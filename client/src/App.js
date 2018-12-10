@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { CssBaseline, withStyles } from "@material-ui/core";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+import Header from "./Components/Header";
+import Dashboard from "./Pages/Dashboard";
+
+const styles = theme => ({
+  main: {
+    padding: 3 * theme.spacing.unit,
+    [theme.breakpoints.down("xs")]: {
+      padding: 2 * theme.spacing.unit
+    }
   }
-}
+});
 
-export default App;
+const App = ({ classes }) => (
+  <React.Fragment>
+    <CssBaseline />
+    <Header />
+    <main className={classes.main}>
+      <Dashboard />
+    </main>
+  </React.Fragment>
+);
+
+export default withStyles(styles)(App);
