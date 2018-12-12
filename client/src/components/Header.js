@@ -60,6 +60,7 @@ const styles = theme => ({
   },
   drawerHeader: {
     display: "flex",
+    background: "indigo",
     alignItems: "center",
     padding: "0 8px",
     ...theme.mixins.toolbar,
@@ -149,7 +150,10 @@ class Header extends React.Component {
           }}
         >
           <div className={classes.drawerHeader}>
-            <IconButton onClick={this.handleDrawerClose}>
+            <IconButton
+              onClick={this.handleDrawerClose}
+              style={{ color: "white" }}
+            >
               {theme.direction === "ltr" ? <CloseIcon /> : <ChevronRightIcon />}
             </IconButton>
           </div>

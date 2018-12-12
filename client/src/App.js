@@ -1,8 +1,8 @@
 import React from "react";
 import { CssBaseline, withStyles } from "@material-ui/core";
 
-import Header from "./Components/Header";
-import Dashboard from "./Pages/Dashboard";
+import Header from "./components/Header";
+import Dashboard from "./pages/Dashboard";
 
 const styles = theme => ({
   main: {

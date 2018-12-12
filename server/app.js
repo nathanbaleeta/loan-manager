@@ -1,20 +1,29 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const loanRouter = require("./routes/loanRouter");
 
-var app = express();
+const app = express();
+const port = process.env.PORT || 7000;
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// Connecting to the database
+//const db = mongoose.connect(process.env.DB_ADDRESS);
+const db = mongoose.connect(
+  "mongodb://127.0.0.1:27017/loanDB",
+  { useNewUrlParser: true }
+);
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// setting body parser middleware & CORS
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+
+// API routes
+app.use("/api/loans", loanRouter);
+
+// Running the server on preset port
+app.listen(port, () => console.log(`Listening on port ${port}...`));
 
 module.exports = app;

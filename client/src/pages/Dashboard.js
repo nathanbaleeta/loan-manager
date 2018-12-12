@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
-import DebitorList from "../Components/DebitorList";
+import DebitorList from "../components/DebitorList";
 
 export default () => (
   <div>
