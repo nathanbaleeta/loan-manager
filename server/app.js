@@ -16,8 +16,8 @@ const db = mongoose.connect(
 );
 
 // setting body parser middleware & CORS
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cors());
 
 // API routes

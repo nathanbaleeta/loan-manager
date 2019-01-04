@@ -1,19 +1,31 @@
 import React from "react";
+import Chip from '@material-ui/core/Chip';
 import API from "./Api";
 import MUIDataTable from "mui-datatables";
+import CustomToolbar from "./mui-datatables/CustomToolbar";
 
 export default class DebitorList extends React.Component {
+
   state = {
     count: 100,
     data: []
   };
 
-  componentDidMount() {
+   componentDidMount() {
     API.get("loans").then(res => {
       const data = res.data;
       this.setState({ data });
     });
-  }
+   }
+
+   componentDidUpdate() {
+    // only update table if the data has changed
+    API.get("loans").then(res => {
+      const data = res.data;
+      this.setState({ data });
+    });
+      
+    }
 
   render() {
     const columns = [
@@ -25,7 +37,14 @@ export default class DebitorList extends React.Component {
         }
       },
       {
-        name: "Phone",
+        name: "Phone 1",
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
+      {
+        name: "Phone 2",
         options: {
           filter: false,
           sort: false
@@ -91,16 +110,24 @@ export default class DebitorList extends React.Component {
       serverSide: false,
       rowsPerPage: 10,
       pagination: true,
-      count: count
+      count: count,
+      customToolbar: () => {
+        return (
+          <CustomToolbar />
+        );
+      }
     };
 
     return (
+   
+
       <MUIDataTable
         title={"Debitors' list"}
         data={data.map(loan => {
           return [
-            loan.clientName,
-            loan.phone,
+            loan.lastName + " " + loan.firstName,
+            <Chip label={ loan.phone1} color="primary" variant="outlined"/>, 
+            <Chip label={ loan.phone2} color="primary" variant="outlined"/>, 
             loan.address,
             loan.principal,
             loan.interestRate,
@@ -116,3 +143,4 @@ export default class DebitorList extends React.Component {
     );
   }
 }
+

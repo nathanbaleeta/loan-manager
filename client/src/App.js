@@ -16,7 +16,7 @@ const styles = theme => ({
 const App = ({ classes }) => (
   <React.Fragment>
     <CssBaseline />
-    <Header />
+    <Header />  
     <main className={classes.main}>
       <Dashboard />
     </main>

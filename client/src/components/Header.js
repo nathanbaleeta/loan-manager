@@ -60,7 +60,7 @@ const styles = theme => ({
   },
   drawerHeader: {
     display: "flex",
-    background: "indigo",
+    color: "primary",
     alignItems: "center",
     padding: "0 8px",
     ...theme.mixins.toolbar,
@@ -106,7 +106,6 @@ class Header extends React.Component {
         <CssBaseline />
         <AppBar
           position="fixed"
-          style={{ background: "indigo" }}
           className={classNames(classes.appBar, {
             [classes.appBarShift]: open
           })}
@@ -148,11 +147,12 @@ class Header extends React.Component {
           classes={{
             paper: classes.drawerPaper
           }}
+
         >
           <div className={classes.drawerHeader}>
-            <IconButton
+            <IconButton color="primary"
               onClick={this.handleDrawerClose}
-              style={{ color: "white" }}
+              
             >
               {theme.direction === "ltr" ? <CloseIcon /> : <ChevronRightIcon />}
             </IconButton>
