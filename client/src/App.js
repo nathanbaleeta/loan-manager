@@ -1,8 +1,12 @@
 import React from "react";
 import { CssBaseline, withStyles } from "@material-ui/core";
+import { Switch, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Dashboard from "./pages/Dashboard";
+
+import ClientList from "./components/Client/ClientList";
+import ClientForm from "./components/Client/ClientForm";
 
 const styles = theme => ({
   main: {
@@ -16,9 +20,17 @@ const styles = theme => ({
 const App = ({ classes }) => (
   <React.Fragment>
     <CssBaseline />
-    <Header />  
+    <Header />
+    <br />
+    <br />
+    <br />
+    <br />
     <main className={classes.main}>
-      <Dashboard />
+      <Switch>
+        <Route exact path="/" component={Dashboard} />
+        <Route path="/clients" component={ClientList} />
+        <Route path="/clients" component={ClientForm} />
+      </Switch>
     </main>
   </React.Fragment>
 );

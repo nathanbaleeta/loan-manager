@@ -20,7 +20,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
+//import Avatar from "@material-ui/core/Avatar";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import Tooltip from "@material-ui/core/Tooltip";
 
@@ -208,7 +208,7 @@ class Header extends React.Component {
               noWrap
               //style={{ fontWeight: "bold" }}
             >
-              Kandole Loan Manager
+              Honest Business Services Ltd
             </Typography>
             {/*    <div className={classes.search}>
               <div className={classes.searchIcon}>
@@ -234,7 +234,7 @@ class Header extends React.Component {
                       </IconButton>
                     </Tooltip>
                   </Link>
-                  <Link to="/" className={classes.link}>
+                  <Link to="/clients" className={classes.link}>
                     <Tooltip title="Profile">
                       <IconButton color="inherit">
                         <PersonIcon />

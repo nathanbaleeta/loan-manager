@@ -1,7 +1,5 @@
 import React from "react";
-import DebitorList from "../components/DebitorList";
-
-//import Checkout from "../components/checkout/Checkout";
+import ClientList from "../components/Client/ClientList";
 
 export default () => (
   <div>
@@ -10,9 +8,7 @@ export default () => (
     <br />
     <br />
 
-    <DebitorList />
+    <ClientList />
     <br />
-
-    {/* <Checkout/> */}
   </div>
 );
