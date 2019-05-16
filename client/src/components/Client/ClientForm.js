@@ -130,7 +130,7 @@ class ClientForm extends React.Component {
       <div>
         <br />
         <form onSubmit={this.handleSubmit}>
-          <Typography variant="title" align="left" color="inherit">
+          <Typography variant="headline" align="left" color="primary">
             Bio-data
           </Typography>
           <Grid container spacing={24}>
@@ -206,7 +206,7 @@ class ClientForm extends React.Component {
               </InputMask>
             </Grid>
             <Grid item xs={12} sm={12}>
-              <Typography variant="title" align="left" color="inherit">
+              <Typography variant="headline" align="left" color="primary">
                 Loan Calculator
               </Typography>
             </Grid>
@@ -315,7 +315,7 @@ class ClientForm extends React.Component {
                 type="submit"
                 variant="contained"
                 size="large"
-                color="primary"
+                color="secondary"
               >
                 Save Client
               </Button>
