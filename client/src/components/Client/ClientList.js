@@ -1,9 +1,5 @@
 import React from "react";
 
-import Chip from "@material-ui/core/Chip";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-
 import Button from "@material-ui/core/Button";
 
 import Dialog from "@material-ui/core/Dialog";
@@ -15,14 +11,28 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import MUIDataTable from "mui-datatables";
 import CustomToolbar from "../mui-datatables/CustomToolbarClients";
 
+import firebase from "../common/firebase";
+
 class ClientList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 100,
       data: [],
       open: false,
-      loan: null
+
+      key: "",
+      firstName: "",
+      lastName: "",
+      phone1: "",
+      phone2: "",
+      address: "",
+      principal: "",
+      interestRate: "",
+      amountDue: "",
+      totalInterest: "",
+      issueDate: "",
+      loanTerm: "",
+      collateral: ""
     };
   }
 
@@ -34,28 +44,56 @@ class ClientList extends React.Component {
     this.setState({ open: false });
   };
 
-  handleDelete = loan => {};
+  componentDidMount() {
+    const clientsRef = firebase.database().ref("clients");
 
-  componentDidMount() {}
+    clientsRef.on("value", snapshot => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        newState.push({
+          id: item,
+          firstName: items[item].firstName,
+          lastName: items[item].lastName,
+          phone1: items[item].phone1,
+          phone2: items[item].phone2,
+          address: items[item].address,
+          principal: items[item].principal,
+          interestRate: items[item].interestRate,
+          amountDue: items[item].amountDue,
+          totalInterest: items[item].totalInterest,
 
-  componentDidUpdate() {
-    // only update table if the data has changed
-    /*API.get("loans").then(res => {
-      const data = res.data;
-      this.setState({ data });
+          issueDate: items[item].issueDate,
+          loanTerm: items[item].loanTerm,
+          collateral: items[item].collateral
+        });
+      }
+
+      //console.log(newState);
+      this.setState({
+        data: newState
+      });
+      //console.log(this.state.data);
     });
-    */
   }
 
   render() {
-    //const { loan } = this.props;
+    const { data } = this.state;
 
     const columns = [
       {
-        name: "Client",
+        name: "Client name",
         options: {
           filter: false,
           sort: true
+        }
+      },
+
+      {
+        name: "Address",
+        options: {
+          filter: false,
+          sort: false
         }
       },
       {
@@ -66,7 +104,7 @@ class ClientList extends React.Component {
         }
       },
       {
-        name: "Address",
+        name: "Phone 2",
         options: {
           filter: false,
           sort: false
@@ -75,38 +113,46 @@ class ClientList extends React.Component {
       {
         name: "Principal",
         options: {
-          filter: true,
+          filter: false,
           sort: false
         }
       },
       {
-        name: "Interest Rate",
-        options: {
-          filter: true,
-          sort: false
-        }
-      },
-      {
-        name: "Issue Date",
-        options: {
-          filter: true,
-          sort: false
-        }
-      },
-      {
-        name: "Loan Term",
+        name: "Interest rate",
         options: {
           filter: false,
           sort: false
         }
       },
-
       {
-        name: "Actions"
+        name: "Loan term",
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
+      {
+        name: "Total Interest",
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
+      {
+        name: "Issue date",
+        options: {
+          filter: false,
+          sort: false
+        }
       }
+      /*   {
+        name: "Collateral",
+        options: {
+          filter: false,
+          sort: false
+        }
+      } */
     ];
-
-    const { data, count } = this.state;
 
     const options = {
       filter: true,
@@ -115,7 +161,6 @@ class ClientList extends React.Component {
       serverSide: false,
       rowsPerPage: 10,
       pagination: true,
-      count: count,
       customToolbar: () => {
         return <CustomToolbar />;
       }
@@ -125,22 +170,18 @@ class ClientList extends React.Component {
       <React.Fragment>
         <MUIDataTable
           title={"Client list"}
-          data={data.map(loan => {
+          data={data.map(c => {
             return [
-              loan.lastName + " " + loan.firstName,
-              <Chip label={loan.phone1} color="primary" variant="outlined" />,
-              loan.address,
-              loan.principal,
-              loan.interestRate,
-              loan.dateLoanGiven,
-              loan.loanTerm,
-
-              <IconButton
-                color="primary"
-                onClick={e => this.handleDelete(loan)}
-              >
-                <DeleteIcon color="primary" />
-              </IconButton>
+              c.lastName + " " + c.firstName,
+              c.address,
+              c.phone1,
+              c.phone2,
+              c.principal,
+              c.interestRate,
+              c.loanTerm,
+              c.totalInterest,
+              c.issueDate
+              //c.collateral
             ];
           })}
           columns={columns}
