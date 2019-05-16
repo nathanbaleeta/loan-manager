@@ -5,14 +5,14 @@ import DebitorList from "../components/DebitorList";
 
 export default () => (
   <div>
-   <br/><br/>
-     
-     <DebitorList /> 
-    <br/>
-     
-    
-   {/* <Checkout/> */}
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <DebitorList />
+    <br />
+
+    {/* <Checkout/> */}
   </div>
 );
-
-   

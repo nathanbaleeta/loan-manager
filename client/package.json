@@ -11,7 +11,9 @@
     "mui-datatables": "^2.0.0-beta-41",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-inline-grid": "^0.5.3",
     "react-input-mask": "^2.0.4",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.1",
     "typeface-roboto": "^0.0.54"
   },
