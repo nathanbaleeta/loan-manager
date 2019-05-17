@@ -1,0 +1,135 @@
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+
+import firebase from "../common/firebase";
+
+//import NumberFormat from "react-number-format";
+
+//var NumberFormat = require('react-number-format');
+
+const styles = theme => ({});
+
+class ExpenseForm extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      description: "",
+      amount: "",
+      expenseDate: ""
+    };
+  }
+
+  onChange = e => {
+    /*
+          Because we named the inputs to match their
+          corresponding values in state, it's
+          super easy to update the state
+        */
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+
+    // get our form data out of state
+    const expense = {
+      description: this.state.description,
+      amount: this.state.amount,
+      expenseDate: this.state.expenseDate,
+      created: new Date().toLocaleString("en-GB", {
+        timeZone: "Africa/Nairobi"
+      })
+    };
+
+    console.log(expense);
+
+    //Save farmer module
+    const expensesRef = firebase.database().ref("expenses");
+    expensesRef.push(expense);
+
+    //Clear the Client form inputs
+    this.setState({
+      particulars: "",
+      amount: "",
+      expenseDate: ""
+    });
+  };
+
+  render() {
+    const { description, amount, expenseDate } = this.state;
+
+    return (
+      <div>
+        <br />
+        <form onSubmit={this.handleSubmit}>
+          <Typography variant="headline" align="left" color="primary">
+            Expense details
+          </Typography>
+          <br />
+          <Grid container spacing={24}>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                required
+                id="description"
+                name="description"
+                value={description}
+                onChange={this.onChange}
+                label="Particulars"
+                fullWidth
+                autoComplete="off"
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={12}>
+              <TextField
+                required
+                id="amount"
+                name="amount"
+                value={amount}
+                onChange={this.onChange}
+                type="number"
+                label="Amount"
+                fullWidth
+                autoComplete="off"
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={12}>
+              <TextField
+                required
+                id="expenseDate"
+                name="expenseDate"
+                value={expenseDate}
+                onChange={this.onChange}
+                label="Date"
+                type="date"
+                fullWidth
+                autoComplete="off"
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                color="secondary"
+              >
+                Save Expense
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    );
+  }
+}
+
+export default withStyles(styles)(ExpenseForm);

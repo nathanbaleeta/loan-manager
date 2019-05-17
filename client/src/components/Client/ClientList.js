@@ -10,7 +10,6 @@ import InputMask from "react-input-mask";
 
 import { Typography } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -516,14 +515,6 @@ class ClientList extends React.Component {
               </form>
             </DialogContentText>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={this.closeDialog} color="primary">
-              Disagree
-            </Button>
-            <Button onClick={this.closeDialog} color="primary" autoFocus>
-              Agree
-            </Button>
-          </DialogActions>
         </Dialog>
       </React.Fragment>
     );

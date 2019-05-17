@@ -14,7 +14,8 @@ import { withStyles } from "@material-ui/core/styles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import PollIcon from "@material-ui/icons/Poll";
-import PersonIcon from "@material-ui/icons/Person";
+import GroupIcon from "@material-ui/icons/Group";
+import ViewListIcon from "@material-ui/icons/ViewList";
 
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
@@ -235,9 +236,16 @@ class Header extends React.Component {
                     </Tooltip>
                   </Link>
                   <Link to="/clients" className={classes.link}>
-                    <Tooltip title="Profile">
+                    <Tooltip title="Clients">
                       <IconButton color="inherit">
-                        <PersonIcon />
+                        <GroupIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </Link>
+                  <Link to="/expenses" className={classes.link}>
+                    <Tooltip title="Expenses">
+                      <IconButton color="inherit">
+                        <ViewListIcon />
                       </IconButton>
                     </Tooltip>
                   </Link>
