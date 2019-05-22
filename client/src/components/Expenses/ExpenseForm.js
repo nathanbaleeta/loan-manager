@@ -32,12 +32,16 @@ class ExpenseForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  capitalize(str) {
+    return str.toUpperCase();
+  }
+
   handleSubmit = event => {
     event.preventDefault();
 
     // get our form data out of state
     const expense = {
-      description: this.state.description,
+      description: this.capitalize(this.state.description),
       amount: this.state.amount,
       expenseDate: this.state.expenseDate,
       created: new Date().toLocaleString("en-GB", {

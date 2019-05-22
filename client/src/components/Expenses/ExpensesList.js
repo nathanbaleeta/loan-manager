@@ -72,6 +72,10 @@ class ClientList extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  capitalize(str) {
+    return str.toUpperCase();
+  }
+
   updateExpense(id) {
     //const recordToEdit = this.state.data.find(item => item.id === id);
     //console.log(recordToEdit);
@@ -97,7 +101,7 @@ class ClientList extends React.Component {
 
     // get our form data out of state
     const expense = {
-      description: this.state.description,
+      description: this.capitalize(this.state.description),
       amount: this.state.amount,
       expenseDate: this.state.expenseDate
     };

@@ -46,7 +46,7 @@ class Visualization extends React.Component {
           </Grid>
         </Grid>
         <br /> <br /> <br />
-        <Typography variant="headline" align="center" color="primary">
+        <Typography variant="display1" align="center" color="primary">
           Expenses Analytics
         </Typography>
         <br />

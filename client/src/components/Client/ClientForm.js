@@ -25,8 +25,8 @@ class ClientForm extends React.Component {
       address: "",
       principal: "",
       interestRate: "",
-      amountDue: "",
-      totalInterest: "",
+      //amountDue: "",
+      //totalInterest: "",
       issueDate: "",
       loanTerm: "",
       collateral: ""
@@ -42,7 +42,11 @@ class ClientForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  calculateAmountDue = () => {
+  capitalize(str) {
+    return str.toUpperCase();
+  }
+
+  /* calculateAmountDue = () => {
     let computedInterestRate = (parseInt(this.state.interestRate) + 100) / 100;
 
     let computedAmountDue = Math.floor(
@@ -63,25 +67,25 @@ class ClientForm extends React.Component {
     this.setState({
       totalInterest: totalInterest
     });
-  };
+  }; */
 
   handleSubmit = event => {
     event.preventDefault();
 
     // get our form data out of state
     const client = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
+      firstName: this.capitalize(this.state.firstName),
+      lastName: this.capitalize(this.state.lastName),
       phone1: this.state.phone1,
       phone2: this.state.phone2,
-      address: this.state.address,
+      address: this.capitalize(this.state.address),
       principal: this.state.principal,
       interestRate: this.state.interestRate,
-      amountDue: this.state.amountDue,
-      totalInterest: this.state.totalInterest,
+      //amountDue: this.state.amountDue,
+      //totalInterest: this.state.totalInterest,
       issueDate: this.state.issueDate,
       loanTerm: this.state.loanTerm,
-      collateral: this.state.collateral,
+      collateral: this.capitalize(this.state.collateral),
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi"
       })
@@ -102,8 +106,8 @@ class ClientForm extends React.Component {
       phone2: "",
       principal: "",
       interestRate: "",
-      amountDue: "",
-      totalInterest: "",
+      //amountDue: "",
+      //totalInterest: "",
       issueDate: "",
       loanTerm: "",
       collateral: ""
@@ -119,8 +123,8 @@ class ClientForm extends React.Component {
       address,
       principal,
       interestRate,
-      amountDue,
-      totalInterest,
+      //amountDue,
+      //totalInterest,
       issueDate,
       loanTerm,
       collateral
@@ -250,7 +254,7 @@ class ClientForm extends React.Component {
                 autoComplete="off"
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            {/*  <Grid item xs={12} sm={6}>
               <TextField
                 required
                 id="amountDue"
@@ -276,7 +280,7 @@ class ClientForm extends React.Component {
                 fullWidth
                 autoComplete="off"
               />
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={12} sm={6}>
               <TextField

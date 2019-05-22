@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -34,8 +35,8 @@ class ClientList extends React.Component {
       address: "",
       principal: "",
       interestRate: "",
-      amountDue: "",
-      totalInterest: "",
+      //amountDue: "",
+      //totalInterest: "",
       issueDate: "",
       loanTerm: "",
       collateral: ""
@@ -66,8 +67,8 @@ class ClientList extends React.Component {
           address: items[item].address,
           principal: items[item].principal,
           interestRate: items[item].interestRate,
-          amountDue: items[item].amountDue,
-          totalInterest: items[item].totalInterest,
+          //amountDue: items[item].amountDue,
+          //totalInterest: items[item].totalInterest,
 
           issueDate: items[item].issueDate,
           loanTerm: items[item].loanTerm,
@@ -92,6 +93,10 @@ class ClientList extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  capitalize(str) {
+    return str.toUpperCase();
+  }
+
   updateClient(id) {
     //const recordToEdit = this.state.data.find(item => item.id === id);
     //console.log(recordToEdit);
@@ -110,8 +115,8 @@ class ClientList extends React.Component {
 
         principal: snapshot.child("principal").val(),
         interestRate: snapshot.child("interestRate").val(),
-        amountDue: snapshot.child("amountDue").val(),
-        totalInterest: snapshot.child("totalInterest").val(),
+        //amountDue: snapshot.child("amountDue").val(),
+        //totalInterest: snapshot.child("totalInterest").val(),
         issueDate: snapshot.child("issueDate").val(),
         loanTerm: snapshot.child("loanTerm").val(),
         collateral: snapshot.child("collateral").val()
@@ -127,19 +132,18 @@ class ClientList extends React.Component {
 
     // get our form data out of state
     const client = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
+      firstName: this.capitalize(this.state.firstName),
+      lastName: this.capitalize(this.state.lastName),
       phone1: this.state.phone1,
       phone2: this.state.phone2,
-      address: this.state.address,
+      address: this.capitalize(this.state.address),
       principal: this.state.principal,
       interestRate: this.state.interestRate,
-      amountDue: this.state.amountDue,
-      totalInterest: this.state.totalInterest,
+      //amountDue: this.state.amountDue,
+      //totalInterest: this.state.totalInterest,
       issueDate: this.state.issueDate,
-
       loanTerm: this.state.loanTerm,
-      collateral: this.state.collateral
+      collateral: this.capitalize(this.state.collateral)
     };
 
     //Update farmer module
@@ -209,28 +213,28 @@ class ClientList extends React.Component {
           sort: false
         }
       },
-      {
+      /*  {
         name: "Total Interest",
         options: {
           filter: false,
           sort: false
         }
       },
-      /*
+     */
       {
         name: "Issue date",
         options: {
           filter: false,
           sort: false
         }
-      }
+      } /*
          {
         name: "Collateral",
         options: {
           filter: false,
           sort: false
         }
-      } */
+      } */,
       {
         name: "Actions",
         options: {
@@ -272,15 +276,23 @@ class ClientList extends React.Component {
           title={"Client list"}
           data={data.map(c => {
             return [
-              c.lastName + " " + c.firstName,
+              <Link
+                to={`/clients/${c.id}`}
+                style={{
+                  color: "darkblue",
+                  textDecoration: "none"
+                }}
+              >
+                {c.lastName + " " + c.firstName}
+              </Link>,
               c.address,
               c.phone1,
               c.phone2,
               c.principal,
               c.interestRate,
               c.loanTerm,
-              c.totalInterest,
-              //c.issueDate
+              //c.totalInterest,
+              c.issueDate,
               //c.collateral
               <IconButton
                 color="primary"
@@ -441,7 +453,7 @@ class ClientList extends React.Component {
                       autoComplete="off"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  {/*   <Grid item xs={12} sm={6}>
                     <TextField
                       required
                       id="amountDue"
@@ -468,7 +480,7 @@ class ClientList extends React.Component {
                       autoComplete="off"
                     />
                   </Grid>
-
+ */}
                   <Grid item xs={12} sm={6}>
                     <TextField
                       required
