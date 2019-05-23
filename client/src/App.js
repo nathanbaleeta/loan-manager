@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import ClientList from "./components/Client/ClientList";
 import ClientForm from "./components/Client/ClientForm";
 import ClientDetails from "./components/Client/ClientDetails";
+import ClientDetails1 from "./components/Client/ClientDetails1";
 
 import ExpensesList from "./components/Expenses/ExpensesList";
 import ExpenseForm from "./components/Expenses/ExpenseForm";
@@ -32,6 +33,8 @@ const App = ({ classes }) => (
     <br />
     <main className={classes.main}>
       <Switch>
+        <Route path="/clients/:id/loans" component={ClientDetails1} />
+
         <Route path="/clients/:id" component={ClientDetails} />
         <Route path="/clients/:id" component={InstallmentForm} />
         <Route path="/clients" component={ClientList} />
@@ -39,6 +42,7 @@ const App = ({ classes }) => (
 
         <Route path="/expenses" component={ExpensesList} />
         <Route path="/expenses" component={ExpenseForm} />
+
         <Route exact path="/" />
         <Route path="/data-analytics" component={Dashboard} />
       </Switch>
