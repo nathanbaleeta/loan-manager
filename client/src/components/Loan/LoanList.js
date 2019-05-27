@@ -5,6 +5,9 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+
 import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
@@ -22,12 +25,15 @@ const styles = theme => ({
     }
   },
   root: {
-    width: "100%",
-    //maxWidth: 470,
+    //width: "100%",
+    //maxWidth: 427,
+    maxWidth: "24%",
     backgroundColor: theme.palette.background.paper,
-    position: "relative",
+    position: "fixed",
     overflow: "auto",
-    maxHeight: 800
+    maxHeight: "100%",
+    borderRight: "1px solid #d4d4d4",
+    paddingLeft: "1%"
   },
   listSection: {
     backgroundColor: "inherit"
@@ -37,11 +43,15 @@ const styles = theme => ({
     padding: 0
   },
   message: {
-    borderBottom: "1px solid #d4d4d4"
+    borderTop: "1px solid #d4d4d4"
     /* "&:hover": {
       background: "#D23E56",
       color: "white"
     } */
+  },
+  fab: {
+    marginLeft: "7%",
+    marginBottom: "2%"
   },
 
   // Overiding CSS with classnames for ListItemText Implementation
@@ -67,35 +77,11 @@ function LoanList(props) {
       >
         Loan List
       </Typography>
+      <Fab color="primary" aria-label="Add" className={classes.fab}>
+        <AddIcon />
+      </Fab>
+
       <List className={classes.root}>
-        <ListItem button className={classes.message}>
-          <ListItemText
-            classes={{
-              primary: classes.primary,
-              secondary: classes.secondary
-            }}
-            primary="Nathan Baleeta"
-            secondary={
-              <React.Fragment>
-                {"  I'll be in your neighborhood doing errands this…"}
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-        <ListItem button className={classes.message}>
-          <ListItemText
-            classes={{
-              primary: classes.primary,
-              secondary: classes.secondary
-            }}
-            primary="Nathan Baleeta"
-            secondary={
-              <React.Fragment>
-                {"  I'll be in your neighborhood doing errands this…"}
-              </React.Fragment>
-            }
-          />
-        </ListItem>
         <ListItem button className={classes.message}>
           <ListItemText
             classes={{

@@ -24,13 +24,23 @@ class ClientDetails1 extends React.Component {
             xs={3}
             sm={3}
             style={{
-              marginLeft: "-1%"
-              //backgroundColor: "white"
+              marginLeft: "-2%",
+              marginTop: "-2%",
+              borderRight: "1px solid #d4d4d4",
+              backgroundColor: "white"
             }}
           >
+            <br />
             <LoanList />
           </Grid>
-          <Grid item xs={6} sm={6}>
+          <Grid
+            item
+            xs={6}
+            sm={6}
+            style={{
+              marginLeft: "1%"
+            }}
+          >
             <ExpensesList />
           </Grid>
           <Grid item xs={3} sm={3}>
