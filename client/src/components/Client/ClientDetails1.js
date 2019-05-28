@@ -2,17 +2,28 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-//import Typography from "@material-ui/core/Typography";
 
 import ProfileInfo from "../Client/ProfileInfo";
-
 import LoanList from "../Loan/LoanList";
-
 import ExpensesList from "../Expenses/ExpensesList";
+import firebase from "../common/firebase";
 
 const styles = theme => ({});
 
 class ClientDetails1 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // target ID retrieved from another component(ClientList) using onClick event listener from route
+      clientID: this.props.match.params.id
+    };
+  }
+  componentDidMount() {
+    //console.log(this.state.clientID);
+
+    // Client installment data.
+    const loanRef = firebase.database().ref(`loans/${this.state.clientID}`);
+  }
   render() {
     //const { classes } = this.props;
 
@@ -31,7 +42,7 @@ class ClientDetails1 extends React.Component {
             }}
           >
             <br />
-            <LoanList />
+            <LoanList id={this.state.clientID} />
           </Grid>
           <Grid
             item
@@ -41,7 +52,7 @@ class ClientDetails1 extends React.Component {
               marginLeft: "1%"
             }}
           >
-            <ExpensesList />
+            {/* <LoanList /> */}
           </Grid>
           <Grid item xs={3} sm={3}>
             <ProfileInfo />

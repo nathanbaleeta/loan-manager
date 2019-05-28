@@ -18,7 +18,7 @@ import CustomToolbar from "../mui-datatables/CustomToolbarExpenses";
 
 import firebase from "../common/firebase";
 
-class ClientList extends React.Component {
+class ExpensesList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -190,8 +190,6 @@ class ClientList extends React.Component {
               e.amount,
               e.expenseDate,
 
-              //c.issueDate
-              //c.collateral
               <IconButton
                 color="primary"
                 //onClick={() => this.updateFarmer(index)}
@@ -300,4 +298,4 @@ class ClientList extends React.Component {
   }
 }
 
-export default ClientList;
+export default ExpensesList;
