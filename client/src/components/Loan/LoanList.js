@@ -33,9 +33,9 @@ const styles = theme => ({
     }
   },
   root: {
-    //width: "100%",
-    //maxWidth: 427,
-    maxWidth: "24%",
+    width: "100%",
+    maxWidth: 427,
+    //maxWidth: "24%",
     backgroundColor: theme.palette.background.paper,
     position: "fixed",
     overflow: "auto",
@@ -68,7 +68,8 @@ const styles = theme => ({
     fontWeight: "bold"
   },
   secondary: {
-    fontSize: "18px"
+    fontSize: "18px",
+    color: "black"
   }
 });
 
@@ -76,7 +77,9 @@ class LoanList extends React.Component {
   constructor() {
     super();
     this.state = {
-      clientID: "",
+      loanData: [],
+
+      loanID: "",
       principal: "",
       interestRate: "",
       issueDate: "",
@@ -88,6 +91,29 @@ class LoanList extends React.Component {
   componentDidMount() {
     // target ID retrieved from another component(ClientList) using onClick event listener from route
     //console.log(this.props.id);
+    const key = this.props.id;
+
+    const loansRef = firebase.database().ref(`loans/${key}`);
+    loansRef.on("value", snapshot => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        newState.push({
+          loanID: item,
+          principal: items[item].principal,
+          interestRate: items[item].interestRate,
+          issueDate: items[item].issueDate,
+          loanTerm: items[item].loanTerm,
+          collateral: items[item].collateral
+        });
+      }
+
+      //console.log(newState);
+      this.setState({
+        loanData: newState
+      });
+      console.log(this.state.loanData);
+    });
   }
 
   handleOpen = () => {
@@ -106,10 +132,6 @@ class LoanList extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  capitalize(str) {
-    return str.toUpperCase();
-  }
-
   render() {
     const { classes } = this.props;
 
@@ -121,7 +143,7 @@ class LoanList extends React.Component {
           align="center"
           color="primary"
         >
-          Loan List
+          Loan history
         </Typography>
 
         <Fab
@@ -134,314 +156,28 @@ class LoanList extends React.Component {
         </Fab>
 
         <List className={classes.root}>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem button className={classes.message}>
-            <ListItemText
-              classes={{
-                primary: classes.primary,
-                secondary: classes.secondary
-              }}
-              primary="Nathan Baleeta"
-              secondary={
-                <React.Fragment>
-                  {"  I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-              }
-            />
-          </ListItem>
+          {this.state.loanData.map(loan => (
+            <ListItem button className={classes.message}>
+              <ListItemText
+                classes={{
+                  primary: classes.primary,
+                  secondary: classes.secondary
+                }}
+                primary={"Principal: " + loan.principal}
+                secondary={
+                  <React.Fragment>
+                    {"Interest: " + loan.interestRate + "%"}
+                    <br />
+                    {"Duration: " + loan.loanTerm + " months"}
+                    <br />
+                    {"Issue date: " + loan.issueDate}
+                    <br />
+                    {/*{"Collateral: " + loan.collateral} */}
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+          ))}
         </List>
 
         <Dialog

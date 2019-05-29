@@ -32,14 +32,7 @@ class ClientList extends React.Component {
       lastName: "",
       phone1: "",
       phone2: "",
-      address: "",
-      principal: "",
-      interestRate: "",
-      //amountDue: "",
-      //totalInterest: "",
-      issueDate: "",
-      loanTerm: "",
-      collateral: ""
+      address: ""
     };
   }
 
@@ -64,15 +57,7 @@ class ClientList extends React.Component {
           lastName: items[item].lastName,
           phone1: items[item].phone1,
           phone2: items[item].phone2,
-          address: items[item].address,
-          principal: items[item].principal,
-          interestRate: items[item].interestRate,
-          //amountDue: items[item].amountDue,
-          //totalInterest: items[item].totalInterest,
-
-          issueDate: items[item].issueDate,
-          loanTerm: items[item].loanTerm,
-          collateral: items[item].collateral
+          address: items[item].address
         });
       }
 
@@ -111,15 +96,7 @@ class ClientList extends React.Component {
         lastName: snapshot.child("lastName").val(),
         phone1: snapshot.child("phone1").val(),
         phone2: snapshot.child("phone2").val(),
-        address: snapshot.child("address").val(),
-
-        principal: snapshot.child("principal").val(),
-        interestRate: snapshot.child("interestRate").val(),
-        //amountDue: snapshot.child("amountDue").val(),
-        //totalInterest: snapshot.child("totalInterest").val(),
-        issueDate: snapshot.child("issueDate").val(),
-        loanTerm: snapshot.child("loanTerm").val(),
-        collateral: snapshot.child("collateral").val()
+        address: snapshot.child("address").val()
       });
     });
     console.log(
@@ -136,14 +113,7 @@ class ClientList extends React.Component {
       lastName: this.capitalize(this.state.lastName),
       phone1: this.state.phone1,
       phone2: this.state.phone2,
-      address: this.capitalize(this.state.address),
-      principal: this.state.principal,
-      interestRate: this.state.interestRate,
-      //amountDue: this.state.amountDue,
-      //totalInterest: this.state.totalInterest,
-      issueDate: this.state.issueDate,
-      loanTerm: this.state.loanTerm,
-      collateral: this.capitalize(this.state.collateral)
+      address: this.capitalize(this.state.address)
     };
 
     //Update farmer module
@@ -192,49 +162,7 @@ class ClientList extends React.Component {
           sort: false
         }
       },
-      {
-        name: "Principal",
-        options: {
-          filter: false,
-          sort: false
-        }
-      },
-      {
-        name: "Interest rate",
-        options: {
-          filter: false,
-          sort: false
-        }
-      },
-      {
-        name: "Loan term",
-        options: {
-          filter: false,
-          sort: false
-        }
-      },
-      /*  {
-        name: "Total Interest",
-        options: {
-          filter: false,
-          sort: false
-        }
-      },
-     */
-      {
-        name: "Issue date",
-        options: {
-          filter: false,
-          sort: false
-        }
-      } /*
-         {
-        name: "Collateral",
-        options: {
-          filter: false,
-          sort: false
-        }
-      } */,
+
       {
         name: "Actions",
         options: {
@@ -288,12 +216,7 @@ class ClientList extends React.Component {
               c.address,
               c.phone1,
               c.phone2,
-              c.principal,
-              c.interestRate,
-              c.loanTerm,
-              //c.totalInterest,
-              c.issueDate,
-              //c.collateral
+
               <IconButton
                 color="primary"
                 //onClick={() => this.updateFarmer(index)}
@@ -374,7 +297,7 @@ class ClientList extends React.Component {
                       autoComplete="off"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={12}>
                     <InputMask
                       mask="(+256) 999 999 999"
                       value={this.state.phone1}
@@ -391,7 +314,7 @@ class ClientList extends React.Component {
                       )}
                     </InputMask>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={12}>
                     <InputMask
                       mask="(+256) 999 999 999"
                       value={this.state.phone2}
@@ -408,112 +331,8 @@ class ClientList extends React.Component {
                       )}
                     </InputMask>
                   </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="headline" align="left" color="inherit">
-                      Loan Calculator
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="principal"
-                      name="principal"
-                      value={this.state.principal}
-                      onChange={this.onChange}
-                      type="number"
-                      label="Principal"
-                      fullWidth
-                      autoComplete="off"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="interestRate"
-                      name="interestRate"
-                      value={this.state.interestRate}
-                      onChange={this.onChange}
-                      label="Interest rate"
-                      type="number"
-                      fullWidth
-                      autoComplete="off"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="loanTerm"
-                      name="loanTerm"
-                      value={this.state.loanTerm}
-                      onChange={this.onChange}
-                      label="Loan term"
-                      helperText="Duration in months"
-                      type="number"
-                      fullWidth
-                      autoComplete="off"
-                    />
-                  </Grid>
-                  {/*   <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="amountDue"
-                      name="amountDue"
-                      value={this.state.amountDue}
-                      onClick={this.calculateAmountDue}
-                      label="Amount Due"
-                      helperText="Amount Due at Loan Maturity"
-                      type="number"
-                      fullWidth
-                      autoComplete="off"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="totalInterest"
-                      name="totalInterest"
-                      value={this.state.totalInterest}
-                      onClick={this.calculateTotalInterest}
-                      label="Total Interest"
-                      type="number"
-                      fullWidth
-                      autoComplete="off"
-                    />
-                  </Grid>
- */}
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="issueDate"
-                      name="issueDate"
-                      value={this.state.issueDate}
-                      onChange={this.onChange}
-                      label="Issue Date"
-                      type="date"
-                      fullWidth
-                      autoComplete="off"
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                    />
-                  </Grid>
 
                   <Grid item xs={12} sm={12}>
-                    <TextField
-                      id="collateral"
-                      type="string"
-                      name="collateral"
-                      value={this.state.collateral}
-                      onChange={this.onChange}
-                      label="Collateral*"
-                      multiline
-                      rowsMax="4"
-                      fullWidth
-                      autoComplete="off"
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} sm={6}>
                     <Button
                       type="submit"
                       variant="contained"

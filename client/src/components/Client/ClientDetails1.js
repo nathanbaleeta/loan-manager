@@ -5,8 +5,8 @@ import Grid from "@material-ui/core/Grid";
 
 import ProfileInfo from "../Client/ProfileInfo";
 import LoanList from "../Loan/LoanList";
-import ExpensesList from "../Expenses/ExpensesList";
-import firebase from "../common/firebase";
+//import ExpensesList from "../Expenses/ExpensesList";
+//import firebase from "../common/firebase";
 
 const styles = theme => ({});
 
@@ -20,9 +20,8 @@ class ClientDetails1 extends React.Component {
   }
   componentDidMount() {
     //console.log(this.state.clientID);
-
     // Client installment data.
-    const loanRef = firebase.database().ref(`loans/${this.state.clientID}`);
+    //const loanRef = firebase.database().ref(`loans/${this.state.clientID}`);
   }
   render() {
     //const { classes } = this.props;

@@ -22,14 +22,7 @@ class ClientForm extends React.Component {
       lastName: "",
       phone1: "",
       phone2: "",
-      address: "",
-      principal: "",
-      interestRate: "",
-      //amountDue: "",
-      //totalInterest: "",
-      issueDate: "",
-      loanTerm: "",
-      collateral: ""
+      address: ""
     };
   }
 
@@ -46,29 +39,6 @@ class ClientForm extends React.Component {
     return str.toUpperCase();
   }
 
-  /* calculateAmountDue = () => {
-    let computedInterestRate = (parseInt(this.state.interestRate) + 100) / 100;
-
-    let computedAmountDue = Math.floor(
-      this.state.principal * computedInterestRate
-    );
-
-    this.setState({
-      amountDue: computedAmountDue
-    });
-  };
-
-  calculateTotalInterest = () => {
-    let computedTotalInterest =
-      parseInt(this.state.amountDue) - parseInt(this.state.principal);
-
-    let totalInterest = Math.floor(computedTotalInterest);
-
-    this.setState({
-      totalInterest: totalInterest
-    });
-  }; */
-
   handleSubmit = event => {
     event.preventDefault();
 
@@ -79,13 +49,6 @@ class ClientForm extends React.Component {
       phone1: this.state.phone1,
       phone2: this.state.phone2,
       address: this.capitalize(this.state.address),
-      principal: this.state.principal,
-      interestRate: this.state.interestRate,
-      //amountDue: this.state.amountDue,
-      //totalInterest: this.state.totalInterest,
-      issueDate: this.state.issueDate,
-      loanTerm: this.state.loanTerm,
-      collateral: this.capitalize(this.state.collateral),
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi"
       })
@@ -103,32 +66,12 @@ class ClientForm extends React.Component {
       lastName: "",
       address: "",
       phone1: "",
-      phone2: "",
-      principal: "",
-      interestRate: "",
-      //amountDue: "",
-      //totalInterest: "",
-      issueDate: "",
-      loanTerm: "",
-      collateral: ""
+      phone2: ""
     });
   };
 
   render() {
-    const {
-      firstName,
-      lastName,
-      phone1,
-      phone2,
-      address,
-      principal,
-      interestRate,
-      //amountDue,
-      //totalInterest,
-      issueDate,
-      loanTerm,
-      collateral
-    } = this.state;
+    const { firstName, lastName, phone1, phone2, address } = this.state;
 
     return (
       <div>
@@ -175,7 +118,7 @@ class ClientForm extends React.Component {
                 autoComplete="off"
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <InputMask
                 mask="(+256) 999 999 999"
                 value={phone1}
@@ -192,7 +135,7 @@ class ClientForm extends React.Component {
                 )}
               </InputMask>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <InputMask
                 mask="(+256) 999 999 999"
                 value={phone2}
@@ -209,112 +152,8 @@ class ClientForm extends React.Component {
                 )}
               </InputMask>
             </Grid>
-            <Grid item xs={12} sm={12}>
-              <Typography variant="headline" align="left" color="primary">
-                Loan Calculator
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="principal"
-                name="principal"
-                value={principal}
-                onChange={this.onChange}
-                type="number"
-                label="Principal"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="interestRate"
-                name="interestRate"
-                value={interestRate}
-                onChange={this.onChange}
-                label="Interest rate"
-                type="number"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="loanTerm"
-                name="loanTerm"
-                value={loanTerm}
-                onChange={this.onChange}
-                label="Loan term"
-                helperText="Duration in months"
-                type="number"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
-            {/*  <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="amountDue"
-                name="amountDue"
-                value={amountDue}
-                onClick={this.calculateAmountDue}
-                label="Amount Due"
-                helperText="Amount Due at Loan Maturity"
-                type="number"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="totalInterest"
-                name="totalInterest"
-                value={totalInterest}
-                onClick={this.calculateTotalInterest}
-                label="Total Interest"
-                type="number"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid> */}
-
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="issueDate"
-                name="issueDate"
-                value={issueDate}
-                onChange={this.onChange}
-                label="Issue Date"
-                type="date"
-                fullWidth
-                autoComplete="off"
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-            </Grid>
 
             <Grid item xs={12} sm={12}>
-              <TextField
-                id="collateral"
-                type="string"
-                name="collateral"
-                value={collateral}
-                onChange={this.onChange}
-                label="Collateral*"
-                multiline
-                rowsMax="4"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
               <Button
                 type="submit"
                 variant="contained"

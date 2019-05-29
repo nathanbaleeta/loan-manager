@@ -7,7 +7,7 @@ import Dashboard from "./pages/Dashboard";
 
 import ClientList from "./components/Client/ClientList";
 import ClientForm from "./components/Client/ClientForm";
-import ClientDetails from "./components/Client/ClientDetails";
+//import ClientDetails from "./components/Client/ClientDetails";
 import ClientDetails1 from "./components/Client/ClientDetails1";
 
 import ExpensesList from "./components/Expenses/ExpensesList";
