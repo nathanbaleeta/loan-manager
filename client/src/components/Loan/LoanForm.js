@@ -5,10 +5,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
-import firebase from "../common/firebase";
+import NumberFormat from "react-number-format";
 
-//import NumberFormat from "react-number-format";
-//var NumberFormat = require('react-number-format');
+import firebase from "../common/firebase";
 
 const styles = theme => ({});
 
@@ -36,6 +35,10 @@ class LoanForm extends React.Component {
           super easy to update the state
         */
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleChange = name => event => {
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   capitalize(str) {
@@ -87,13 +90,33 @@ class LoanForm extends React.Component {
       <div>
         <br />
         <form onSubmit={this.handleSubmit}>
-          <Grid container spacing={24}>
+          <Grid container spacing={8}>
             <Grid item xs={12} sm={12}>
               <Typography variant="headline" align="left" color="primary">
                 Loan Calculator
               </Typography>
             </Grid>
+            {/* Number formatting using thousand separator */}
             <Grid item xs={12} sm={6}>
+              <NumberFormat
+                value={principal}
+                thousandSeparator={true}
+                onValueChange={values => {
+                  const { formattedValue } = values;
+
+                  this.setState({ principal: formattedValue });
+                }}
+                customInput={TextField}
+                label="Principal"
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                autoComplete="off"
+              />
+            </Grid>
+            {/*  Number formatting using thousand separator */}
+
+            {/*  <Grid item xs={12} sm={6}>
               <TextField
                 required
                 id="principal"
@@ -103,9 +126,11 @@ class LoanForm extends React.Component {
                 type="number"
                 label="Principal"
                 fullWidth
+                margin="normal"
+                variant="outlined"
                 autoComplete="off"
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm={6}>
               <TextField
                 required
@@ -116,6 +141,8 @@ class LoanForm extends React.Component {
                 label="Interest rate"
                 type="number"
                 fullWidth
+                margin="normal"
+                variant="outlined"
                 autoComplete="off"
               />
             </Grid>
@@ -130,6 +157,8 @@ class LoanForm extends React.Component {
                 helperText="Duration in months"
                 type="number"
                 fullWidth
+                margin="normal"
+                variant="outlined"
                 autoComplete="off"
               />
             </Grid>
@@ -144,6 +173,8 @@ class LoanForm extends React.Component {
                 label="Issue Date"
                 type="date"
                 fullWidth
+                margin="normal"
+                variant="outlined"
                 autoComplete="off"
                 InputLabelProps={{
                   shrink: true
@@ -162,15 +193,18 @@ class LoanForm extends React.Component {
                 multiline
                 rowsMax="4"
                 fullWidth
+                margin="normal"
+                variant="outlined"
                 autoComplete="off"
               />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <Button
                 type="submit"
                 variant="contained"
                 size="large"
+                fullWidth
                 color="secondary"
               >
                 Save Loan

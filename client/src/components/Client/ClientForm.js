@@ -80,7 +80,7 @@ class ClientForm extends React.Component {
           <Typography variant="headline" align="left" color="primary">
             Bio-data
           </Typography>
-          <Grid container spacing={24}>
+          <Grid container spacing={8}>
             <Grid item xs={12} sm={6}>
               <TextField
                 required
@@ -90,6 +90,8 @@ class ClientForm extends React.Component {
                 onChange={this.onChange}
                 label="First name"
                 fullWidth
+                margin="normal"
+                variant="outlined"
                 autoComplete="off"
               />
             </Grid>
@@ -102,6 +104,8 @@ class ClientForm extends React.Component {
                 onChange={this.onChange}
                 label="Last name"
                 fullWidth
+                margin="normal"
+                variant="outlined"
                 autoComplete="off"
               />
             </Grid>
@@ -115,6 +119,8 @@ class ClientForm extends React.Component {
                 multiline
                 rowsMax="4"
                 fullWidth
+                margin="normal"
+                variant="outlined"
                 autoComplete="off"
               />
             </Grid>
@@ -130,6 +136,8 @@ class ClientForm extends React.Component {
                     name="phone1"
                     label="Phone 1"
                     fullWidth
+                    margin="normal"
+                    variant="outlined"
                     autoComplete="phone1"
                   />
                 )}
@@ -147,6 +155,8 @@ class ClientForm extends React.Component {
                     name="phone2"
                     label="Phone 2"
                     fullWidth
+                    margin="normal"
+                    variant="outlined"
                     autoComplete="off"
                   />
                 )}
@@ -154,10 +164,12 @@ class ClientForm extends React.Component {
             </Grid>
 
             <Grid item xs={12} sm={12}>
+              <br />
               <Button
                 type="submit"
                 variant="contained"
                 size="large"
+                fullWidth
                 color="secondary"
               >
                 Save Client

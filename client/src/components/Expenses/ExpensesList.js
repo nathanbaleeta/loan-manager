@@ -232,7 +232,7 @@ class ExpensesList extends React.Component {
                   Expense details
                 </Typography>
                 <br />
-                <Grid container spacing={24}>
+                <Grid container spacing={8}>
                   <Grid item xs={12} sm={12}>
                     <TextField
                       required
@@ -242,6 +242,8 @@ class ExpensesList extends React.Component {
                       onChange={this.onChange}
                       label="Particulars"
                       fullWidth
+                      margin="normal"
+                      variant="outlined"
                       autoComplete="off"
                     />
                   </Grid>
@@ -256,6 +258,8 @@ class ExpensesList extends React.Component {
                       type="number"
                       label="Amount"
                       fullWidth
+                      margin="normal"
+                      variant="outlined"
                       autoComplete="off"
                     />
                   </Grid>
@@ -270,6 +274,8 @@ class ExpensesList extends React.Component {
                       label="Date"
                       type="date"
                       fullWidth
+                      margin="normal"
+                      variant="outlined"
                       autoComplete="off"
                       InputLabelProps={{
                         shrink: true
@@ -277,10 +283,12 @@ class ExpensesList extends React.Component {
                     />
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={12}>
+                    <br />
                     <Button
                       type="submit"
                       variant="contained"
+                      fullWidth
                       size="large"
                       color="secondary"
                     >
