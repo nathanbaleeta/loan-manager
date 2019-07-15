@@ -9,7 +9,13 @@ import NumberFormat from "react-number-format";
 
 import firebase from "../common/firebase";
 
-const styles = theme => ({});
+const styles = theme => ({
+  // Overiding css properties on material ui textbox
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "black !important"
+  }
+});
 
 class LoanForm extends React.Component {
   constructor() {
@@ -78,6 +84,7 @@ class LoanForm extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     const {
       principal,
       interestRate,
@@ -112,6 +119,11 @@ class LoanForm extends React.Component {
                 margin="normal"
                 variant="outlined"
                 autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
             {/*  Number formatting using thousand separator */}
@@ -144,6 +156,11 @@ class LoanForm extends React.Component {
                 margin="normal"
                 variant="outlined"
                 autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -160,6 +177,11 @@ class LoanForm extends React.Component {
                 margin="normal"
                 variant="outlined"
                 autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
 
@@ -196,6 +218,11 @@ class LoanForm extends React.Component {
                 margin="normal"
                 variant="outlined"
                 autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
 

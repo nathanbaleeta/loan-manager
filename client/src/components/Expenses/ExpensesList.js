@@ -1,4 +1,6 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -18,7 +20,15 @@ import CustomToolbar from "../mui-datatables/CustomToolbarExpenses";
 
 import firebase from "../common/firebase";
 
-class ExpensesList extends React.Component {
+const styles = theme => ({
+  // Overiding css properties on material ui textbox
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "black !important"
+  }
+});
+
+class ExpensesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -121,6 +131,7 @@ class ExpensesList extends React.Component {
 
   render() {
     const { data } = this.state;
+    const { classes } = this.props;
 
     const columns = [
       {
@@ -181,7 +192,7 @@ class ExpensesList extends React.Component {
     };
 
     return (
-      <React.Fragment>
+      <Fragment>
         <MUIDataTable
           title={"Expense list"}
           data={data.map(e => {
@@ -213,7 +224,7 @@ class ExpensesList extends React.Component {
           <DialogTitle
             id="simple-dialog-title"
             color="default"
-            style={{ backgroundColor: "indigo" }}
+            style={{ backgroundColor: "#2E3B55" }}
           >
             <Typography
               component="h1"
@@ -245,6 +256,11 @@ class ExpensesList extends React.Component {
                       margin="normal"
                       variant="outlined"
                       autoComplete="off"
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline
+                        }
+                      }}
                     />
                   </Grid>
 
@@ -261,6 +277,11 @@ class ExpensesList extends React.Component {
                       margin="normal"
                       variant="outlined"
                       autoComplete="off"
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline
+                        }
+                      }}
                     />
                   </Grid>
 
@@ -279,6 +300,11 @@ class ExpensesList extends React.Component {
                       autoComplete="off"
                       InputLabelProps={{
                         shrink: true
+                      }}
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline
+                        }
                       }}
                     />
                   </Grid>
@@ -301,9 +327,13 @@ class ExpensesList extends React.Component {
             </DialogContentText>
           </DialogContent>
         </Dialog>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }
 
-export default ExpensesList;
+ExpensesList.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(ExpensesList);

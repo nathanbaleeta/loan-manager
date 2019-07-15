@@ -1,4 +1,6 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
@@ -20,7 +22,14 @@ import CustomToolbar from "../mui-datatables/CustomToolbarClients";
 
 import firebase from "../common/firebase";
 
-class ClientList extends React.Component {
+const styles = theme => ({
+  // Overiding css properties on material ui textbox
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "black !important"
+  }
+});
+class ClientList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -130,6 +139,7 @@ class ClientList extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     const { data } = this.state;
 
     const columns = [
@@ -199,7 +209,7 @@ class ClientList extends React.Component {
     };
 
     return (
-      <React.Fragment>
+      <Fragment>
         <MUIDataTable
           title={"Client list"}
           data={data.map(c => {
@@ -240,7 +250,7 @@ class ClientList extends React.Component {
           <DialogTitle
             id="simple-dialog-title"
             color="default"
-            style={{ backgroundColor: "indigo" }}
+            style={{ backgroundColor: "#2E3B55" }}
           >
             <Typography
               component="h1"
@@ -272,6 +282,11 @@ class ClientList extends React.Component {
                       margin="normal"
                       variant="outlined"
                       autoComplete="off"
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline
+                        }
+                      }}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -286,6 +301,11 @@ class ClientList extends React.Component {
                       margin="normal"
                       variant="outlined"
                       autoComplete="off"
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline
+                        }
+                      }}
                     />
                   </Grid>
                   <Grid item xs={12} sm={12}>
@@ -301,6 +321,11 @@ class ClientList extends React.Component {
                       margin="normal"
                       variant="outlined"
                       autoComplete="off"
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline
+                        }
+                      }}
                     />
                   </Grid>
                   <Grid item xs={12} sm={12}>
@@ -318,6 +343,11 @@ class ClientList extends React.Component {
                           margin="normal"
                           variant="outlined"
                           autoComplete="phone1"
+                          InputProps={{
+                            classes: {
+                              notchedOutline: classes.notchedOutline
+                            }
+                          }}
                         />
                       )}
                     </InputMask>
@@ -337,6 +367,11 @@ class ClientList extends React.Component {
                           margin="normal"
                           variant="outlined"
                           autoComplete="off"
+                          InputProps={{
+                            classes: {
+                              notchedOutline: classes.notchedOutline
+                            }
+                          }}
                         />
                       )}
                     </InputMask>
@@ -359,9 +394,13 @@ class ClientList extends React.Component {
             </DialogContentText>
           </DialogContent>
         </Dialog>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }
 
-export default ClientList;
+ClientList.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(ClientList);

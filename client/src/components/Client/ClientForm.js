@@ -12,7 +12,13 @@ import firebase from "../common/firebase";
 
 //var NumberFormat = require('react-number-format');
 
-const styles = theme => ({});
+const styles = theme => ({
+  // Overiding css properties on material ui textbox
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "black !important"
+  }
+});
 
 class ClientForm extends React.Component {
   constructor() {
@@ -71,6 +77,7 @@ class ClientForm extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     const { firstName, lastName, phone1, phone2, address } = this.state;
 
     return (
@@ -93,6 +100,11 @@ class ClientForm extends React.Component {
                 margin="normal"
                 variant="outlined"
                 autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -107,6 +119,11 @@ class ClientForm extends React.Component {
                 margin="normal"
                 variant="outlined"
                 autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -122,6 +139,11 @@ class ClientForm extends React.Component {
                 margin="normal"
                 variant="outlined"
                 autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={12}>
@@ -139,6 +161,11 @@ class ClientForm extends React.Component {
                     margin="normal"
                     variant="outlined"
                     autoComplete="phone1"
+                    InputProps={{
+                      classes: {
+                        notchedOutline: classes.notchedOutline
+                      }
+                    }}
                   />
                 )}
               </InputMask>
@@ -158,6 +185,11 @@ class ClientForm extends React.Component {
                     margin="normal"
                     variant="outlined"
                     autoComplete="off"
+                    InputProps={{
+                      classes: {
+                        notchedOutline: classes.notchedOutline
+                      }
+                    }}
                   />
                 )}
               </InputMask>

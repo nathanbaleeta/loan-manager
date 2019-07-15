@@ -4,26 +4,20 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-//import InputBase from "@material-ui/core/InputBase";
+
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
-//import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
+import ViewListIcon from "@material-ui/icons/ViewList";
 import PollIcon from "@material-ui/icons/Poll";
 import GroupIcon from "@material-ui/icons/Group";
-import ViewListIcon from "@material-ui/icons/ViewList";
 
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-//import Avatar from "@material-ui/core/Avatar";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import Tooltip from "@material-ui/core/Tooltip";
 
 const styles = theme => ({
   root: {
@@ -43,7 +37,8 @@ const styles = theme => ({
     color: "white"
   },
   avatar: {
-    margin: 10
+    height: 55,
+    width: 55
   },
   title: {
     display: "none",
@@ -55,30 +50,18 @@ const styles = theme => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: "white",
-    "&:hover": {
+    /* "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.75)
-    },
+    }, */
     marginRight: theme.spacing.unit * 2,
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing.unit * 3,
+      marginLeft: theme.spacing.unit * 8,
       width: "auto"
     }
   },
-  searchIcon: {
-    color: "black",
-    "&:hover": {
-      color: fade(theme.palette.common.white, 0.25)
-    },
-    width: theme.spacing.unit * 9,
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
-  },
+
   inputRoot: {
     color: "primary",
     width: "100%"
@@ -90,8 +73,8 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 10,
     transition: theme.transitions.create("width"),
     width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: 200
+    [theme.breakpoints.up("lg")]: {
+      width: 490
     }
   },
   sectionDesktop: {
@@ -141,6 +124,8 @@ class Header extends React.Component {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+    //const { isAuthenticated, user } = this.props.auth;
+
     const renderMenu = (
       <Menu
         anchorEl={anchorEl}
@@ -153,9 +138,7 @@ class Header extends React.Component {
           <MenuItem onClick={this.handleMenuClose}>Settings</MenuItem>
         </Link>
 
-        <Link to="/logout" className={classes.link}>
-          <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
-        </Link>
+        <MenuItem onClick={this.props.logout}>Logout</MenuItem>
       </Menu>
     );
 
@@ -170,7 +153,7 @@ class Header extends React.Component {
         <MenuItem>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
-              <MailIcon />
+              <GroupIcon />
             </Badge>
           </IconButton>
           <p>Messages</p>
@@ -195,11 +178,11 @@ class Header extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="fixed" style={{ background: "indigo" }}>
+        <AppBar position="fixed" style={{ background: "#2E3B55" }}>
           <Toolbar>
-            {/*  <Avatar
+            {/*    <Avatar
               alt="Remy Sharp"
-              src="/static/images/logo/logo.png"
+              src="/static/images/logo/7.png"
               className={classes.avatar}
             /> */}
             <Typography
@@ -207,58 +190,75 @@ class Header extends React.Component {
               variant="h4"
               color="inherit"
               noWrap
-              //style={{ fontWeight: "bold" }}
             >
               Honest Business Services Ltd
             </Typography>
-            {/*    <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
-            </div>*/}
 
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <div>
                 <Grid container justify="center" alignItems="center">
-                  <Link to="/data-analytics" className={classes.link}>
-                    <Tooltip title="Data analytics">
+                  <div style={{ paddingRight: 20 }}>
+                    <Link to="/data-analytics" className={classes.link}>
                       <IconButton color="inherit">
                         <PollIcon />
                       </IconButton>
-                    </Tooltip>
-                  </Link>
-                  <Link to="/clients" className={classes.link}>
-                    <Tooltip title="Clients">
+
+                      <Typography
+                        variant="body2"
+                        color="inherit"
+                        noWrap
+                        style={{ fontWeight: "bold" }}
+                      >
+                        Analytics
+                      </Typography>
+                    </Link>
+                  </div>
+                  <div style={{ paddingRight: 20 }}>
+                    <Link to="/clients" className={classes.link}>
                       <IconButton color="inherit">
                         <GroupIcon />
                       </IconButton>
-                    </Tooltip>
-                  </Link>
-                  <Link to="/expenses" className={classes.link}>
-                    <Tooltip title="Expenses">
+
+                      <Typography
+                        variant="body2"
+                        color="inherit"
+                        noWrap
+                        style={{ fontWeight: "bold" }}
+                      >
+                        Clients
+                      </Typography>
+                    </Link>
+                  </div>
+                  <div style={{ paddingRight: 20 }}>
+                    <Link to="/expenses" className={classes.link}>
                       <IconButton color="inherit">
                         <ViewListIcon />
                       </IconButton>
-                    </Tooltip>
-                  </Link>
+                      <Typography
+                        variant="body2"
+                        color="inherit"
+                        noWrap
+                        style={{ fontWeight: "bold" }}
+                      >
+                        Expenses
+                      </Typography>
+                    </Link>
+                  </div>
                 </Grid>
               </div>
-
+              {/* 
               <IconButton
                 aria-owns={isMenuOpen ? "material-appbar" : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
+                <br />
                 <ArrowDropDownIcon />
+              </IconButton> */}
+              <IconButton color="inherit" onClick={this.handleProfileMenuOpen}>
+                <AccountCircle style={{ height: 50, width: 50 }} />
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>

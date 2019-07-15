@@ -10,8 +10,13 @@ import firebase from "../common/firebase";
 //import NumberFormat from "react-number-format";
 
 //var NumberFormat = require('react-number-format');
-
-const styles = theme => ({});
+const styles = theme => ({
+  // Overiding css properties on material ui textbox
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "black !important"
+  }
+});
 
 class ExpenseForm extends React.Component {
   constructor() {
@@ -64,6 +69,7 @@ class ExpenseForm extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     const { description, amount, expenseDate } = this.state;
 
     return (
@@ -87,6 +93,11 @@ class ExpenseForm extends React.Component {
                 margin="normal"
                 variant="outlined"
                 autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
 
@@ -103,6 +114,11 @@ class ExpenseForm extends React.Component {
                 margin="normal"
                 variant="outlined"
                 autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
 
@@ -121,6 +137,11 @@ class ExpenseForm extends React.Component {
                 autoComplete="off"
                 InputLabelProps={{
                   shrink: true
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
                 }}
               />
             </Grid>
