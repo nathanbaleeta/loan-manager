@@ -29,6 +29,7 @@ const styles = theme => ({
     borderColor: "black !important"
   }
 });
+
 class ClientList extends Component {
   constructor(props) {
     super(props);
@@ -199,10 +200,16 @@ class ClientList extends Component {
         const id = this.state.data[row]["id"];
         console.log(id);
 
-        // Perform client deletion
+        // Perform client deletion and cascade to all other related objects(loans & installments)
         firebase
           .database()
           .ref("clients")
+          .child(id)
+          .remove();
+
+        firebase
+          .database()
+          .ref("loans")
           .child(id)
           .remove();
       }

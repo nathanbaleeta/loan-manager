@@ -190,7 +190,7 @@ class LoanList extends React.Component {
           <DialogTitle
             id="simple-dialog-title"
             color="default"
-            style={{ backgroundColor: "indigo" }}
+            style={{ backgroundColor: "#2E3B55" }}
           >
             <Typography
               component="h1"

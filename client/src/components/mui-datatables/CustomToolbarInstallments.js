@@ -59,7 +59,7 @@ class CustomToolbar extends React.Component {
             id="simple-dialog-title"
             color="default"
             style={{
-              backgroundColor: "indigo"
+              backgroundColor: "#2E3B55"
             }}
           >
             <Typography

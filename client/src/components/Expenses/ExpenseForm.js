@@ -5,6 +5,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
+import NumberFormat from "react-number-format";
+
 import firebase from "../common/firebase";
 
 //import NumberFormat from "react-number-format";
@@ -102,13 +104,15 @@ class ExpenseForm extends React.Component {
             </Grid>
 
             <Grid item xs={12} sm={12}>
-              <TextField
-                required
-                id="amount"
-                name="amount"
+              <NumberFormat
                 value={amount}
-                onChange={this.onChange}
-                type="number"
+                thousandSeparator={true}
+                onValueChange={values => {
+                  const { formattedValue } = values;
+
+                  this.setState({ amount: formattedValue });
+                }}
+                customInput={TextField}
                 label="Amount"
                 fullWidth
                 margin="normal"

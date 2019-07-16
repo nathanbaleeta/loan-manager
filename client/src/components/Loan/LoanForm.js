@@ -201,6 +201,11 @@ class LoanForm extends React.Component {
                 InputLabelProps={{
                   shrink: true
                 }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
 

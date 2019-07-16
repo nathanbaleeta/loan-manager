@@ -18,6 +18,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import MUIDataTable from "mui-datatables";
 import CustomToolbar from "../mui-datatables/CustomToolbarExpenses";
 
+import NumberFormat from "react-number-format";
+
 import firebase from "../common/firebase";
 
 const styles = theme => ({
@@ -265,13 +267,15 @@ class ExpensesList extends Component {
                   </Grid>
 
                   <Grid item xs={12} sm={12}>
-                    <TextField
-                      required
-                      id="amount"
-                      name="amount"
+                    <NumberFormat
                       value={this.state.amount}
-                      onChange={this.onChange}
-                      type="number"
+                      thousandSeparator={true}
+                      onValueChange={values => {
+                        const { formattedValue } = values;
+
+                        this.setState({ amount: formattedValue });
+                      }}
+                      customInput={TextField}
                       label="Amount"
                       fullWidth
                       margin="normal"
