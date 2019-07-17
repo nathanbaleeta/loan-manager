@@ -75,7 +75,7 @@ class ClientList extends Component {
       this.setState({
         data: newState
       });
-      console.log(this.state.data);
+      //console.log(this.state.data);
     });
   }
 

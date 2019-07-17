@@ -80,12 +80,11 @@ class LoanList extends React.Component {
     this.state = {
       loanData: [],
 
-      loanID: "",
-      principal: "",
-      interestRate: "",
-      issueDate: "",
-      loanTerm: "",
-      collateral: ""
+      firstName: "",
+      lastName: "",
+      address: "",
+      phone1: "",
+      phone2: ""
     };
   }
 

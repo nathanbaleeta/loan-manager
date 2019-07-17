@@ -51,6 +51,7 @@ class CustomToolbar extends React.Component {
 
         <Dialog
           id="myDialog"
+          maxWidth="sm"
           open={this.state.open}
           aria-labelledby="form-dialog-title"
           onClose={this.handleClose}

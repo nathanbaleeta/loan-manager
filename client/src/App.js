@@ -36,7 +36,7 @@ const App = ({ classes }) => (
         <Route path="/clients/:id" component={ClientDetails1} />
 
         {/*  <Route path="/clients/:id" component={ClientDetails} /> */}
-        <Route path="/clients/:id" component={InstallmentForm} />
+        <Route path="/clients1/:id" component={InstallmentForm} />
         <Route path="/clients" component={ClientList} />
         <Route path="/clients" component={ClientForm} />
 
