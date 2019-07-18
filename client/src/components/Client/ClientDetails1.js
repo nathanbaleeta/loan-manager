@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import LoanList from "../Loan/LoanList";
+import InstallmentForm from "../Installment/InstallmentForm";
 
 import firebase from "../common/firebase";
 
@@ -81,13 +82,20 @@ class ClientDetails1 extends React.Component {
               marginLeft: "1%"
             }}
           >
-            {/* <LoanList /> */}
+            <InstallmentForm />
           </Grid>
           <Grid item xs={3} sm={3}>
             <Paper className={classes.root} elevation={1}>
               <Grid container spacing={24}>
                 <Grid item xs={12} sm={12}>
-                  <Typography variant="title" gutterBottom align="center">
+                  <Typography
+                    variant="title"
+                    gutterBottom
+                    align="center"
+                    style={{
+                      fontWeight: "bold"
+                    }}
+                  >
                     Personal Info
                   </Typography>
                 </Grid>

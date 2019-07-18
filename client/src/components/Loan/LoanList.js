@@ -7,6 +7,7 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -62,6 +63,9 @@ const styles = theme => ({
     marginLeft: "7%",
     marginBottom: "2%"
   },
+  link: {
+    textDecoration: "none"
+  },
 
   // Overiding CSS with classnames for ListItemText Implementation
   primary: {
@@ -78,14 +82,13 @@ class LoanList extends React.Component {
   constructor() {
     super();
     this.state = {
-      loanData: [],
-
-      firstName: "",
-      lastName: "",
-      address: "",
-      phone1: "",
-      phone2: ""
+      clientID: "",
+      loanData: []
     };
+  }
+
+  getInstallments() {
+    console.log("Hi");
   }
 
   componentDidMount() {
@@ -110,6 +113,7 @@ class LoanList extends React.Component {
 
       //console.log(newState);
       this.setState({
+        clientID: key,
         loanData: newState
       });
       console.log(this.state.loanData);
@@ -134,6 +138,7 @@ class LoanList extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { clientID, loanData } = this.state;
 
     return (
       <React.Fragment>
@@ -156,27 +161,33 @@ class LoanList extends React.Component {
         </Fab>
 
         <List className={classes.root}>
-          {this.state.loanData.map(loan => (
-            <ListItem button className={classes.message}>
-              <ListItemText
-                classes={{
-                  primary: classes.primary,
-                  secondary: classes.secondary
-                }}
-                primary={"Principal: " + loan.principal}
-                secondary={
-                  <React.Fragment>
-                    {"Interest: " + loan.interestRate + "%"}
-                    <br />
-                    {"Duration: " + loan.loanTerm + " months"}
-                    <br />
-                    {"Issue date: " + loan.issueDate}
-                    <br />
-                    {/*{"Collateral: " + loan.collateral} */}
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
+          {loanData.map(loan => (
+            <Link
+              to={`/clients/${clientID}/loans/${loan.loanID}`}
+              className={classes.link}
+            >
+              <ListItem button className={classes.message}>
+                <ListItemText
+                  classes={{
+                    primary: classes.primary,
+                    secondary: classes.secondary
+                  }}
+                  primary={"Principal: " + loan.principal}
+                  secondary={
+                    <React.Fragment>
+                      {"Interest: " + loan.interestRate + "%"}
+                      <br />
+                      {"Duration: " + loan.loanTerm + " months"}
+                      <br />
+                      {"Issue date: " + loan.issueDate}
+                      <br />
+
+                      {/*{"Collateral: " + loan.collateral} */}
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+            </Link>
           ))}
         </List>
 

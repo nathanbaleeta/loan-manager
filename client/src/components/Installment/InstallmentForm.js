@@ -7,7 +7,13 @@ import Grid from "@material-ui/core/Grid";
 
 import firebase from "../common/firebase";
 
-const styles = theme => ({});
+const styles = theme => ({
+  // Overiding css properties on material ui textbox
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "black !important"
+  }
+});
 
 class InstallmentForm extends React.Component {
   constructor() {
@@ -23,8 +29,8 @@ class InstallmentForm extends React.Component {
 
   componentDidMount() {
     // target client ID retrieved from another component using onClick event listener from route
-    const key = this.props.match.params.id;
-    this.setState({ targetClientID: key });
+    //const key = this.props.match.params.id;
+    //this.setState({ targetClientID: key });
   }
 
   onChange = e => {
@@ -92,6 +98,7 @@ class InstallmentForm extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     const { bbf, dateReturned, amountPaid, interestGained } = this.state;
 
     return (
@@ -114,7 +121,14 @@ class InstallmentForm extends React.Component {
                 type="number"
                 label="Balance Brought Forward (B/F)"
                 fullWidth
+                margin="normal"
+                variant="outlined"
                 autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -127,7 +141,14 @@ class InstallmentForm extends React.Component {
                 label="Interest Gained"
                 type="number"
                 fullWidth
+                margin="normal"
+                variant="outlined"
                 autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
 
@@ -141,9 +162,16 @@ class InstallmentForm extends React.Component {
                 label="Date returned"
                 type="date"
                 fullWidth
+                margin="normal"
+                variant="outlined"
                 autoComplete="off"
                 InputLabelProps={{
                   shrink: true
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
                 }}
               />
             </Grid>
@@ -157,7 +185,14 @@ class InstallmentForm extends React.Component {
                 label="Amount paid"
                 type="number"
                 fullWidth
+                margin="normal"
+                variant="outlined"
                 autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
               />
             </Grid>
             <Grid item xs={12} sm={12} />
