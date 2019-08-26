@@ -199,7 +199,7 @@ class Header extends React.Component {
               <div>
                 <Grid container justify="center" alignItems="center">
                   <div style={{ paddingRight: 20 }}>
-                    <Link to="/data-analytics" className={classes.link}>
+                    <Link to="/" className={classes.link}>
                       <IconButton color="inherit">
                         <PollIcon />
                       </IconButton>

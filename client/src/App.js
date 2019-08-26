@@ -2,8 +2,8 @@ import React from "react";
 import { CssBaseline, withStyles } from "@material-ui/core";
 import { Switch, Route } from "react-router-dom";
 
-import Header from "./components/Header";
-import Dashboard from "./pages/Dashboard";
+import Header from "./components/Layout/Header";
+import Dashboard from "./components/Analytics/Dashboard";
 
 import ClientList from "./components/Client/ClientList";
 import ClientForm from "./components/Client/ClientForm";
@@ -13,6 +13,7 @@ import ClientDetails1 from "./components/Client/ClientDetails1";
 import ExpensesList from "./components/Expenses/ExpensesList";
 import ExpenseForm from "./components/Expenses/ExpenseForm";
 import InstallmentForm from "./components/Installment/InstallmentForm";
+import InstallmentList from "./components/Installment/InstallmentList";
 
 const styles = theme => ({
   main: {
@@ -34,7 +35,8 @@ const App = ({ classes }) => (
     <main className={classes.main}>
       <Switch>
         <Route path="/clients/:id" component={ClientDetails1} />
-        <Route path="clients/:id/loans/:id" component={InstallmentForm} />
+        {/*  <Route path="clients/:id/loans/:id" component={InstallmentForm} /> */}
+        <Route path="/clients/:id/loans/:id" component={InstallmentList} />
 
         {/*  <Route path="/clients/:id" component={ClientDetails} /> */}
         <Route path="/clients1/:id" component={InstallmentForm} />
@@ -44,8 +46,7 @@ const App = ({ classes }) => (
         <Route path="/expenses" component={ExpensesList} />
         <Route path="/expenses" component={ExpenseForm} />
 
-        <Route exact path="/" />
-        <Route path="/data-analytics" component={Dashboard} />
+        <Route exact path="/" component={Dashboard} />
       </Switch>
     </main>
   </React.Fragment>

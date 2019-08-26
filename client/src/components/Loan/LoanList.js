@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -18,6 +18,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import LoanForm from "../Loan/LoanForm";
 
 import firebase from "../common/firebase";
+import numeral from "numeral";
 
 const styles = theme => ({
   //Style the scrollbar
@@ -36,8 +37,8 @@ const styles = theme => ({
   root: {
     width: "100%",
     height: "100%",
-    maxWidth: 427,
-    //maxWidth: "24%",
+    //maxWidth: 427,
+    maxWidth: "24%",
     backgroundColor: theme.palette.background.paper,
     position: "fixed",
     overflow: "auto",
@@ -78,7 +79,7 @@ const styles = theme => ({
   }
 });
 
-class LoanList extends React.Component {
+class LoanList extends Component {
   constructor() {
     super();
     this.state = {
@@ -141,7 +142,7 @@ class LoanList extends React.Component {
     const { clientID, loanData } = this.state;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <Typography
           variant="display1"
           gutterBottom
@@ -172,7 +173,9 @@ class LoanList extends React.Component {
                     primary: classes.primary,
                     secondary: classes.secondary
                   }}
-                  primary={"Principal: " + loan.principal}
+                  primary={
+                    "Principal: " + numeral(loan.principal).format("0,0[.]00")
+                  }
                   secondary={
                     <React.Fragment>
                       {"Interest: " + loan.interestRate + "%"}
@@ -223,7 +226,7 @@ class LoanList extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

@@ -152,7 +152,7 @@ class InstallmentForm extends React.Component {
               />
             </Grid>
 
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 required
                 id="dateReturned"
@@ -175,7 +175,7 @@ class InstallmentForm extends React.Component {
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 required
                 id="amountPaid"
@@ -195,7 +195,7 @@ class InstallmentForm extends React.Component {
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={12} />
+
             <Grid item xs={12} sm={6}>
               <Button
                 type="submit"

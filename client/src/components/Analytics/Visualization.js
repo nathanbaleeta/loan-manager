@@ -6,7 +6,10 @@ import { Typography } from "@material-ui/core";
 
 import Grid from "@material-ui/core/Grid";
 
-import ExpensesReport from "../components/analytics/ExpensesReport";
+import ExpensesReport from "../Analytics/ExpensesReport";
+import ClientSummary from "./ClientSummary";
+import ExpensesSummary from "./ExpensesSummary";
+import LoansSummary from "./LoansSummary";
 
 const styles = theme => ({
   root: {
@@ -30,19 +33,19 @@ class Visualization extends React.Component {
 
     return (
       <div>
-        <Typography variant="display1" align="center" color="primary">
-          Loan Analytics
+        <Typography variant="display2" align="center" color="primary">
+          Data Analytics
         </Typography>
         <br />
         <Grid container spacing={24}>
           <Grid item xs={4}>
-            <ExpensesReport />
+            <ClientSummary />
           </Grid>
           <Grid item xs={4}>
-            <ExpensesReport />
+            <ExpensesSummary />
           </Grid>
           <Grid item xs={4}>
-            <ExpensesReport />
+            <LoansSummary />
           </Grid>
         </Grid>
         <br /> <br /> <br />

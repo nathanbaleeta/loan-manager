@@ -6,7 +6,10 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import LoanList from "../Loan/LoanList";
-import InstallmentForm from "../Installment/InstallmentForm";
+//import InstallmentForm from "../Installment/InstallmentForm";
+import InstallmentList from "../Installment/InstallmentList";
+
+import { Switch, Route } from "react-router-dom";
 
 import firebase from "../common/firebase";
 
@@ -82,7 +85,16 @@ class ClientDetails1 extends React.Component {
               marginLeft: "1%"
             }}
           >
-            <InstallmentForm />
+            {/*   <InstallmentForm /> */}
+            <br />
+            {/*  <InstallmentList />
+             */}
+            <Switch>
+              <Route
+                path="/clients/:id/loans/:id"
+                component={InstallmentList}
+              />
+            </Switch>
           </Grid>
           <Grid item xs={3} sm={3}>
             <Paper className={classes.root} elevation={1}>

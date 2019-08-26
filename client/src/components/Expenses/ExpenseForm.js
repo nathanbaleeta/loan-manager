@@ -43,13 +43,19 @@ class ExpenseForm extends React.Component {
     return str.toUpperCase();
   }
 
+  // remove commas before saving to firebase
+  removeCommas(str) {
+    let result = str.replace(/,/g, "");
+    return Number(result);
+  }
+
   handleSubmit = event => {
     event.preventDefault();
 
     // get our form data out of state
     const expense = {
       description: this.capitalize(this.state.description),
-      amount: this.state.amount,
+      amount: this.removeCommas(this.state.amount),
       expenseDate: this.state.expenseDate,
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi"

@@ -21,6 +21,7 @@ import CustomToolbar from "../mui-datatables/CustomToolbarExpenses";
 import NumberFormat from "react-number-format";
 
 import firebase from "../common/firebase";
+import numeral from "numeral";
 
 const styles = theme => ({
   // Overiding css properties on material ui textbox
@@ -199,9 +200,27 @@ class ExpensesList extends Component {
           title={"Expense list"}
           data={data.map(e => {
             return [
-              e.description,
-              e.amount,
-              e.expenseDate,
+              <div
+                style={{
+                  fontSize: 16
+                }}
+              >
+                {e.description}
+              </div>,
+              <div
+                style={{
+                  fontSize: 16
+                }}
+              >
+                {numeral(e.amount).format("0,0[.]00")}
+              </div>,
+              <div
+                style={{
+                  fontSize: 16
+                }}
+              >
+                {e.expenseDate}
+              </div>,
 
               <IconButton
                 color="primary"

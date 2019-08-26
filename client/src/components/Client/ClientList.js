@@ -225,14 +225,33 @@ class ClientList extends Component {
                 to={`/clients/${c.id}`}
                 style={{
                   color: "darkblue",
-                  textDecoration: "none"
+                  textDecoration: "none",
+                  fontSize: 16
                 }}
               >
                 {c.lastName + " " + c.firstName}
               </Link>,
-              c.address,
-              c.phone1,
-              c.phone2,
+              <div
+                style={{
+                  fontSize: 16
+                }}
+              >
+                {c.address}
+              </div>,
+              <div
+                style={{
+                  fontSize: 16
+                }}
+              >
+                {c.phone1}
+              </div>,
+              <div
+                style={{
+                  fontSize: 16
+                }}
+              >
+                {c.phone2}
+              </div>,
 
               <IconButton
                 color="primary"
