@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import Highcharts from "highcharts";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -26,7 +26,7 @@ const styles = theme => ({
   }
 });
 
-class ExpensesReport extends React.Component {
+class LoanReport extends Component {
   constructor() {
     super();
     this.state = {
@@ -47,17 +47,17 @@ class ExpensesReport extends React.Component {
           }
         },
         title: {
-          text: "Expenses Report"
+          text: "Loans' Report"
         },
         series: [{ data: [] }]
       }
     };
   }
   componentDidMount() {
-    // Get value of sales provided
+    // Get value of procurement provided
     const query = firebase
       .database()
-      .ref("expenses")
+      .ref("loans")
       .orderByKey();
     query.on("value", snapshot => {
       let todayCounter = 0;
@@ -68,36 +68,48 @@ class ExpensesReport extends React.Component {
       snapshot.forEach(childSnapshot => {
         // Get values for day, month and cummulative
 
-        const created = childSnapshot.child("created").val();
-        const isToday = moment(created, "DD/MM/YYYY").isSame(Date.now(), "day");
-        const isWeek = moment(created, "DD/MM/YYYY").isSame(Date.now(), "week");
-        const isMonth = moment(created, "DD/MM/YYYY").isSame(
-          Date.now(),
-          "month"
-        );
+        childSnapshot.forEach(grandChildSnapshot => {
+          const created = grandChildSnapshot.child("created").val();
+          const isToday = moment(created, "DD/MM/YYYY").isSame(
+            Date.now(),
+            "day"
+          );
+          const isWeek = moment(created, "DD/MM/YYYY").isSame(
+            Date.now(),
+            "week"
+          );
+          const isMonth = moment(created, "DD/MM/YYYY").isSame(
+            Date.now(),
+            "month"
+          );
 
-        isToday
-          ? (todayCounter =
-              todayCounter + parseInt(childSnapshot.child("amount").val()))
-          : (todayCounter = todayCounter + 0);
+          isToday
+            ? (todayCounter =
+                todayCounter +
+                parseInt(grandChildSnapshot.child("principal").val()))
+            : (todayCounter = todayCounter + 0);
 
-        isWeek
-          ? (weekCounter =
-              weekCounter + parseInt(childSnapshot.child("amount").val()))
-          : (weekCounter = weekCounter + 0);
+          isWeek
+            ? (weekCounter =
+                weekCounter +
+                parseInt(grandChildSnapshot.child("principal").val()))
+            : (weekCounter = weekCounter + 0);
 
-        isMonth
-          ? (monthCounter =
-              monthCounter + parseInt(childSnapshot.child("amount").val()))
-          : (monthCounter = monthCounter + 0);
+          isMonth
+            ? (monthCounter =
+                monthCounter +
+                parseInt(grandChildSnapshot.child("principal").val()))
+            : (monthCounter = monthCounter + 0);
 
-        console.log(isToday);
+          console.log(isToday);
 
-        //console.log(moment(created, "DD/MM/YYYY").fromNow());
+          //console.log(moment(created, "DD/MM/YYYY").fromNow());
 
-        // Cummulative counter
-        cummulativeCounter =
-          cummulativeCounter + parseInt(childSnapshot.child("amount").val());
+          // Cummulative counter
+          cummulativeCounter =
+            cummulativeCounter +
+            parseInt(grandChildSnapshot.child("principal").val());
+        });
       });
 
       this.setState({
@@ -121,19 +133,21 @@ class ExpensesReport extends React.Component {
     const { chartOptions } = this.state;
 
     return (
-      <div className={classes.root}>
-        <Card className={classes.card}>
-          <CardActionArea>
-            <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-          </CardActionArea>
-        </Card>
-      </div>
+      <Fragment>
+        <div className={classes.root}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+            </CardActionArea>
+          </Card>
+        </div>
+      </Fragment>
     );
   }
 }
 
-ExpensesReport.propTypes = {
+LoanReport.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ExpensesReport);
+export default withStyles(styles)(LoanReport);

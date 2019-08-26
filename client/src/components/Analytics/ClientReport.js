@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import Highcharts from "highcharts";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -26,7 +26,7 @@ const styles = theme => ({
   }
 });
 
-class ExpensesReport extends React.Component {
+class ClientReport extends Component {
   constructor() {
     super();
     this.state = {
@@ -47,7 +47,7 @@ class ExpensesReport extends React.Component {
           }
         },
         title: {
-          text: "Expenses Report"
+          text: "Clients' Report"
         },
         series: [{ data: [] }]
       }
@@ -57,8 +57,9 @@ class ExpensesReport extends React.Component {
     // Get value of sales provided
     const query = firebase
       .database()
-      .ref("expenses")
+      .ref("clients")
       .orderByKey();
+
     query.on("value", snapshot => {
       let todayCounter = 0;
       let weekCounter = 0;
@@ -77,27 +78,21 @@ class ExpensesReport extends React.Component {
         );
 
         isToday
-          ? (todayCounter =
-              todayCounter + parseInt(childSnapshot.child("amount").val()))
+          ? (todayCounter = todayCounter + 1)
           : (todayCounter = todayCounter + 0);
 
         isWeek
-          ? (weekCounter =
-              weekCounter + parseInt(childSnapshot.child("amount").val()))
+          ? (weekCounter = weekCounter + 1)
           : (weekCounter = weekCounter + 0);
 
         isMonth
-          ? (monthCounter =
-              monthCounter + parseInt(childSnapshot.child("amount").val()))
+          ? (monthCounter = monthCounter + 1)
           : (monthCounter = monthCounter + 0);
 
-        console.log(isToday);
-
-        //console.log(moment(created, "DD/MM/YYYY").fromNow());
-
         // Cummulative counter
-        cummulativeCounter =
-          cummulativeCounter + parseInt(childSnapshot.child("amount").val());
+        created
+          ? (cummulativeCounter = cummulativeCounter + 1)
+          : (cummulativeCounter = cummulativeCounter + 0);
       });
 
       this.setState({
@@ -121,19 +116,21 @@ class ExpensesReport extends React.Component {
     const { chartOptions } = this.state;
 
     return (
-      <div className={classes.root}>
-        <Card className={classes.card}>
-          <CardActionArea>
-            <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-          </CardActionArea>
-        </Card>
-      </div>
+      <Fragment>
+        <div className={classes.root}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+            </CardActionArea>
+          </Card>
+        </div>
+      </Fragment>
     );
   }
 }
 
-ExpensesReport.propTypes = {
+ClientReport.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ExpensesReport);
+export default withStyles(styles)(ClientReport);

@@ -7,6 +7,9 @@ import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
 import ExpensesReport from "../Analytics/ExpensesReport";
+import ClientReport from "../Analytics/ClientReport";
+import LoanReport from "../Analytics/LoanReport";
+
 import ClientSummary from "./ClientSummary";
 import ExpensesSummary from "./ExpensesSummary";
 import LoansSummary from "./LoansSummary";
@@ -50,21 +53,18 @@ class Visualization extends React.Component {
         </Grid>
         <br /> <br /> <br />
         <Typography variant="display1" align="center" color="primary">
-          Expenses Analytics
+          Summary Reports
         </Typography>
         <br />
         <Grid container spacing={24}>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
+            <ClientReport />
+          </Grid>
+          <Grid item xs={4}>
             <ExpensesReport />
           </Grid>
-          <Grid item xs={3}>
-            <ExpensesReport />
-          </Grid>
-          <Grid item xs={3}>
-            <ExpensesReport />
-          </Grid>
-          <Grid item xs={3}>
-            <ExpensesReport />
+          <Grid item xs={4}>
+            <LoanReport />
           </Grid>
         </Grid>
       </div>
