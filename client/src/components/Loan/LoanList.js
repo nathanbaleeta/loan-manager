@@ -92,6 +92,12 @@ class LoanList extends Component {
     console.log("Hi");
   }
 
+  // remove commas using regular expressions before saving to firebase
+  removeCommas(str) {
+    let result = str.replace(/,/g, "");
+    return Number(result);
+  }
+
   componentDidMount() {
     // target ID retrieved from another component(ClientList) using onClick event listener from route
     //console.log(this.props.id);

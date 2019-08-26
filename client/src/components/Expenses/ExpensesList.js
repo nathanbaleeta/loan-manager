@@ -53,6 +53,12 @@ class ExpensesList extends Component {
     this.setState({ open: false });
   };
 
+  // remove commas using regular expressions before saving to firebase
+  removeCommas(str) {
+    let result = str.replace(/,/g, "");
+    return Number(result);
+  }
+
   componentDidMount() {
     const expensesRef = firebase.database().ref("expenses");
 
@@ -115,7 +121,7 @@ class ExpensesList extends Component {
     // get our form data out of state
     const expense = {
       description: this.capitalize(this.state.description),
-      amount: this.state.amount,
+      amount: this.removeCommas(this.state.amount),
       expenseDate: this.state.expenseDate
     };
 
