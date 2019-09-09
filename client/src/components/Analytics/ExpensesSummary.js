@@ -72,7 +72,7 @@ class ExpensesSummary extends Component {
                   <Grid item xs={3} sm={3} />
                   <Grid item xs={6} sm={6}>
                     <Typography
-                      variant="display1"
+                      variant="headline"
                       gutterBottom
                       align="center"
                       color="Primary"

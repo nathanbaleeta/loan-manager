@@ -226,28 +226,28 @@ class ClientList extends Component {
                 style={{
                   color: "darkblue",
                   textDecoration: "none",
-                  fontSize: 16
+                  fontSize: 17
                 }}
               >
                 {c.lastName + " " + c.firstName}
               </Link>,
               <div
                 style={{
-                  fontSize: 16
+                  fontSize: 17
                 }}
               >
                 {c.address}
               </div>,
               <div
                 style={{
-                  fontSize: 16
+                  fontSize: 17
                 }}
               >
                 {c.phone1}
               </div>,
               <div
                 style={{
-                  fontSize: 16
+                  fontSize: 17
                 }}
               >
                 {c.phone2}

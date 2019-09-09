@@ -15,21 +15,32 @@ const styles = theme => ({
   }
 });
 
-class ClientSummary extends Component {
+class InstallmentSummary extends Component {
   constructor() {
     super();
     this.state = {
-      numOfClients: 0
+      totalLoans: 0
     };
   }
 
   componentDidMount() {
-    // Get client count
-    const clientsRef = firebase.database().ref("clients");
-    clientsRef.on("value", snapshot => {
-      const clientCount = snapshot.numChildren();
+    // Get expenses amount count
+    const query = firebase
+      .database()
+      .ref("loans")
+      .orderByKey();
+    query.on("value", snapshot => {
+      let loansCounter = 0;
+      snapshot.forEach(function(childSnapshot) {
+        childSnapshot.forEach(grandChildSnapshot => {
+          // Sum up all loan principals
+          loansCounter =
+            loansCounter +
+            parseInt(grandChildSnapshot.child("principal").val());
+        });
+      });
       this.setState({
-        numOfClients: clientCount
+        totalLoans: loansCounter
       });
     });
   }
@@ -50,29 +61,29 @@ class ClientSummary extends Component {
                     color: "#0000CD"
                   }}
                 >
-                  Clients
+                  Total Installments
                 </Typography>
                 <br />
                 <img
                   alt="Remy Sharp"
-                  src="/static/images/clients.png"
+                  src="/static/images/loans.png"
                   className={classes.bigAvatar}
                 />
                 <br />
                 <br />
                 <Grid container spacing={24}>
-                  <Grid item xs={4} sm={4} />
-                  <Grid item xs={4} sm={4}>
+                  <Grid item xs={3} sm={3} />
+                  <Grid item xs={6} sm={6}>
                     <Typography
                       variant="headline"
                       gutterBottom
                       align="center"
                       color="Primary"
                     >
-                      {numeral(this.state.numOfClients).format("0,0")}
+                      {numeral(this.state.totalLoans).format("0,0[.]00")} /=
                     </Typography>
                   </Grid>
-                  <Grid item xs={4} sm={4} />
+                  <Grid item xs={3} sm={3} />
                 </Grid>
                 <br />
               </CardContent>
@@ -87,4 +98,4 @@ class ClientSummary extends Component {
   }
 }
 
-export default withStyles(styles)(ClientSummary);
+export default withStyles(styles)(InstallmentSummary);

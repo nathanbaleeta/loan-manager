@@ -13,6 +13,7 @@ import LoanReport from "../Analytics/LoanReport";
 import ClientSummary from "./ClientSummary";
 import ExpensesSummary from "./ExpensesSummary";
 import LoansSummary from "./LoansSummary";
+import InstallmentSummary from "./InstallmentSummary";
 
 const styles = theme => ({
   root: {
@@ -36,34 +37,50 @@ class Visualization extends React.Component {
 
     return (
       <div>
-        <Typography variant="display2" align="center" color="primary">
+        <Typography
+          variant="display1"
+          align="center"
+          color="primary"
+          style={{ color: "black" }}
+        >
           Data Analytics
         </Typography>
         <br />
         <Grid container spacing={24}>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <ClientSummary />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <ExpensesSummary />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <LoansSummary />
+          </Grid>
+          <Grid item xs={3}>
+            <InstallmentSummary />
           </Grid>
         </Grid>
         <br /> <br /> <br />
-        <Typography variant="display1" align="center" color="primary">
+        <Typography
+          variant="display1"
+          align="center"
+          color="primary"
+          style={{ color: "black" }}
+        >
           Summary Reports
         </Typography>
         <br />
         <Grid container spacing={24}>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <ClientReport />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <ExpensesReport />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={3}>
+            <LoanReport />
+          </Grid>
+          <Grid item xs={3}>
             <LoanReport />
           </Grid>
         </Grid>

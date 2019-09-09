@@ -208,21 +208,21 @@ class ExpensesList extends Component {
             return [
               <div
                 style={{
-                  fontSize: 16
+                  fontSize: 17
                 }}
               >
                 {e.description}
               </div>,
               <div
                 style={{
-                  fontSize: 16
+                  fontSize: 17
                 }}
               >
                 {numeral(e.amount).format("0,0[.]00")}
               </div>,
               <div
                 style={{
-                  fontSize: 16
+                  fontSize: 17
                 }}
               >
                 {e.expenseDate}
