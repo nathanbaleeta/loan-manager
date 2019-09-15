@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import ExpensesReport from "../Analytics/ExpensesReport";
 import ClientReport from "../Analytics/ClientReport";
 import LoanReport from "../Analytics/LoanReport";
+import InstallmentReport from "../Analytics/InstallmentReport";
 
 import ClientSummary from "./ClientSummary";
 import ExpensesSummary from "./ExpensesSummary";
@@ -81,7 +82,7 @@ class Visualization extends React.Component {
             <LoanReport />
           </Grid>
           <Grid item xs={3}>
-            <LoanReport />
+            <InstallmentReport />
           </Grid>
         </Grid>
       </div>
