@@ -12,7 +12,7 @@ import ClientDetails1 from "./components/Client/ClientDetails1";
 
 import ExpensesList from "./components/Expenses/ExpensesList";
 import ExpenseForm from "./components/Expenses/ExpenseForm";
-import InstallmentForm from "./components/Installment/InstallmentForm";
+//import InstallmentForm from "./components/Installment/InstallmentForm";
 import InstallmentList from "./components/Installment/InstallmentList";
 
 const styles = theme => ({
@@ -35,11 +35,11 @@ const App = ({ classes }) => (
     <main className={classes.main}>
       <Switch>
         <Route path="/clients/:id" component={ClientDetails1} />
-        {/*  <Route path="clients/:id/loans/:id" component={InstallmentForm} /> */}
+
         <Route path="/clients/:id/loans/:id" component={InstallmentList} />
 
         {/*  <Route path="/clients/:id" component={ClientDetails} /> */}
-        <Route path="/clients1/:id" component={InstallmentForm} />
+        {/* <Route path="/clients1/:id" component={InstallmentForm} /> */}
         <Route path="/clients" component={ClientList} />
         <Route path="/clients" component={ClientForm} />
 

@@ -134,7 +134,8 @@ class ProfileInfo extends Component {
                   gutterBottom
                   align="left"
                   style={{
-                    fontSize: "18px"
+                    fontSize: "18px",
+                    color: "mediumblue"
                   }}
                 >
                   {firstName}
@@ -144,7 +145,8 @@ class ProfileInfo extends Component {
                   gutterBottom
                   align="left"
                   style={{
-                    fontSize: "18px"
+                    fontSize: "18px",
+                    color: "mediumblue"
                   }}
                 >
                   {lastName}
@@ -154,8 +156,8 @@ class ProfileInfo extends Component {
                   gutterBottom
                   align="left"
                   style={{
-                    fontWeight: "bold",
-                    fontSize: "18px"
+                    fontSize: "18px",
+                    color: "mediumblue"
                   }}
                 >
                   {address}
@@ -165,7 +167,7 @@ class ProfileInfo extends Component {
                   gutterBottom
                   align="left"
                   style={{
-                    fontWeight: "bold",
+                    color: "mediumblue",
                     fontSize: "18px"
                   }}
                 >
@@ -176,7 +178,7 @@ class ProfileInfo extends Component {
                   gutterBottom
                   align="left"
                   style={{
-                    fontWeight: "bold",
+                    color: "mediumblue",
                     fontSize: "18px"
                   }}
                 >

@@ -105,7 +105,7 @@ class InstallmentForm extends React.Component {
       <div>
         <br />
         <form onSubmit={this.handleSubmit}>
-          <Grid container spacing={24}>
+          <Grid container spacing={8}>
             <Grid item xs={12} sm={12}>
               <Typography variant="headline" align="left" color="primary">
                 Installment Calculator
@@ -196,11 +196,14 @@ class InstallmentForm extends React.Component {
               />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
+              <br />
+              <br />
               <Button
                 type="submit"
                 variant="contained"
                 size="large"
+                fullWidth
                 color="secondary"
               >
                 Save Installment
