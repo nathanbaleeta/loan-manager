@@ -53,12 +53,6 @@ class ExpensesList extends Component {
     this.setState({ open: false });
   };
 
-  // remove commas using regular expressions before saving to firebase
-  removeCommas(str) {
-    let result = str.replace(/,/g, "");
-    return Number(result);
-  }
-
   componentDidMount() {
     const expensesRef = firebase.database().ref("expenses");
 
@@ -91,9 +85,13 @@ class ExpensesList extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  capitalize(str) {
-    return str.toUpperCase();
-  }
+  toTitleCase = phrase => {
+    return phrase
+      .toLowerCase()
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   updateExpense(id) {
     //const recordToEdit = this.state.data.find(item => item.id === id);
@@ -120,8 +118,8 @@ class ExpensesList extends Component {
 
     // get our form data out of state
     const expense = {
-      description: this.capitalize(this.state.description),
-      amount: this.removeCommas(this.state.amount),
+      description: this.toTitleCase(this.state.description),
+      amount: this.state.amount,
       expenseDate: this.state.expenseDate
     };
 
@@ -208,21 +206,21 @@ class ExpensesList extends Component {
             return [
               <div
                 style={{
-                  fontSize: 17
+                  fontSize: 18
                 }}
               >
                 {e.description}
               </div>,
               <div
                 style={{
-                  fontSize: 17
+                  fontSize: 18
                 }}
               >
                 {numeral(e.amount).format("0,0[.]00")}
               </div>,
               <div
                 style={{
-                  fontSize: 17
+                  fontSize: 18
                 }}
               >
                 {e.expenseDate}

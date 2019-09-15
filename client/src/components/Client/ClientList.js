@@ -88,9 +88,13 @@ class ClientList extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  capitalize(str) {
-    return str.toUpperCase();
-  }
+  toTitleCase = phrase => {
+    return phrase
+      .toLowerCase()
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   updateClient(id) {
     //const recordToEdit = this.state.data.find(item => item.id === id);
@@ -119,11 +123,11 @@ class ClientList extends Component {
 
     // get our form data out of state
     const client = {
-      firstName: this.capitalize(this.state.firstName),
-      lastName: this.capitalize(this.state.lastName),
+      firstName: this.toTitleCase(this.state.firstName),
+      lastName: this.toTitleCase(this.state.lastName),
       phone1: this.state.phone1,
       phone2: this.state.phone2,
-      address: this.capitalize(this.state.address)
+      address: this.toTitleCase(this.state.address)
     };
 
     //Update farmer module
@@ -226,28 +230,28 @@ class ClientList extends Component {
                 style={{
                   color: "darkblue",
                   textDecoration: "none",
-                  fontSize: 17
+                  fontSize: 18
                 }}
               >
                 {c.lastName + " " + c.firstName}
               </Link>,
               <div
                 style={{
-                  fontSize: 17
+                  fontSize: 18
                 }}
               >
                 {c.address}
               </div>,
               <div
                 style={{
-                  fontSize: 17
+                  fontSize: 18
                 }}
               >
                 {c.phone1}
               </div>,
               <div
                 style={{
-                  fontSize: 17
+                  fontSize: 18
                 }}
               >
                 {c.phone2}

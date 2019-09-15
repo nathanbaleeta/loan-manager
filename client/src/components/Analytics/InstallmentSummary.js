@@ -66,7 +66,7 @@ class InstallmentSummary extends Component {
                 <br />
                 <img
                   alt="Remy Sharp"
-                  src="/static/images/loans.png"
+                  src="/static/images/installment.jpg"
                   className={classes.bigAvatar}
                 />
                 <br />

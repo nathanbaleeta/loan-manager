@@ -180,7 +180,9 @@ class LoanList extends Component {
                     secondary: classes.secondary
                   }}
                   primary={
-                    "Principal: " + numeral(loan.principal).format("0,0[.]00")
+                    "Principal: " +
+                    numeral(loan.principal).format("0,0[.]00") +
+                    "/="
                   }
                   secondary={
                     <React.Fragment>

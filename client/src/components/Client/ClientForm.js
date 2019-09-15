@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
@@ -20,7 +20,7 @@ const styles = theme => ({
   }
 });
 
-class ClientForm extends React.Component {
+class ClientForm extends Component {
   constructor() {
     super();
     this.state = {
@@ -41,20 +41,24 @@ class ClientForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  capitalize(str) {
-    return str.toUpperCase();
-  }
+  toTitleCase = phrase => {
+    return phrase
+      .toLowerCase()
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   handleSubmit = event => {
     event.preventDefault();
 
     // get our form data out of state
     const client = {
-      firstName: this.capitalize(this.state.firstName),
-      lastName: this.capitalize(this.state.lastName),
+      firstName: this.toTitleCase(this.state.firstName),
+      lastName: this.toTitleCase(this.state.lastName),
       phone1: this.state.phone1,
       phone2: this.state.phone2,
-      address: this.capitalize(this.state.address),
+      address: this.toTitleCase(this.state.address),
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi"
       })
@@ -81,7 +85,7 @@ class ClientForm extends React.Component {
     const { firstName, lastName, phone1, phone2, address } = this.state;
 
     return (
-      <div>
+      <Fragment>
         <br />
         <form onSubmit={this.handleSubmit}>
           <Typography variant="headline" align="left" color="primary">
@@ -209,7 +213,7 @@ class ClientForm extends React.Component {
             </Grid>
           </Grid>
         </form>
-      </div>
+      </Fragment>
     );
   }
 }
