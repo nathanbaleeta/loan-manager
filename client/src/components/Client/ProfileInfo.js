@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
-import Grid from "@material-ui/core/Grid";
+import firebase from "../common/firebase";
 
 const styles = theme => ({
   root: {
@@ -17,108 +18,181 @@ const styles = theme => ({
   }
 });
 
-function PersonalInfo(props) {
-  const { classes } = props;
+class ProfileInfo extends Component {
+  state = {
+    // target ID retrieved from another component(ClientList) using onClick event listener from route
+    clientID: this.props.id,
+    firstName: "",
+    lastName: "",
+    address: "",
+    phone1: "",
+    phone2: ""
+  };
 
-  return (
-    <div>
-      <Paper className={classes.root} elevation={1}>
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={12}>
-            <Typography variant="title" gutterBottom align="center">
-              Personal Info
-            </Typography>
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <Typography
-              variant="body1"
-              gutterBottom
-              align="left"
-              style={{
-                fontWeight: "bold"
-              }}
-            >
-              Date of birth:
-            </Typography>
-            <Typography
-              variant="body1"
-              gutterBottom
-              align="left"
-              style={{
-                fontWeight: "bold"
-              }}
-            >
-              Position:
-            </Typography>
-            <Typography
-              variant="body1"
-              gutterBottom
-              align="left"
-              style={{
-                fontWeight: "bold"
-              }}
-            >
-              Height:
-            </Typography>
-            <Typography
-              variant="body1"
-              gutterBottom
-              align="left"
-              style={{
-                fontWeight: "bold"
-              }}
-            >
-              Weight:
-            </Typography>
-            <Typography
-              variant="body1"
-              gutterBottom
-              align="left"
-              style={{
-                fontWeight: "bold"
-              }}
-            >
-              Wingspan:
-            </Typography>
-            <Typography
-              variant="body1"
-              gutterBottom
-              align="left"
-              style={{
-                fontWeight: "bold"
-              }}
-            >
-              Vertical leap:
-            </Typography>
-          </Grid>
-          <Grid item xs={4} sm={4}>
-            <Typography variant="body1" gutterBottom align="left">
-              12th Dec, 1997
-            </Typography>
-            <Typography variant="body1" gutterBottom align="left">
-              Point Guard
-            </Typography>
-            <Typography variant="body1" gutterBottom align="left">
-              6'4"
-            </Typography>
-            <Typography variant="body1" gutterBottom align="left">
-              342lbs
-            </Typography>
-            <Typography variant="body1" gutterBottom align="left">
-              2m
-            </Typography>
-            <Typography variant="body1" gutterBottom align="left">
-              3m
-            </Typography>
-          </Grid>
+  componentDidMount() {
+    // Client profile data.
+    const clientRef = firebase.database().ref(`clients/${this.state.clientID}`);
+    clientRef.on("value", snapshot => {
+      const firstName = snapshot.child("firstName").val();
+      const lastName = snapshot.child("lastName").val();
+      const address = snapshot.child("address").val();
+      const phone1 = snapshot.child("phone1").val();
+      const phone2 = snapshot.child("phone2").val();
+
+      this.setState({
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        phone1: phone1,
+        phone2: phone2
+      });
+
+      //console.log(this.state);
+    });
+  }
+  render() {
+    const { classes } = this.props;
+    const { firstName, lastName, address, phone1, phone2 } = this.state;
+
+    return (
+      <Fragment>
+        <Grid container spacing={4}>
+          <Paper className={classes.root} elevation={1}>
+            <Grid container spacing={24}>
+              <Grid item xs={12} sm={12}>
+                <Typography
+                  variant="title"
+                  gutterBottom
+                  align="center"
+                  style={{
+                    fontWeight: "bold"
+                  }}
+                >
+                  Personal Info
+                </Typography>
+              </Grid>
+              <Grid item xs={4} sm={4}>
+                <Typography
+                  variant="title"
+                  gutterBottom
+                  align="left"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "18px"
+                  }}
+                >
+                  Firstname:
+                </Typography>
+                <Typography
+                  variant="title"
+                  gutterBottom
+                  align="left"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "18px"
+                  }}
+                >
+                  Lastname:
+                </Typography>
+                <Typography
+                  variant="title"
+                  gutterBottom
+                  align="left"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "18px"
+                  }}
+                >
+                  Address:
+                </Typography>
+                <Typography
+                  variant="title"
+                  gutterBottom
+                  align="left"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "18px"
+                  }}
+                >
+                  Phone 1:
+                </Typography>
+                <Typography
+                  variant="title"
+                  gutterBottom
+                  align="left"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "18px"
+                  }}
+                >
+                  Phone 2:
+                </Typography>
+              </Grid>
+              <Grid item xs={7} sm={7}>
+                <Typography
+                  variant="title"
+                  gutterBottom
+                  align="left"
+                  style={{
+                    fontSize: "18px"
+                  }}
+                >
+                  {firstName}
+                </Typography>
+                <Typography
+                  variant="title"
+                  gutterBottom
+                  align="left"
+                  style={{
+                    fontSize: "18px"
+                  }}
+                >
+                  {lastName}
+                </Typography>
+                <Typography
+                  variant="title"
+                  gutterBottom
+                  align="left"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "18px"
+                  }}
+                >
+                  {address}
+                </Typography>
+                <Typography
+                  variant="title"
+                  gutterBottom
+                  align="left"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "18px"
+                  }}
+                >
+                  {phone1}
+                </Typography>
+                <Typography
+                  variant="title"
+                  gutterBottom
+                  align="left"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "18px"
+                  }}
+                >
+                  {phone2}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Paper>
         </Grid>
-      </Paper>
-    </div>
-  );
+      </Fragment>
+    );
+  }
 }
 
-PersonalInfo.propTypes = {
+ProfileInfo.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(PersonalInfo);
+export default withStyles(styles)(ProfileInfo);

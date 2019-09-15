@@ -76,6 +76,12 @@ class ExpensesList extends Component {
     });
   }
 
+  // remove commas before saving to firebase
+  removeCommas(str) {
+    let result = str.replace(/,/g, "");
+    return Number(result);
+  }
+
   onChange = e => {
     /*
           Because we named the inputs to match their
@@ -119,7 +125,7 @@ class ExpensesList extends Component {
     // get our form data out of state
     const expense = {
       description: this.toTitleCase(this.state.description),
-      amount: this.state.amount,
+      amount: this.removeCommas(this.state.amount),
       expenseDate: this.state.expenseDate
     };
 

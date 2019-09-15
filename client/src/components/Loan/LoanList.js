@@ -149,25 +149,25 @@ class LoanList extends Component {
 
     return (
       <Fragment>
-        <Typography
-          variant="display1"
-          gutterBottom
-          align="center"
-          color="primary"
-        >
-          Loan history
-        </Typography>
-
-        <Fab
-          color="primary"
-          aria-label="Add"
-          className={classes.fab}
-          onClick={this.handleOpen}
-        >
-          <AddIcon />
-        </Fab>
-
         <List className={classes.root}>
+          <br />
+          <Typography
+            variant="display1"
+            gutterBottom
+            align="center"
+            color="primary"
+          >
+            Loan history
+          </Typography>
+
+          <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.fab}
+            onClick={this.handleOpen}
+          >
+            <AddIcon />
+          </Fab>
           {loanData.map(loan => (
             <Link
               to={`/clients/${clientID}/loans/${loan.loanID}`}
