@@ -25,7 +25,8 @@ class LoanForm extends React.Component {
       interestRate: "",
       issueDate: "",
       loanTerm: "",
-      collateral: ""
+      collateral: "",
+      bbf: ""
     };
   }
 
@@ -47,23 +48,35 @@ class LoanForm extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  capitalize(str) {
+  capitalize = str => {
     return str.toUpperCase();
-  }
+  };
 
   // remove commas before saving to firebase
-  removeCommas(str) {
+  removeCommas = str => {
     let result = str.replace(/,/g, "");
     return Number(result);
-  }
+  };
+
+  // Calculate BBF
+  calculateBBF = principal => {
+    let newPrincipal = this.removeCommas(principal);
+    let computedInterestRate = (parseInt(this.state.interestRate) + 100) / 100;
+
+    let bbf = Math.floor(newPrincipal * computedInterestRate);
+    console.log(bbf);
+    return bbf;
+  };
 
   handleSubmit = event => {
     event.preventDefault();
 
     const key = this.props.id;
+
     // get our form data out of state
     const loan = {
       principal: this.removeCommas(this.state.principal),
+      bbf: this.calculateBBF(this.state.principal),
       interestRate: this.state.interestRate,
       issueDate: this.state.issueDate,
       loanTerm: this.state.loanTerm,
@@ -82,6 +95,7 @@ class LoanForm extends React.Component {
     //Clear the Client form inputs
     this.setState({
       principal: "",
+      //bbf: "",
       interestRate: "",
       issueDate: "",
       loanTerm: "",
