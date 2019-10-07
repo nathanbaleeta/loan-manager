@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 
+import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
@@ -34,41 +35,43 @@ const styles = theme => ({
     overflow: "auto",
     //position: "fixed",
     maxHeight: "100%",
-    borderRight: "1px solid #d4d4d4",
+    //borderRight: "1px solid #d4d4d4",
     marginTop: "-2%"
   }
 });
 
 class InstallmentList extends Component {
   state = {
-    loanID: this.props.id,
-    installmentData: []
+    //loanID: this.props.match.params.id,
+    installmentData: [],
+    principal: "",
+    interestRate: "",
+    issueDate: "",
+    loanTerm: "",
+    collateral: ""
   };
 
   componentDidMount() {
-    console.log(this.props.id);
+    console.log(this.props.loan);
+    console.log(this.props.client);
 
-    const installmentsRef = firebase
+    const loansDetailRef = firebase
       .database()
-      .ref(`installments/${this.state.loanID}`);
-    installmentsRef.on("value", snapshot => {
-      let items = snapshot.val();
-      let newState = [];
-      for (let item in items) {
-        newState.push({
-          loanID: item,
-          bbf: items[item].bbf,
-          interestGained: items[item].interestGained,
-          dateReturned: items[item].dateReturned,
-          amountPaid: items[item].amountPaid
-        });
-      }
+      .ref(`loans/${this.props.client}/${this.props.loan}`);
+    loansDetailRef.on("value", snapshot => {
+      const principal = snapshot.child("principal").val();
+      const interestRate = snapshot.child("interestRate").val();
+      const loanTerm = snapshot.child("loanTerm").val();
+      const issueDate = snapshot.child("issueDate").val();
 
-      //console.log(newState);
       this.setState({
-        installmentData: newState
+        principal: principal,
+        interestRate: interestRate,
+        loanTerm: loanTerm,
+        issueDate: issueDate
       });
-      console.log(this.state.installmentData);
+
+      console.log(this.state);
     });
   }
 
@@ -82,20 +85,81 @@ class InstallmentList extends Component {
 
   render() {
     const { classes } = this.props;
+    const { principal, interestRate, loanTerm, issueDate } = this.state;
 
     return (
       <Fragment>
         <Paper className={classes.tableRoot} elevation={0}>
-          <br />
-          <Typography
-            variant="display1"
-            gutterBottom
-            align="center"
-            color="primary"
-          >
-            Instalments record
-          </Typography>
-
+          <br /> <br />
+          <Fragment>
+            <br />
+            <Typography
+              variant="display1"
+              gutterBottom
+              align="center"
+              color="primary"
+            >
+              Loan Details
+            </Typography>
+            <Grid container spacing={8}>
+              <Grid item xs={3} sm={3}>
+                <Typography
+                  variant="title"
+                  align="center"
+                  color="default"
+                  style={{ fontWeight: "bold" }}
+                >
+                  Principal
+                </Typography>
+                <br />
+                <Typography variant="title" align="center" color="default">
+                  {principal}
+                </Typography>
+              </Grid>
+              <Grid item xs={3} sm={3}>
+                <Typography
+                  variant="title"
+                  align="center"
+                  color="default"
+                  style={{ fontWeight: "bold" }}
+                >
+                  Interest
+                </Typography>
+                <br />
+                <Typography variant="title" align="center" color="default">
+                  {interestRate}
+                </Typography>
+              </Grid>
+              <Grid item xs={3} sm={3}>
+                <Typography
+                  variant="title"
+                  align="center"
+                  color="default"
+                  style={{ fontWeight: "bold" }}
+                >
+                  Duration
+                </Typography>
+                <br />
+                <Typography variant="title" align="center" color="default">
+                  {loanTerm}
+                </Typography>
+              </Grid>
+              <Grid item xs={3} sm={3}>
+                <Typography
+                  variant="title"
+                  align="center"
+                  color="default"
+                  style={{ fontWeight: "bold" }}
+                >
+                  Issue date
+                </Typography>
+                <br />
+                <Typography variant="title" align="center" color="default">
+                  {issueDate}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Fragment>
           <Typography
             variant="display2"
             gutterBottom

@@ -98,13 +98,21 @@ const styles = theme => ({
 
 class ClientDetails extends Component {
   state = {
-    // target ID retrieved from another component(ClientList) using onClick event listener from route
+    // target ID retrieved from another component(ClientList)
+    //using onClick event listener from route
     clientID: this.props.match.params.id,
     loanData: [],
-    loanID: ""
+    loanID: "",
+
+    principal: "",
+    interestRate: "",
+    loanTerm: "",
+    issueDate: ""
   };
 
   componentDidMount() {
+    console.log(this.state.clientID);
+
     const loansRef = firebase.database().ref(`loans/${this.state.clientID}`);
     loansRef.on("value", snapshot => {
       let items = snapshot.val();
@@ -124,12 +132,12 @@ class ClientDetails extends Component {
       this.setState({
         loanData: newState
       });
-      console.log(this.state.loanData);
+      //console.log(this.state.loanData);
     });
   }
 
   getLoanInstallments(id) {
-    console.log(id);
+    //console.log(id);
     this.setState({
       loanID: id
     });
@@ -248,11 +256,17 @@ class ClientDetails extends Component {
             <Switch>
               <Route
                 path="/clients/:id/loans/:id"
-                //component={InstallmentList}
+                render={props => (
+                  <InstallmentList
+                    {...props}
+                    // pass various parameters to child component as props
+                    client={this.state.clientID}
+                    loan={this.state.loanID}
+                  />
+                )}
+              />
               />
             </Switch>
-
-            <InstallmentList id={this.state.loanID} />
           </Grid>
         </Grid>
 
