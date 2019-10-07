@@ -97,18 +97,21 @@ const styles = theme => ({
 });
 
 class ClientDetails extends Component {
-  state = {
-    // target ID retrieved from another component(ClientList)
-    //using onClick event listener from route
-    clientID: this.props.match.params.id,
-    loanData: [],
-    loanID: "",
+  constructor(props) {
+    super(props);
+    this.state = {
+      // target ID retrieved from another component(ClientList)
+      //using onClick event listener from route
+      clientID: this.props.match.params.id,
+      loanData: [],
+      loanID: "",
 
-    principal: "",
-    interestRate: "",
-    loanTerm: "",
-    issueDate: ""
-  };
+      principal: "",
+      interestRate: "",
+      loanTerm: "",
+      issueDate: ""
+    };
+  }
 
   componentDidMount() {
     console.log(this.state.clientID);
@@ -220,6 +223,7 @@ class ClientDetails extends Component {
                   <ListItem
                     button
                     className={classes.message}
+                    //onClick={() => this.getLoanInstallments(loan.loanID)}
                     onClick={this.getLoanInstallments.bind(this, loan.loanID)}
                   >
                     <ListItemText
@@ -259,9 +263,9 @@ class ClientDetails extends Component {
                 render={props => (
                   <InstallmentList
                     {...props}
-                    // pass various parameters to child component as props
-                    client={this.state.clientID}
+                    // pass multiple parameters to another/ child component as props
                     loan={this.state.loanID}
+                    client={this.state.clientID}
                   />
                 )}
               />

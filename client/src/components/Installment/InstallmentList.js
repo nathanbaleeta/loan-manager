@@ -44,34 +44,38 @@ class InstallmentList extends Component {
   state = {
     //loanID: this.props.match.params.id,
     installmentData: [],
+
     principal: "",
     interestRate: "",
     issueDate: "",
-    loanTerm: "",
-    collateral: ""
+    loanTerm: ""
+    //collateral: ""
   };
 
   componentDidMount() {
-    console.log(this.props.loan);
-    console.log(this.props.client);
+    this.fetchResults(this.props.client, this.props.loan);
+  }
 
+  componentDidUpdate(prevProps) {
+    // Check if props have changed; if yes update variables then reuse & call fetch results
+    if (prevProps !== this.props) {
+      let clientID = this.props.client;
+      let loanID = this.props.loan;
+      this.fetchResults(clientID, loanID);
+    }
+  }
+
+  fetchResults(clientID, loanID) {
     const loansDetailRef = firebase
       .database()
-      .ref(`loans/${this.props.client}/${this.props.loan}`);
+      .ref(`loans/${clientID}/${loanID}`);
     loansDetailRef.on("value", snapshot => {
-      const principal = snapshot.child("principal").val();
-      const interestRate = snapshot.child("interestRate").val();
-      const loanTerm = snapshot.child("loanTerm").val();
-      const issueDate = snapshot.child("issueDate").val();
-
       this.setState({
-        principal: principal,
-        interestRate: interestRate,
-        loanTerm: loanTerm,
-        issueDate: issueDate
+        principal: snapshot.child("principal").val(),
+        interestRate: snapshot.child("interestRate").val(),
+        loanTerm: snapshot.child("loanTerm").val(),
+        issueDate: snapshot.child("issueDate").val()
       });
-
-      console.log(this.state);
     });
   }
 
