@@ -33,11 +33,6 @@ import firebase from "../common/firebase";
 import numeral from "numeral";
 
 const styles = theme => ({
-  root: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
-  },
   avatar: {
     margin: 10
   },

@@ -59,12 +59,11 @@ class LoanForm extends React.Component {
   };
 
   // Calculate BBF
-  calculateBBF = principal => {
+  calculateBBF = (principal, interestRate) => {
     let newPrincipal = this.removeCommas(principal);
-    let computedInterestRate = (parseInt(this.state.interestRate) + 100) / 100;
+    let computedInterestRate = (parseFloat(interestRate) + 100) / 100;
 
-    let bbf = Math.floor(newPrincipal * computedInterestRate);
-    console.log(bbf);
+    let bbf = parseFloat(newPrincipal * computedInterestRate);
     return bbf;
   };
 
@@ -76,7 +75,7 @@ class LoanForm extends React.Component {
     // get our form data out of state
     const loan = {
       principal: this.removeCommas(this.state.principal),
-      bbf: this.calculateBBF(this.state.principal),
+      bbf: this.calculateBBF(this.state.principal, this.state.interestRate),
       interestRate: this.state.interestRate,
       issueDate: this.state.issueDate,
       loanTerm: this.state.loanTerm,

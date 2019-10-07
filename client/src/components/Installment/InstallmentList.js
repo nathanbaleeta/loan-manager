@@ -87,6 +87,14 @@ class InstallmentList extends Component {
             Instalments record
           </Typography>
 
+          <Typography
+            variant="display2"
+            gutterBottom
+            align="right"
+            color="secondary"
+          >
+            1,120,000/=
+          </Typography>
           <Fab
             color="primary"
             aria-label="Add"
