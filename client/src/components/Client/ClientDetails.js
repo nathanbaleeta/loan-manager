@@ -1,125 +1,157 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-
-import { Typography } from "@material-ui/core";
-
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import EditIcon from "@material-ui/icons/Edit";
-
-import MUIDataTable from "mui-datatables";
-import CustomToolbar from "../mui-datatables/CustomToolbarInstallments";
-
-import Dialog from "@material-ui/core/Dialog";
-
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-
-import firebase from "../common/firebase";
-import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 
-const styles = theme => ({});
+import ProfileInfo from "../Client/ProfileInfo";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 
-class ClientDetails extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      TargetID: "",
-      TargetKey: "",
-      installmentData: [],
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import Typography from "@material-ui/core/Typography";
 
-      //Client Profile data
-      firstName: "",
-      lastName: "",
-      phone1: "",
-      phone2: "",
-      address: "",
-      principal: "",
-      interestRate: "",
-      issueDate: "",
-      loanTerm: "",
-      collateral: "",
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
 
-      //Client Installment data
-      key: "",
-      bbf: "",
-      amountPaid: "",
-      dateReturned: "",
-      interestGained: "",
+import Button from "@material-ui/core/Button";
 
-      open: false
-    };
+import { Link } from "react-router-dom";
+
+import LoanForm from "../Loan/LoanForm";
+
+//import InstallmentForm from "../Installment/InstallmentForm";
+import InstallmentList from "../Installment/InstallmentList";
+
+import { Switch, Route } from "react-router-dom";
+
+import firebase from "../common/firebase";
+import numeral from "numeral";
+
+const styles = theme => ({
+  avatar: {
+    margin: 10
+  },
+
+  //Style the scrollbar
+  "@global": {
+    "*::-webkit-scrollbar": {
+      width: "0.4em"
+    },
+    "*::-webkit-scrollbar-track": {
+      "-webkit-box-shadow": "inset 0 0 6px rgba(0,0,0,0.00)"
+    },
+    "*::-webkit-scrollbar-thumb": {
+      backgroundColor: "rgba(0,0,0,.3)",
+      outline: "1px solid slategrey"
+    }
+  },
+  root: {
+    width: "100%",
+    height: "100%",
+    //maxWidth: 427,
+    maxWidth: "24%",
+    backgroundColor: theme.palette.background.paper,
+    position: "fixed",
+    overflow: "auto",
+    maxHeight: "100%",
+    borderLeft: "1px solid #d4d4d4",
+    borderRight: "1px solid #d4d4d4"
+    //paddingLeft: "1%"
+  },
+  listSection: {
+    backgroundColor: "inherit"
+  },
+  ul: {
+    backgroundColor: "inherit",
+    padding: 0
+  },
+  message: {
+    borderTop: "1px solid #d4d4d4"
+    /* "&:hover": {
+        background: "#D23E56",
+        color: "white"
+      } */
+  },
+  fab: {
+    marginLeft: "7%",
+    marginBottom: "2%"
+  },
+  link: {
+    textDecoration: "none"
+  },
+
+  // Overiding CSS with classnames for ListItemText Implementation
+  primary: {
+    fontSize: "20px",
+    fontWeight: "bold"
+  },
+  secondary: {
+    fontSize: "18px",
+    color: "black"
   }
-  openDialog = () => {
-    this.setState({ open: true });
-  };
+});
 
-  closeDialog = () => {
-    this.setState({ open: false });
+class ClientDetails extends Component {
+  state = {
+    // target ID retrieved from another component(ClientList) using onClick event listener from route
+    clientID: this.props.match.params.id,
+    loanData: [],
+    loanID: ""
   };
 
   componentDidMount() {
-    // target ID retrieved from another component(ClientList) using onClick event listener from route
-    const key = this.props.match.params.id;
-
-    // Client profile data.
-    const clientRef = firebase.database().ref(`clients/${key}`);
-    clientRef.on("value", snapshot => {
-      const firstName = snapshot.child("firstName").val();
-      const lastName = snapshot.child("lastName").val();
-      const phone1 = snapshot.child("phone1").val();
-      const phone2 = snapshot.child("phone2").val();
-      const address = snapshot.child("address").val();
-      const principal = snapshot.child("principal").val();
-      const interestRate = snapshot.child("interestRate").val();
-      const issueDate = snapshot.child("issueDate").val();
-      const loanTerm = snapshot.child("loanTerm").val();
-      const collateral = snapshot.child("collateral").val();
-
-      this.setState({
-        firstName: firstName,
-        lastName: lastName,
-        phone1: phone1,
-        phone2: phone2,
-        address: address,
-        principal: principal,
-        interestRate: interestRate,
-        issueDate: issueDate,
-        loanTerm: loanTerm,
-        collateral: collateral
-      });
-    });
-
-    // Client installment data.
-    const installmentRef = firebase.database().ref(`installments/${key}`);
-    installmentRef.on("value", snapshot => {
-      let installmentInfo = {};
+    const loansRef = firebase.database().ref(`loans/${this.state.clientID}`);
+    loansRef.on("value", snapshot => {
+      let items = snapshot.val();
       let newState = [];
-      snapshot.forEach(function(childSnapshot) {
-        // handle read data.
-        var i = childSnapshot.val();
-        //console.log(childSnapshot.key);
+      for (let item in items) {
+        newState.push({
+          loanID: item,
+          principal: items[item].principal,
+          interestRate: items[item].interestRate,
+          issueDate: items[item].issueDate,
+          loanTerm: items[item].loanTerm,
+          collateral: items[item].collateral
+        });
+      }
 
-        installmentInfo = {
-          installmentID: childSnapshot.key,
-          amountPaid: i.amountPaid,
-          bbf: i.bbf,
-          dateReturned: i.dateReturned,
-          interestGained: i.interestGained,
-          created: i.created
-        };
-        // Add installment object to array
-        newState.push(installmentInfo);
-      });
+      //console.log(newState);
       this.setState({
-        installmentData: newState,
-        TargetID: key
+        loanData: newState
       });
-      //console.log(this.state.installmentData);
+      console.log(this.state.loanData);
     });
   }
+
+  getLoanInstallments(id) {
+    console.log(id);
+    this.setState({
+      loanID: id
+    });
+  }
+
+  // remove commas before saving to firebase
+  removeCommas = num => {
+    //Convert number to string before attempting string manipulation
+    let str = num.toString();
+
+    // Check if string contains comma before attempting to sanitize
+    let result = str.includes(",") ? str.replace(/,/g, "") : str;
+    return Number(result);
+  };
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
 
   onChange = e => {
     /*
@@ -130,320 +162,110 @@ class ClientDetails extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  updateInstallment(id) {
-    this.openDialog();
-
-    const key = id;
-    this.setState({ TargetKey: key });
-    const installmentsRef = firebase
-      .database()
-      .ref(`installments/${this.state.TargetID}/${key}`);
-    installmentsRef.on("value", snapshot => {
-      this.setState({
-        key: snapshot.key,
-        bbf: snapshot.child("bbf").val(),
-        amountPaid: snapshot.child("amountPaid").val(),
-        dateReturned: snapshot.child("dateReturned").val(),
-        interestGained: snapshot.child("interestGained").val()
-      });
-    });
-    console.log(
-      "############### Veryfing state is working ###################"
-    );
-  }
-
-  handleSubmit = event => {
-    event.preventDefault();
-
-    // get our form data out of state
-    const installment = {
-      bbf: this.state.bbf,
-      amountPaid: this.state.amountPaid,
-      dateReturned: this.state.dateReturned,
-      interestGained: this.state.interestGained
-    };
-
-    console.log(installment);
-
-    //Update and commit installment change
-    const installmentsRef = firebase
-      .database()
-      .ref(`installments/${this.state.TargetID}/${this.state.TargetKey}`);
-
-    installmentsRef
-      .update(installment)
-      .then(function() {
-        console.log("Synchronization succeeded");
-      })
-      .catch(function(error) {
-        console.log("Synchronization failed");
-      });
-  };
-
   render() {
-    //const { classes } = this.props;
-    const {
-      installmentData,
-      firstName,
-      lastName,
-      phone1,
-      phone2,
-      address,
-      principal,
-      interestRate,
-      issueDate,
-      loanTerm,
-      collateral
-    } = this.state;
-
-    const columns = [
-      {
-        name: "B/F",
-        options: {
-          filter: false,
-          sort: true
-        }
-      },
-
-      {
-        name: "Date",
-        options: {
-          filter: false,
-          sort: false
-        }
-      },
-      {
-        name: "Amount paid",
-        options: {
-          filter: false,
-          sort: false
-        }
-      },
-      {
-        name: "Interest gained",
-        options: {
-          filter: false,
-          sort: false
-        }
-      },
-      {
-        name: "Actions",
-        options: {
-          filter: false,
-          sort: false
-        }
-      }
-    ];
-
-    const options = {
-      filter: true,
-      filterType: "dropdown",
-      responsive: "scroll",
-      serverSide: false,
-      rowsPerPage: 10,
-      pagination: true,
-      customToolbar: () => {
-        return <CustomToolbar />;
-      },
-
-      onRowsDelete: rowsDeleted => {
-        //console.log(this.state.installmentData);
-        // get the corresponding id in state
-        const row = rowsDeleted.data[0].index;
-        const id = this.state.installmentData[row]["installmentID"];
-        console.log(id);
-
-        // Perform client deletion
-        firebase
-          .database()
-          .ref(`installments/${this.state.TargetID}`)
-          .child(id)
-          .remove();
-      }
-    };
+    const { classes } = this.props;
+    const { clientID, loanData } = this.state;
 
     return (
-      <React.Fragment>
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={12}>
-            <Typography
-              variant="headline"
-              gutterBottom
-              align="left"
-              color="primary"
-            >
-              Biodata:
-            </Typography>
+      <Fragment>
+        <Grid container spacing={2}>
+          <Grid item xs={3} sm={3}>
+            <ProfileInfo id={this.state.clientID} />
           </Grid>
-          <Grid item xs={2} sm={2}>
-            <Typography
-              variant="title"
-              gutterBottom
-              align="left"
-              color="default"
-            >
-              FIRSTNAME:
-            </Typography>
-            <Typography
-              variant="title"
-              gutterBottom
-              align="left"
-              color="default"
-            >
-              LASTNAME:
-            </Typography>
-            <Typography
-              variant="title"
-              gutterBottom
-              align="left"
-              color="default"
-            >
-              CONTACT 1:
-            </Typography>
-            <Typography
-              variant="title"
-              gutterBottom
-              align="left"
-              color="default"
-            >
-              CONTACT 2:
-            </Typography>
-            <Typography
-              variant="title"
-              gutterBottom
-              align="left"
-              color="default"
-            >
-              ADDRESS:
-            </Typography>
-          </Grid>
-
-          <Grid item xs={10} sm={10}>
-            <Typography variant="title" gutterBottom align="left">
-              {firstName}
-            </Typography>
-            <Typography variant="title" gutterBottom align="left">
-              {lastName}
-            </Typography>
-            <Typography variant="title" gutterBottom align="left">
-              {phone1}
-            </Typography>
-            <Typography variant="title" gutterBottom align="left">
-              {phone2}
-            </Typography>
-            <Typography variant="title" gutterBottom align="left">
-              {address}
-            </Typography>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={12}>
-            <Typography
-              variant="headline"
-              gutterBottom
-              align="left"
-              color="primary"
-            >
-              Loan Information:
-            </Typography>
-          </Grid>
-          <Grid item xs={2} sm={2}>
-            <Typography
-              variant="title"
-              gutterBottom
-              align="left"
-              color="default"
-            >
-              PRINCIPAL:
-            </Typography>
-            <Typography
-              variant="title"
-              gutterBottom
-              align="left"
-              color="default"
-            >
-              INTEREST RATE:
-            </Typography>
-            <Typography
-              variant="title"
-              gutterBottom
-              align="left"
-              color="default"
-            >
-              ISSUE DATE:
-            </Typography>
-            <Typography
-              variant="title"
-              gutterBottom
-              align="left"
-              color="default"
-            >
-              LOAN TERM:
-            </Typography>
-            <Typography
-              variant="title"
-              gutterBottom
-              align="left"
-              color="default"
-            >
-              COLLATERAL:
-            </Typography>
-          </Grid>
-
-          <Grid item xs={10} sm={10}>
-            <Typography variant="title" gutterBottom align="left">
-              {principal}
-            </Typography>
-            <Typography variant="title" gutterBottom align="left">
-              {interestRate}
-            </Typography>
-            <Typography variant="title" gutterBottom align="left">
-              {issueDate}
-            </Typography>
-            <Typography variant="title" gutterBottom align="left">
-              {loanTerm}
-            </Typography>
-            <Typography variant="title" gutterBottom align="left">
-              {collateral}
-            </Typography>
-          </Grid>
-        </Grid>
-        <br />
-
-        <MUIDataTable
-          title={"Installment Tracker"}
-          data={installmentData.map((i, index) => {
-            return [
-              i.bbf,
-              i.dateReturned,
-              i.amountPaid,
-              i.interestGained,
-
-              <IconButton
+          <Grid
+            item
+            xs={3}
+            sm={3}
+            style={{
+              //marginLeft: "0%",
+              marginTop: "-2%"
+              //borderRight: "1px solid #d4d4d4",
+              //backgroundColor: "white"
+            }}
+          >
+            {/* LoanList */}
+            <List className={classes.root}>
+              <br />
+              <br />
+              <Typography
+                variant="display1"
+                gutterBottom
+                align="center"
                 color="primary"
-                onClick={this.updateInstallment.bind(this, i.installmentID)}
               >
-                <EditIcon color="primary" />
-              </IconButton>
-            ];
-          })}
-          columns={columns}
-          options={options}
-        />
+                Loan history
+              </Typography>
+
+              <Fab
+                color="secondary"
+                aria-label="Add"
+                className={classes.fab}
+                onClick={this.handleOpen}
+              >
+                <AddIcon />
+              </Fab>
+              {loanData.map(loan => (
+                <Link
+                  to={`/clients/${clientID}/loans/${loan.loanID}`}
+                  className={classes.link}
+                >
+                  <ListItem
+                    button
+                    className={classes.message}
+                    onClick={this.getLoanInstallments.bind(this, loan.loanID)}
+                  >
+                    <ListItemText
+                      classes={{
+                        primary: classes.primary,
+                        secondary: classes.secondary
+                      }}
+                      primary={
+                        "Principal: " +
+                        numeral(loan.principal).format("0,0[.]00") +
+                        "/="
+                      }
+                      secondary={
+                        <React.Fragment>
+                          {"Interest: " + loan.interestRate + "%"}
+                          <br />
+                          {"Duration: " + loan.loanTerm + " months"}
+                          <br />
+                          {"Issue date: " + loan.issueDate}
+                          <br />
+
+                          {/*{"Collateral: " + loan.collateral} */}
+                        </React.Fragment>
+                      }
+                    />
+                  </ListItem>
+                </Link>
+              ))}
+            </List>
+
+            {/* LoanList */}
+          </Grid>
+          <Grid item xs={6} sm={6}>
+            <Switch>
+              <Route
+                path="/clients/:id/loans/:id"
+                //component={InstallmentList}
+              />
+            </Switch>
+
+            <InstallmentList id={this.state.loanID} />
+          </Grid>
+        </Grid>
 
         <Dialog
           open={this.state.open}
-          onClose={this.handleClose}
+          onClose={this.closeDialog}
           aria-labelledby="form-dialog-title"
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle
             id="simple-dialog-title"
             color="default"
-            style={{
-              backgroundColor: "indigo"
-            }}
+            style={{ backgroundColor: "#2E3B55" }}
           >
             <Typography
               component="h1"
@@ -451,97 +273,28 @@ class ClientDetails extends React.Component {
               align="center"
               style={{ color: "white" }}
             >
-              Edit Installment
+              Add Loan
             </Typography>
           </DialogTitle>
           <DialogContent>
-            <form onSubmit={this.handleSubmit}>
-              <Grid container spacing={24}>
-                <Grid item xs={12} sm={12} />
-                <Grid item xs={12} sm={12}>
-                  <Typography variant="headline" align="left" color="primary">
-                    Installment Calculator
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    id="bbf"
-                    name="bbf"
-                    value={this.state.bbf}
-                    onChange={this.onChange}
-                    type="number"
-                    label="Balance Brought Forward (B/F)"
-                    fullWidth
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    id="interestGained"
-                    name="interestGained"
-                    value={this.state.interestGained}
-                    onChange={this.onChange}
-                    label="Interest Gained"
-                    type="number"
-                    fullWidth
-                    autoComplete="off"
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12}>
-                  <TextField
-                    required
-                    id="dateReturned"
-                    name="dateReturned"
-                    value={this.state.dateReturned}
-                    onChange={this.onChange}
-                    label="Date returned"
-                    type="date"
-                    fullWidth
-                    autoComplete="off"
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                  <TextField
-                    required
-                    id="amountPaid"
-                    name="amountPaid"
-                    value={this.state.amountPaid}
-                    onChange={this.onChange}
-                    label="Amount paid"
-                    type="number"
-                    fullWidth
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} sm={12} />
-                <Grid item xs={12} sm={6}>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    color="secondary"
-                  >
-                    Update Installment
-                  </Button>
-                </Grid>
-              </Grid>
-            </form>
+            <DialogContentText id="alert-dialog-description" color="primary">
+              <br />
+              <LoanForm id={this.state.clientID} />
+            </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.closeDialog} color="primary">
+            <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
           </DialogActions>
         </Dialog>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }
+
+ClientDetails.propTypes = {
+  classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(ClientDetails);

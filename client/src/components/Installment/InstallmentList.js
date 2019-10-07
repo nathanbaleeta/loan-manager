@@ -27,6 +27,15 @@ const styles = theme => ({
   fab: {
     marginLeft: "3%",
     marginBottom: "2%"
+  },
+  tableRoot: {
+    height: "100%",
+    width: "100%",
+    overflow: "auto",
+    //position: "fixed",
+    maxHeight: "100%",
+    borderRight: "1px solid #d4d4d4",
+    marginTop: "-2%"
   }
 });
 
@@ -76,7 +85,7 @@ class InstallmentList extends Component {
 
     return (
       <Fragment>
-        <Paper className={classes.tableRoot}>
+        <Paper className={classes.tableRoot} elevation={0}>
           <br />
           <Typography
             variant="display1"
@@ -96,7 +105,7 @@ class InstallmentList extends Component {
             1,120,000/=
           </Typography>
           <Fab
-            color="primary"
+            color="default"
             aria-label="Add"
             className={classes.fab}
             onClick={this.handleOpen}

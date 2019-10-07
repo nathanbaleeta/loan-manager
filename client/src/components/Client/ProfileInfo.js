@@ -5,16 +5,26 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
+import Avatar from "@material-ui/core/Avatar";
+
 import firebase from "../common/firebase";
 
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2
+    paddingBottom: theme.spacing.unit * 2,
+    height: "100%",
+    maxHeight: "100%"
   },
   avatar: {
     margin: 10
+  },
+  bigAvatar: {
+    margin: 10,
+    width: 170,
+    height: 170
+    //border: "4px solid black"
   }
 });
 
@@ -57,107 +67,48 @@ class ProfileInfo extends Component {
     return (
       <Fragment>
         <Grid container spacing={4}>
-          <Paper className={classes.root} elevation={1}>
-            <Grid container spacing={24}>
-              <Grid item xs={12} sm={12}>
+          <Grid
+            container
+            spacing={24}
+            style={{
+              background: "white"
+            }}
+          >
+            <Grid item xs={12} sm={12}>
+              <Paper className={classes.root} elevation={0} align="center">
+                <Typography
+                  variant="display1"
+                  gutterBottom
+                  align="center"
+                  color="primary"
+                >
+                  Personal Information
+                </Typography>
+                <Avatar
+                  alt="Remy Sharp"
+                  src="/static/images/avatar.png"
+                  className={classes.bigAvatar}
+                />
+
+                <Typography
+                  variant="headline"
+                  gutterBottom
+                  align="center"
+                  color="default"
+                  style={{
+                    fontWeight: "bold",
+                    overflow: "auto"
+                  }}
+                >
+                  {firstName + " " + lastName}
+                </Typography>
                 <Typography
                   variant="title"
                   gutterBottom
                   align="center"
                   style={{
-                    fontWeight: "bold"
-                  }}
-                >
-                  Personal Info
-                </Typography>
-              </Grid>
-              <Grid item xs={4} sm={4}>
-                <Typography
-                  variant="title"
-                  gutterBottom
-                  align="left"
-                  style={{
                     fontWeight: "bold",
                     fontSize: "18px"
-                  }}
-                >
-                  Firstname:
-                </Typography>
-                <Typography
-                  variant="title"
-                  gutterBottom
-                  align="left"
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "18px"
-                  }}
-                >
-                  Lastname:
-                </Typography>
-                <Typography
-                  variant="title"
-                  gutterBottom
-                  align="left"
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "18px"
-                  }}
-                >
-                  Address:
-                </Typography>
-                <Typography
-                  variant="title"
-                  gutterBottom
-                  align="left"
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "18px"
-                  }}
-                >
-                  Phone 1:
-                </Typography>
-                <Typography
-                  variant="title"
-                  gutterBottom
-                  align="left"
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "18px"
-                  }}
-                >
-                  Phone 2:
-                </Typography>
-              </Grid>
-              <Grid item xs={7} sm={7}>
-                <Typography
-                  variant="title"
-                  gutterBottom
-                  align="left"
-                  style={{
-                    fontSize: "18px",
-                    color: "mediumblue"
-                  }}
-                >
-                  {firstName}
-                </Typography>
-                <Typography
-                  variant="title"
-                  gutterBottom
-                  align="left"
-                  style={{
-                    fontSize: "18px",
-                    color: "mediumblue"
-                  }}
-                >
-                  {lastName}
-                </Typography>
-                <Typography
-                  variant="title"
-                  gutterBottom
-                  align="left"
-                  style={{
-                    fontSize: "18px",
-                    color: "mediumblue"
                   }}
                 >
                   {address}
@@ -165,9 +116,9 @@ class ProfileInfo extends Component {
                 <Typography
                   variant="title"
                   gutterBottom
-                  align="left"
+                  align="center"
                   style={{
-                    color: "mediumblue",
+                    fontWeight: "bold",
                     fontSize: "18px"
                   }}
                 >
@@ -176,17 +127,17 @@ class ProfileInfo extends Component {
                 <Typography
                   variant="title"
                   gutterBottom
-                  align="left"
+                  align="center"
                   style={{
-                    color: "mediumblue",
+                    fontWeight: "bold",
                     fontSize: "18px"
                   }}
                 >
                   {phone2}
                 </Typography>
-              </Grid>
+              </Paper>
             </Grid>
-          </Paper>
+          </Grid>
         </Grid>
       </Fragment>
     );

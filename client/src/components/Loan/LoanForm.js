@@ -53,8 +53,12 @@ class LoanForm extends React.Component {
   };
 
   // remove commas before saving to firebase
-  removeCommas = str => {
-    let result = str.replace(/,/g, "");
+  removeCommas = num => {
+    //Convert number to string before attempting string manipulation
+    let str = num.toString();
+
+    // Check if string contains comma before attempting to sanitize
+    let result = str.includes(",") ? str.replace(/,/g, "") : str;
     return Number(result);
   };
 
