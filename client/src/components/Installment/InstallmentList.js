@@ -22,6 +22,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 
 import InstallmentForm from "./InstallmentForm";
 
+import numeral from "numeral";
 import firebase from "../common/firebase";
 
 const styles = theme => ({
@@ -48,12 +49,13 @@ class InstallmentList extends Component {
     principal: "",
     interestRate: "",
     issueDate: "",
-    loanTerm: ""
-    //collateral: ""
+    loanTerm: "",
+    collateral: "",
+    bbf: ""
   };
 
   componentDidMount() {
-    this.fetchResults(this.props.client, this.props.loan);
+    this.fetchLoanDetails(this.props.client, this.props.loan);
   }
 
   componentDidUpdate(prevProps) {
@@ -61,11 +63,11 @@ class InstallmentList extends Component {
     if (prevProps !== this.props) {
       let clientID = this.props.client;
       let loanID = this.props.loan;
-      this.fetchResults(clientID, loanID);
+      this.fetchLoanDetails(clientID, loanID);
     }
   }
 
-  fetchResults(clientID, loanID) {
+  fetchLoanDetails(clientID, loanID) {
     const loansDetailRef = firebase
       .database()
       .ref(`loans/${clientID}/${loanID}`);
@@ -74,7 +76,9 @@ class InstallmentList extends Component {
         principal: snapshot.child("principal").val(),
         interestRate: snapshot.child("interestRate").val(),
         loanTerm: snapshot.child("loanTerm").val(),
-        issueDate: snapshot.child("issueDate").val()
+        issueDate: snapshot.child("issueDate").val(),
+        collateral: snapshot.child("collateral").val(),
+        bbf: snapshot.child("bbf").val()
       });
     });
   }
@@ -89,7 +93,14 @@ class InstallmentList extends Component {
 
   render() {
     const { classes } = this.props;
-    const { principal, interestRate, loanTerm, issueDate } = this.state;
+    const {
+      principal,
+      interestRate,
+      loanTerm,
+      issueDate,
+      collateral,
+      bbf
+    } = this.state;
 
     return (
       <Fragment>
@@ -117,7 +128,7 @@ class InstallmentList extends Component {
                 </Typography>
                 <br />
                 <Typography variant="title" align="center" color="default">
-                  {principal}
+                  {numeral(principal).format("0,0[.]00") + "/="}
                 </Typography>
               </Grid>
               <Grid item xs={3} sm={3}>
@@ -162,6 +173,36 @@ class InstallmentList extends Component {
                   {issueDate}
                 </Typography>
               </Grid>
+              <Grid item xs={3} sm={3}>
+                <Typography
+                  variant="title"
+                  align="center"
+                  color="default"
+                  style={{ fontWeight: "bold" }}
+                >
+                  Collateral
+                </Typography>
+                <br />
+                <Typography variant="title" align="center" color="default">
+                  {collateral}
+                </Typography>
+              </Grid>
+              <Grid item xs={3} sm={3}>
+                <Typography
+                  variant="title"
+                  align="center"
+                  color="default"
+                  style={{ fontWeight: "bold" }}
+                >
+                  BBF
+                </Typography>
+                <br />
+                <Typography variant="title" align="center" color="default">
+                  {/*  {bbf === "" ? "0" : Math.trunc(`${bbf}`) + " /="} */}
+
+                  {numeral(bbf).format("0,0[.]00") + "/="}
+                </Typography>
+              </Grid>
             </Grid>
           </Fragment>
           <Typography
@@ -171,6 +212,14 @@ class InstallmentList extends Component {
             color="secondary"
           >
             1,120,000/=
+          </Typography>
+          <Typography
+            variant="headline"
+            gutterBottom
+            align="center"
+            color="primary"
+          >
+            Installment History
           </Typography>
           <Fab
             color="default"

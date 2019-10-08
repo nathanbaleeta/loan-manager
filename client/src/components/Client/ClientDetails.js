@@ -240,8 +240,8 @@ class ClientDetails extends Component {
                         <React.Fragment>
                           {"Interest: " + loan.interestRate + "%"}
                           <br />
-                          {"Duration: " + loan.loanTerm + " months"}
-                          <br />
+                          {/*{"Duration: " + loan.loanTerm + " months"} <br />*/}
+
                           {"Issue date: " + loan.issueDate}
                           <br />
 

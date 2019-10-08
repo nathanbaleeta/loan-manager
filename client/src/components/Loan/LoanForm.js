@@ -48,8 +48,12 @@ class LoanForm extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  capitalize = str => {
-    return str.toUpperCase();
+  toTitleCase = phrase => {
+    return phrase
+      .toLowerCase()
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
   };
 
   // remove commas before saving to firebase
@@ -83,7 +87,7 @@ class LoanForm extends React.Component {
       interestRate: this.state.interestRate,
       issueDate: this.state.issueDate,
       loanTerm: this.state.loanTerm,
-      collateral: this.capitalize(this.state.collateral),
+      collateral: this.toTitleCase(this.state.collateral),
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi"
       })

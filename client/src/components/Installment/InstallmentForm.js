@@ -114,6 +114,50 @@ class InstallmentForm extends React.Component {
             <Grid item xs={12} sm={6}>
               <TextField
                 required
+                id="amountPaid"
+                name="amountPaid"
+                value={amountPaid}
+                onChange={this.onChange}
+                label="Amount paid"
+                type="number"
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                autoComplete="off"
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="dateReturned"
+                name="dateReturned"
+                value={dateReturned}
+                onChange={this.onChange}
+                label="Date returned"
+                type="date"
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                autoComplete="off"
+                InputLabelProps={{
+                  shrink: true
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline
+                  }
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
                 id="bbf"
                 name="bbf"
                 value={bbf}
@@ -139,50 +183,6 @@ class InstallmentForm extends React.Component {
                 value={interestGained}
                 onChange={this.onChange}
                 label="Interest Gained"
-                type="number"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="dateReturned"
-                name="dateReturned"
-                value={dateReturned}
-                onChange={this.onChange}
-                label="Date returned"
-                type="date"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                autoComplete="off"
-                InputLabelProps={{
-                  shrink: true
-                }}
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="amountPaid"
-                name="amountPaid"
-                value={amountPaid}
-                onChange={this.onChange}
-                label="Amount paid"
                 type="number"
                 fullWidth
                 margin="normal"
