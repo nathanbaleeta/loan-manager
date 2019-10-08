@@ -1,10 +1,12 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
+import NumberFormat from "react-number-format";
 import firebase from "../common/firebase";
 
 const styles = theme => ({
@@ -15,15 +17,13 @@ const styles = theme => ({
   }
 });
 
-class InstallmentForm extends React.Component {
+class InstallmentForm extends Component {
   constructor() {
     super();
     this.state = {
       targetClientID: "",
-      bbf: "",
       amountPaid: "",
-      dateReturned: "",
-      interestGained: ""
+      dateReturned: ""
     };
   }
 
@@ -66,17 +66,14 @@ class InstallmentForm extends React.Component {
   }; */
 
   handleSubmit = event => {
-    // set firebase node to current client
-    const key = this.state.targetClientID;
+    // set firebase node to current loan
+    const key = this.props.id;
     event.preventDefault();
 
     // get our form data out of state
     const installment = {
-      bbf: this.state.bbf,
       amountPaid: this.state.amountPaid,
       dateReturned: this.state.dateReturned,
-      interestGained: this.state.interestGained,
-
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi"
       })
@@ -90,36 +87,36 @@ class InstallmentForm extends React.Component {
 
     //Clear the Installment form inputs
     this.setState({
-      bbf: "",
       amountPaid: "",
-      dateReturned: "",
-      interestGained: ""
+      dateReturned: ""
     });
   };
 
   render() {
     const { classes } = this.props;
-    const { bbf, dateReturned, amountPaid, interestGained } = this.state;
+    const { amountPaid, dateReturned } = this.state;
 
     return (
-      <div>
-        <br />
+      <Fragment>
         <form onSubmit={this.handleSubmit}>
           <Grid container spacing={8}>
             <Grid item xs={12} sm={12}>
-              <Typography variant="headline" align="left" color="primary">
+              <Typography variant="headline" align="left" color="default">
                 Installment Calculator
               </Typography>
             </Grid>
+
             <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="amountPaid"
-                name="amountPaid"
+              <NumberFormat
                 value={amountPaid}
-                onChange={this.onChange}
+                thousandSeparator={true}
+                onValueChange={values => {
+                  const { formattedValue } = values;
+
+                  this.setState({ amountPaid: formattedValue });
+                }}
+                customInput={TextField}
                 label="Amount paid"
-                type="number"
                 fullWidth
                 margin="normal"
                 variant="outlined"
@@ -131,6 +128,7 @@ class InstallmentForm extends React.Component {
                 }}
               />
             </Grid>
+
             <Grid item xs={12} sm={6}>
               <TextField
                 required
@@ -155,47 +153,6 @@ class InstallmentForm extends React.Component {
               />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="bbf"
-                name="bbf"
-                value={bbf}
-                onChange={this.onChange}
-                type="number"
-                label="Balance Brought Forward (B/F)"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="interestGained"
-                name="interestGained"
-                value={interestGained}
-                onChange={this.onChange}
-                label="Interest Gained"
-                type="number"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
-              />
-            </Grid>
-
             <Grid item xs={12} sm={12}>
               <br />
               <br />
@@ -211,9 +168,13 @@ class InstallmentForm extends React.Component {
             </Grid>
           </Grid>
         </form>
-      </div>
+      </Fragment>
     );
   }
 }
+
+InstallmentForm.propTypes = {
+  classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(InstallmentForm);

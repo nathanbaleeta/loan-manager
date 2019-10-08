@@ -107,7 +107,6 @@ class InstallmentList extends Component {
         <Paper className={classes.tableRoot} elevation={0}>
           <br /> <br />
           <Fragment>
-            <br />
             <Typography
               variant="display1"
               gutterBottom
@@ -128,7 +127,9 @@ class InstallmentList extends Component {
                 </Typography>
                 <br />
                 <Typography variant="title" align="center" color="default">
-                  {numeral(principal).format("0,0[.]00") + "/="}
+                  {principal === ""
+                    ? ""
+                    : numeral(principal).format("0,0[.]00") + "/="}
                 </Typography>
               </Grid>
               <Grid item xs={3} sm={3}>
@@ -198,91 +199,84 @@ class InstallmentList extends Component {
                 </Typography>
                 <br />
                 <Typography variant="title" align="center" color="default">
-                  {/*  {bbf === "" ? "0" : Math.trunc(`${bbf}`) + " /="} */}
-
-                  {numeral(bbf).format("0,0[.]00") + "/="}
+                  {bbf === "" ? "" : numeral(bbf).format("0,0[.]00") + "/="}
                 </Typography>
               </Grid>
             </Grid>
           </Fragment>
-          <Typography
-            variant="display2"
-            gutterBottom
-            align="right"
-            color="secondary"
-          >
-            1,120,000/=
-          </Typography>
-          <Typography
-            variant="headline"
-            gutterBottom
-            align="center"
-            color="primary"
-          >
-            Installment History
-          </Typography>
-          <Fab
-            color="default"
-            aria-label="Add"
-            className={classes.fab}
-            onClick={this.handleOpen}
-          >
-            <AddIcon />
-          </Fab>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  style={{
-                    color: "mediumblue",
-                    fontSize: 15
-                  }}
-                >
-                  BBF
-                </TableCell>
-                <TableCell
-                  align="left"
-                  style={{
-                    color: "mediumblue",
-                    fontSize: 15
-                  }}
-                >
-                  Interest Gained
-                </TableCell>
-                <TableCell
-                  align="left"
-                  style={{
-                    color: "mediumblue",
-                    fontSize: 15
-                  }}
-                >
-                  Date returned
-                </TableCell>
-
-                <TableCell
-                  align="left"
-                  style={{
-                    color: "mediumblue",
-                    fontSize: 15
-                  }}
-                >
-                  Amount Paid
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.installmentData.map(row => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.bbf}
+          <br />
+          <Fragment>
+            <Typography
+              variant="headline"
+              gutterBottom
+              align="center"
+              color="primary"
+            >
+              Installment History
+            </Typography>
+            <Fab
+              color="default"
+              aria-label="Add"
+              className={classes.fab}
+              onClick={this.handleOpen}
+            >
+              <AddIcon />
+            </Fab>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    style={{
+                      color: "mediumblue",
+                      fontSize: 15
+                    }}
+                  >
+                    BBF
                   </TableCell>
-                  <TableCell align="left">{row.interestGained}</TableCell>
-                  <TableCell align="left">{row.dateReturned}</TableCell>
-                  <TableCell align="left">{row.amountPaid}</TableCell>
+                  <TableCell
+                    align="left"
+                    style={{
+                      color: "mediumblue",
+                      fontSize: 15
+                    }}
+                  >
+                    Interest Gained
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    style={{
+                      color: "mediumblue",
+                      fontSize: 15
+                    }}
+                  >
+                    Date returned
+                  </TableCell>
+
+                  <TableCell
+                    align="left"
+                    style={{
+                      color: "mediumblue",
+                      fontSize: 15
+                    }}
+                  >
+                    Amount Paid
+                  </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHead>
+              <TableBody>
+                {this.state.installmentData.map(row => (
+                  <TableRow key={row.id}>
+                    <TableCell component="th" scope="row">
+                      {row.bbf}
+                    </TableCell>
+                    <TableCell align="left">{row.interestGained}</TableCell>
+                    <TableCell align="left">{row.dateReturned}</TableCell>
+                    <TableCell align="left">{row.amountPaid}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Fragment>
         </Paper>
 
         <Dialog
@@ -302,13 +296,13 @@ class InstallmentList extends Component {
               align="center"
               style={{ color: "white" }}
             >
-              Add Instalment
+              Add Installment
             </Typography>
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description" color="primary">
               <br />
-              <InstallmentForm id={this.props.id} />
+              <InstallmentForm id={this.props.loan} />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
