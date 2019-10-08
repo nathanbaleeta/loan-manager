@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 
-import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
@@ -33,7 +32,7 @@ const styles = theme => ({
   tableRoot: {
     height: "100%",
     width: "100%",
-    overflow: "auto",
+    //overflow: "auto",
     //position: "fixed",
     maxHeight: "100%",
     //borderRight: "1px solid #d4d4d4",
@@ -56,6 +55,7 @@ class InstallmentList extends Component {
 
   componentDidMount() {
     this.fetchLoanDetails(this.props.client, this.props.loan);
+    this.fetchInstallments(this.props.loan);
   }
 
   componentDidUpdate(prevProps) {
@@ -64,6 +64,7 @@ class InstallmentList extends Component {
       let clientID = this.props.client;
       let loanID = this.props.loan;
       this.fetchLoanDetails(clientID, loanID);
+      this.fetchInstallments(loanID);
     }
   }
 
@@ -83,6 +84,30 @@ class InstallmentList extends Component {
     });
   }
 
+  fetchInstallments(loanID) {
+    const installmentRef = firebase
+      .database()
+      .ref(`installments/${this.props.loan}`);
+    installmentRef.on("value", snapshot => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        newState.push({
+          installmentID: item,
+          amountPaid: items[item].amountPaid,
+          dateReturned: items[item].dateReturned,
+          bbf: items[item].bbf
+        });
+      }
+
+      //console.log(newState);
+      this.setState({
+        installmentData: newState
+      });
+      console.log(this.state.installmentData);
+    });
+  }
+
   handleOpen = () => {
     this.setState({ open: true });
   };
@@ -94,6 +119,7 @@ class InstallmentList extends Component {
   render() {
     const { classes } = this.props;
     const {
+      installmentData,
       principal,
       interestRate,
       loanTerm,
@@ -104,116 +130,163 @@ class InstallmentList extends Component {
 
     return (
       <Fragment>
-        <Paper className={classes.tableRoot} elevation={0}>
-          <br /> <br />
-          <Fragment>
-            <Typography
-              variant="display1"
-              gutterBottom
-              align="center"
-              color="primary"
-            >
-              Loan Details
-            </Typography>
-            <Grid container spacing={8}>
-              <Grid item xs={3} sm={3}>
-                <Typography
-                  variant="title"
-                  align="center"
-                  color="default"
-                  style={{ fontWeight: "bold" }}
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  style={{
+                    //background: "black",
+                    color: "black",
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    width: "100%"
+                  }}
+                >
+                  Loan Details
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell
+                  style={{
+                    background: "black",
+                    color: "white",
+                    fontSize: 15,
+                    fontWeight: "bold"
+                  }}
                 >
                   Principal
-                </Typography>
-                <br />
-                <Typography variant="title" align="center" color="default">
-                  {principal === ""
-                    ? ""
-                    : numeral(principal).format("0,0[.]00") + "/="}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <Typography
-                  variant="title"
-                  align="center"
-                  color="default"
-                  style={{ fontWeight: "bold" }}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  style={{
+                    background: "black",
+                    color: "white",
+                    fontSize: 15,
+                    fontWeight: "bold"
+                  }}
                 >
                   Interest
-                </Typography>
-                <br />
-                <Typography variant="title" align="center" color="default">
-                  {interestRate}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <Typography
-                  variant="title"
-                  align="center"
-                  color="default"
-                  style={{ fontWeight: "bold" }}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  style={{
+                    background: "black",
+                    color: "white",
+                    fontSize: 15,
+                    fontWeight: "bold"
+                  }}
                 >
                   Duration
-                </Typography>
-                <br />
-                <Typography variant="title" align="center" color="default">
-                  {loanTerm}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <Typography
-                  variant="title"
-                  align="center"
-                  color="default"
-                  style={{ fontWeight: "bold" }}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  style={{
+                    background: "black",
+                    color: "white",
+                    fontSize: 15,
+                    fontWeight: "bold"
+                  }}
                 >
                   Issue date
-                </Typography>
-                <br />
-                <Typography variant="title" align="center" color="default">
-                  {issueDate}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <Typography
-                  variant="title"
-                  align="center"
-                  color="default"
-                  style={{ fontWeight: "bold" }}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  style={{
+                    background: "black",
+                    color: "white",
+                    fontSize: 15,
+                    fontWeight: "bold"
+                  }}
                 >
                   Collateral
-                </Typography>
-                <br />
-                <Typography variant="title" align="center" color="default">
-                  {collateral}
-                </Typography>
-              </Grid>
-              <Grid item xs={3} sm={3}>
-                <Typography
-                  variant="title"
-                  align="center"
-                  color="default"
-                  style={{ fontWeight: "bold" }}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  style={{
+                    background: "orange",
+                    color: "black",
+                    fontSize: 15,
+                    fontWeight: "bold"
+                  }}
                 >
                   BBF
-                </Typography>
-                <br />
-                <Typography variant="title" align="center" color="default">
-                  {bbf === "" ? "" : numeral(bbf).format("0,0[.]00") + "/="}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Fragment>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow key="1">
+                <TableCell component="th" scope="row">
+                  <Typography
+                    variant="subheading"
+                    align="center"
+                    color="default"
+                  >
+                    {principal === ""
+                      ? ""
+                      : numeral(principal).format("0,0[.]00") + "/="}
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography
+                    variant="subheading"
+                    align="center"
+                    color="default"
+                  >
+                    {interestRate}
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography
+                    variant="subheading"
+                    align="center"
+                    color="default"
+                  >
+                    {loanTerm}
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography
+                    variant="subheading"
+                    align="center"
+                    color="default"
+                  >
+                    {issueDate}
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography
+                    variant="subheading"
+                    align="center"
+                    color="default"
+                  >
+                    {collateral}
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography
+                    variant="subheading"
+                    align="center"
+                    color="default"
+                  >
+                    <Typography
+                      variant="subheading"
+                      align="center"
+                      color="default"
+                    >
+                      {bbf === "" ? "" : numeral(bbf).format("0,0[.]00") + "/="}
+                    </Typography>
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Paper>
+        <br />
+        <Paper className={classes.tableRoot} elevation={0}>
+          <br /> <br />
           <br />
           <Fragment>
-            <Typography
-              variant="headline"
-              gutterBottom
-              align="center"
-              color="primary"
-            >
-              Installment History
-            </Typography>
             <Fab
               color="default"
               aria-label="Add"
@@ -222,60 +295,103 @@ class InstallmentList extends Component {
             >
               <AddIcon />
             </Fab>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    style={{
-                      color: "mediumblue",
-                      fontSize: 15
-                    }}
-                  >
-                    BBF
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    style={{
-                      color: "mediumblue",
-                      fontSize: 15
-                    }}
-                  >
-                    Interest Gained
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    style={{
-                      color: "mediumblue",
-                      fontSize: 15
-                    }}
-                  >
-                    Date returned
-                  </TableCell>
+            <br />
 
-                  <TableCell
-                    align="left"
-                    style={{
-                      color: "mediumblue",
-                      fontSize: 15
-                    }}
-                  >
-                    Amount Paid
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.state.installmentData.map(row => (
-                  <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
-                      {row.bbf}
+            <br />
+
+            <Paper className={classes.root}>
+              <Table className={classes.table}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      style={{
+                        //background: "black",
+                        color: "black",
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        width: "100%"
+                      }}
+                    >
+                      Installment History
                     </TableCell>
-                    <TableCell align="left">{row.interestGained}</TableCell>
-                    <TableCell align="left">{row.dateReturned}</TableCell>
-                    <TableCell align="left">{row.amountPaid}</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                  <TableRow>
+                    <TableCell
+                      style={{
+                        background: "orange",
+                        color: "black",
+                        fontSize: 15,
+                        fontWeight: "bold"
+                      }}
+                    >
+                      BBF
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      style={{
+                        background: "black",
+                        color: "white",
+                        fontSize: 15,
+                        fontWeight: "bold"
+                      }}
+                    >
+                      Date Returned
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      style={{
+                        background: "black",
+                        color: "white",
+                        fontSize: 15,
+                        fontWeight: "bold"
+                      }}
+                    >
+                      Amount paid
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {installmentData.map(installment => (
+                    <TableRow key="1">
+                      <TableCell align="right">
+                        <Typography
+                          variant="subheading"
+                          align="left"
+                          color="default"
+                        >
+                          {installment.bbf === ""
+                            ? ""
+                            : numeral(installment.bbf).format("0,0[.]00") +
+                              "/="}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography
+                          variant="subheading"
+                          align="center"
+                          color="default"
+                        >
+                          {installment.dateReturned}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography
+                          variant="subheading"
+                          align="center"
+                          color="default"
+                        >
+                          {installment.amountPaid === ""
+                            ? ""
+                            : numeral(installment.amountPaid).format(
+                                "0,0[.]00"
+                              ) + "/="}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Paper>
           </Fragment>
         </Paper>
 
@@ -302,7 +418,10 @@ class InstallmentList extends Component {
           <DialogContent>
             <DialogContentText id="alert-dialog-description" color="primary">
               <br />
-              <InstallmentForm id={this.props.loan} />
+              <InstallmentForm
+                id={this.props.loan}
+                client={this.props.client}
+              />
             </DialogContentText>
           </DialogContent>
           <DialogActions>

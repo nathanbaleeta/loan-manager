@@ -18,19 +18,38 @@ const styles = theme => ({
 });
 
 class InstallmentForm extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      targetClientID: "",
       amountPaid: "",
-      dateReturned: ""
+      dateReturned: "",
+      installmentBbf: ""
     };
   }
 
   componentDidMount() {
-    // target client ID retrieved from another component using onClick event listener from route
-    //const key = this.props.match.params.id;
-    //this.setState({ targetClientID: key });
+    this.fetchLoanBBF(this.props.id);
+    console.log(this.props.client);
+  }
+
+  componentDidUpdate(prevProps) {
+    // Check if props have changed; if yes update variables then reuse & call fetch results
+    if (prevProps !== this.props) {
+      let loanID = this.props.id;
+      this.fetchLoanBBF(loanID);
+    }
+  }
+
+  fetchLoanBBF(loanID) {
+    console.log(loanID);
+    const loansBBFRef = firebase
+      .database()
+      .ref(`loans/${this.props.client}/${loanID}`);
+    loansBBFRef.on("value", snapshot => {
+      this.setState({
+        installmentBbf: snapshot.child("bbf").val()
+      });
+    });
   }
 
   onChange = e => {
@@ -42,48 +61,62 @@ class InstallmentForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  /* calculateAmountDue = () => {
-    let computedInterestRate = (parseInt(this.state.interestRate) + 100) / 100;
+  // remove commas before saving to firebase
+  removeCommas = num => {
+    //Convert number to string before attempting string manipulation
+    let str = num.toString();
 
-    let computedAmountDue = Math.floor(
-      this.state.principal * computedInterestRate
-    );
-
-    this.setState({
-      amountDue: computedAmountDue
-    });
+    // Check if string contains comma before attempting to sanitize
+    let result = str.includes(",") ? str.replace(/,/g, "") : str;
+    return Number(result);
   };
 
-  calculateTotalInterest = () => {
-    let computedTotalInterest =
-      parseInt(this.state.amountDue) - parseInt(this.state.principal);
+  calculateBBF = amountPaid => {
+    const amount = this.removeCommas(amountPaid);
+    let newBBF =
+      (parseInt(this.state.installmentBbf) - parseInt(amount)) * 1.12;
 
-    let totalInterest = Math.floor(computedTotalInterest);
-
-    this.setState({
-      totalInterest: totalInterest
-    });
-  }; */
+    return newBBF;
+  };
 
   handleSubmit = event => {
     // set firebase node to current loan
     const key = this.props.id;
+
     event.preventDefault();
 
     // get our form data out of state
     const installment = {
-      amountPaid: this.state.amountPaid,
+      amountPaid: this.removeCommas(this.state.amountPaid),
       dateReturned: this.state.dateReturned,
+      bbf: this.calculateBBF(this.state.amountPaid),
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Nairobi"
       })
     };
-
     console.log(installment);
+
+    const loan = {
+      bbf: this.calculateBBF(this.state.amountPaid)
+    };
 
     //Save installment
     const installmentsRef = firebase.database().ref(`installments/${key}`);
     installmentsRef.push(installment);
+
+    //Update BBF for given loan
+    const updateLoanBBFRef = firebase
+      .database()
+      .ref(`loans/${this.props.client}/${this.props.id}`);
+    updateLoanBBFRef
+      .update(loan)
+      .then(function() {
+        console.log("Synchronization succeeded");
+        console.log(this.state);
+      })
+      .catch(function(error) {
+        console.log("Synchronization failed");
+      });
 
     //Clear the Installment form inputs
     this.setState({
