@@ -57,7 +57,7 @@ class InstallmentReport extends Component {
     // Get value of procurement provided
     const query = firebase
       .database()
-      .ref("loans")
+      .ref("installments")
       .orderByKey();
     query.on("value", snapshot => {
       let todayCounter = 0;
@@ -86,29 +86,27 @@ class InstallmentReport extends Component {
           isToday
             ? (todayCounter =
                 todayCounter +
-                parseInt(grandChildSnapshot.child("principal").val()))
+                parseInt(grandChildSnapshot.child("amountPaid").val()))
             : (todayCounter = todayCounter + 0);
 
           isWeek
             ? (weekCounter =
                 weekCounter +
-                parseInt(grandChildSnapshot.child("principal").val()))
+                parseInt(grandChildSnapshot.child("amountPaid").val()))
             : (weekCounter = weekCounter + 0);
 
           isMonth
             ? (monthCounter =
                 monthCounter +
-                parseInt(grandChildSnapshot.child("principal").val()))
+                parseInt(grandChildSnapshot.child("amountPaid").val()))
             : (monthCounter = monthCounter + 0);
 
           console.log(isToday);
 
-          //console.log(moment(created, "DD/MM/YYYY").fromNow());
-
           // Cummulative counter
           cummulativeCounter =
             cummulativeCounter +
-            parseInt(grandChildSnapshot.child("principal").val());
+            parseInt(grandChildSnapshot.child("amountPaid").val());
         });
       });
 
