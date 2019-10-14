@@ -73,8 +73,7 @@ class InstallmentForm extends Component {
 
   calculateBBF = amountPaid => {
     const amount = this.removeCommas(amountPaid);
-    let newBBF =
-      (parseInt(this.state.installmentBbf) - parseInt(amount)) * 1.12;
+    let newBBF = (this.state.installmentBbf - parseInt(amount)) * 1.12;
 
     return newBBF;
   };
@@ -87,7 +86,10 @@ class InstallmentForm extends Component {
 
     // get our form data out of state
     const installment = {
-      amountPaid: this.removeCommas(this.state.amountPaid),
+      amountPaid: this.removeCommas(
+        this.state.amountPaid,
+        this.state.installmentBbf
+      ),
       dateReturned: this.state.dateReturned,
       bbf: this.calculateBBF(this.state.amountPaid),
       created: new Date().toLocaleString("en-GB", {

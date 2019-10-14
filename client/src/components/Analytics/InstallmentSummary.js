@@ -19,7 +19,7 @@ class InstallmentSummary extends Component {
   constructor() {
     super();
     this.state = {
-      totalLoans: 0
+      totalInstallments: 0
     };
   }
 
@@ -27,20 +27,20 @@ class InstallmentSummary extends Component {
     // Get expenses amount count
     const query = firebase
       .database()
-      .ref("loans")
+      .ref("installments")
       .orderByKey();
     query.on("value", snapshot => {
-      let loansCounter = 0;
+      let installmentsCounter = 0;
       snapshot.forEach(function(childSnapshot) {
         childSnapshot.forEach(grandChildSnapshot => {
-          // Sum up all loan principals
-          loansCounter =
-            loansCounter +
-            parseInt(grandChildSnapshot.child("principal").val());
+          // Sum up all installments paid
+          installmentsCounter =
+            installmentsCounter +
+            parseInt(grandChildSnapshot.child("amountPaid").val());
         });
       });
       this.setState({
-        totalLoans: loansCounter
+        totalInstallments: installmentsCounter
       });
     });
   }
@@ -80,7 +80,8 @@ class InstallmentSummary extends Component {
                       align="center"
                       color="Primary"
                     >
-                      {numeral(this.state.totalLoans).format("0,0[.]00")} /=
+                      {numeral(this.state.totalInstallments).format("0,0[.]00")}{" "}
+                      /=
                     </Typography>
                   </Grid>
                   <Grid item xs={3} sm={3} />
