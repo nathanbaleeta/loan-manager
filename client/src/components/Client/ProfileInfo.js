@@ -22,8 +22,8 @@ const styles = theme => ({
   },
   bigAvatar: {
     margin: 10,
-    width: 170,
-    height: 170
+    width: 120,
+    height: 120
     //border: "4px solid black"
   }
 });
@@ -76,20 +76,11 @@ class ProfileInfo extends Component {
           >
             <Grid item xs={12} sm={12}>
               <Paper className={classes.root} elevation={0} align="center">
-                <Typography
-                  variant="display1"
-                  gutterBottom
-                  align="center"
-                  color="primary"
-                >
-                  Personal Information
-                </Typography>
                 <Avatar
                   alt="Remy Sharp"
                   src="/static/images/avatar.png"
                   className={classes.bigAvatar}
                 />
-
                 <Typography
                   variant="headline"
                   gutterBottom

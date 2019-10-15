@@ -7,6 +7,8 @@ import AddIcon from "@material-ui/icons/Add";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
+import DeleteIcon from "@material-ui/icons/Delete";
+
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -212,6 +214,12 @@ class InstallmentList extends Component {
                 >
                   BBF
                 </TableCell>
+                <TableCell
+                  align="right"
+                  style={{
+                    background: "black"
+                  }}
+                ></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -273,9 +281,21 @@ class InstallmentList extends Component {
                       variant="subheading"
                       align="center"
                       color="default"
+                      style={{
+                        fontWeight: "bold"
+                      }}
                     >
                       {bbf === "" ? "" : numeral(bbf).format("0,0[.]00") + "/="}
                     </Typography>
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography
+                    variant="subheading"
+                    align="center"
+                    color="secondary"
+                  >
+                    <DeleteIcon />
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -326,6 +346,7 @@ class InstallmentList extends Component {
                     >
                       BBF
                     </TableCell>
+
                     <TableCell
                       align="right"
                       style={{
@@ -348,6 +369,26 @@ class InstallmentList extends Component {
                     >
                       Amount paid
                     </TableCell>
+                    <TableCell
+                      style={{
+                        background: "black",
+                        color: "white",
+                        fontSize: 15,
+                        fontWeight: "bold"
+                      }}
+                    >
+                      Interest
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        background: "black",
+                        color: "white",
+                        fontSize: 15,
+                        fontWeight: "bold"
+                      }}
+                    >
+                      Action
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -358,6 +399,9 @@ class InstallmentList extends Component {
                           variant="subheading"
                           align="left"
                           color="default"
+                          style={{
+                            fontWeight: "bold"
+                          }}
                         >
                           {installment.bbf === ""
                             ? ""
@@ -385,6 +429,16 @@ class InstallmentList extends Component {
                             : numeral(installment.amountPaid).format(
                                 "0,0[.]00"
                               ) + "/="}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right"></TableCell>
+                      <TableCell align="right">
+                        <Typography
+                          variant="subheading"
+                          align="center"
+                          color="secondary"
+                        >
+                          <DeleteIcon />
                         </Typography>
                       </TableCell>
                     </TableRow>

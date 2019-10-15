@@ -180,7 +180,7 @@ class ClientDetails extends Component {
     return (
       <Fragment>
         <Grid container spacing={2}>
-          <Grid item xs={3} sm={3}>
+          <Grid item xs={2} sm={2}>
             <ProfileInfo id={this.state.clientID} />
           </Grid>
           <Grid
@@ -256,7 +256,7 @@ class ClientDetails extends Component {
 
             {/* LoanList */}
           </Grid>
-          <Grid item xs={6} sm={6}>
+          <Grid item xs={7} sm={7}>
             <Switch>
               <Route
                 path="/clients/:id/loans/:id"
