@@ -118,12 +118,27 @@ class InstallmentList extends Component {
     this.setState({ open: false });
   };
 
+  onDeleteLoan = loan => {
+    // Perform loan deletion and all related objects e.g installments
+    firebase
+      .database()
+      .ref("loans")
+      .child(this.props.client)
+      .child(loan)
+      .remove();
+
+    firebase
+      .database()
+      .ref("installments")
+      .child(loan)
+      .remove();
+  };
+
   render() {
     const { classes } = this.props;
     const {
       installmentData,
       principal,
-      interestRate,
       loanTerm,
       issueDate,
       collateral,
@@ -207,9 +222,14 @@ class InstallmentList extends Component {
                 <TableCell
                   align="right"
                   style={{
-                    background: "black"
+                    background: "black",
+                    color: "white",
+                    fontSize: 15,
+                    fontWeight: "bold"
                   }}
-                ></TableCell>
+                >
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -277,13 +297,17 @@ class InstallmentList extends Component {
                     align="center"
                     color="secondary"
                   >
-                    <DeleteIcon />
+                    <DeleteIcon
+                      //onClick={this.onDeleteLoan}
+                      onClick={this.onDeleteLoan.bind(this, this.props.loan)}
+                    />
                   </Typography>
                 </TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </Paper>
+        <br />
         <br />
         <Paper className={classes.tableRoot} elevation={0}>
           <br /> <br />
