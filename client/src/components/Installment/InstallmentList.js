@@ -134,6 +134,19 @@ class InstallmentList extends Component {
       .remove();
   };
 
+  onDeleteInstallment = installment => {
+    // Perform installment deletion
+    firebase
+      .database()
+      .ref("installments")
+      .child(this.props.loan)
+      .child(installment)
+      .remove();
+
+    // After deleting given installment update table for seamless rendering
+    this.fetchInstallments(this.props.loan);
+  };
+
   render() {
     const { classes } = this.props;
     const {
@@ -298,7 +311,6 @@ class InstallmentList extends Component {
                     color="secondary"
                   >
                     <DeleteIcon
-                      //onClick={this.onDeleteLoan}
                       onClick={this.onDeleteLoan.bind(this, this.props.loan)}
                     />
                   </Typography>
@@ -444,7 +456,12 @@ class InstallmentList extends Component {
                           align="center"
                           color="secondary"
                         >
-                          <DeleteIcon />
+                          <DeleteIcon
+                            onClick={this.onDeleteInstallment.bind(
+                              this,
+                              installment.installmentID
+                            )}
+                          />
                         </Typography>
                       </TableCell>
                     </TableRow>
