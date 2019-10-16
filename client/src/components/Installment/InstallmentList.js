@@ -159,17 +159,7 @@ class InstallmentList extends Component {
                 >
                   Principal
                 </TableCell>
-                <TableCell
-                  align="right"
-                  style={{
-                    background: "black",
-                    color: "white",
-                    fontSize: 15,
-                    fontWeight: "bold"
-                  }}
-                >
-                  Interest
-                </TableCell>
+
                 <TableCell
                   align="right"
                   style={{
@@ -235,15 +225,7 @@ class InstallmentList extends Component {
                       : numeral(principal).format("0,0[.]00") + "/="}
                   </Typography>
                 </TableCell>
-                <TableCell align="right">
-                  <Typography
-                    variant="subheading"
-                    align="center"
-                    color="default"
-                  >
-                    {interestRate}
-                  </Typography>
-                </TableCell>
+
                 <TableCell align="right">
                   <Typography
                     variant="subheading"

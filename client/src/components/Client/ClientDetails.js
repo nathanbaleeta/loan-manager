@@ -107,7 +107,6 @@ class ClientDetails extends Component {
       loanID: "",
 
       principal: "",
-      interestRate: "",
       loanTerm: "",
       issueDate: ""
     };
@@ -124,7 +123,6 @@ class ClientDetails extends Component {
         newState.push({
           loanID: item,
           principal: items[item].principal,
-          interestRate: items[item].interestRate,
           issueDate: items[item].issueDate,
           loanTerm: items[item].loanTerm,
           collateral: items[item].collateral
@@ -238,13 +236,9 @@ class ClientDetails extends Component {
                       }
                       secondary={
                         <React.Fragment>
-                          {"Interest: " + loan.interestRate + "%"}
-                          <br />
-                          {/*{"Duration: " + loan.loanTerm + " months"} <br />*/}
-
+                          {"Duration: " + loan.loanTerm + " months"} <br />
                           {"Issue date: " + loan.issueDate}
                           <br />
-
                           {/*{"Collateral: " + loan.collateral} */}
                         </React.Fragment>
                       }

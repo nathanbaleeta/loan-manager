@@ -22,7 +22,6 @@ class LoanForm extends React.Component {
     super();
     this.state = {
       principal: "",
-      interestRate: "",
       issueDate: "",
       loanTerm: "",
       collateral: "",
@@ -67,9 +66,9 @@ class LoanForm extends React.Component {
   };
 
   // Calculate BBF
-  calculateBBF = (principal, interestRate) => {
+  calculateBBF = principal => {
     let newPrincipal = this.removeCommas(principal);
-    let computedInterestRate = (parseFloat(interestRate) + 100) / 100;
+    let computedInterestRate = (12 + 100) / 100;
 
     let bbf = parseFloat(newPrincipal * computedInterestRate);
     return bbf;
@@ -83,8 +82,7 @@ class LoanForm extends React.Component {
     // get our form data out of state
     const loan = {
       principal: this.removeCommas(this.state.principal),
-      bbf: this.calculateBBF(this.state.principal, this.state.interestRate),
-      interestRate: this.state.interestRate,
+      bbf: this.calculateBBF(this.state.principal),
       issueDate: this.state.issueDate,
       loanTerm: this.state.loanTerm,
       collateral: this.toTitleCase(this.state.collateral),
@@ -102,8 +100,6 @@ class LoanForm extends React.Component {
     //Clear the Client form inputs
     this.setState({
       principal: "",
-      //bbf: "",
-      interestRate: "",
       issueDate: "",
       loanTerm: "",
       collateral: ""
@@ -112,13 +108,7 @@ class LoanForm extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const {
-      principal,
-      interestRate,
-      loanTerm,
-      issueDate,
-      collateral
-    } = this.state;
+    const { principal, loanTerm, issueDate, collateral } = this.state;
 
     return (
       <div>
@@ -131,7 +121,7 @@ class LoanForm extends React.Component {
               </Typography>
             </Grid>
             {/* Number formatting using thousand separator */}
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <NumberFormat
                 value={principal}
                 thousandSeparator={true}
@@ -169,7 +159,7 @@ class LoanForm extends React.Component {
                 variant="outlined"
                 autoComplete="off"
               />
-            </Grid> */}
+            </Grid> 
             <Grid item xs={12} sm={6}>
               <TextField
                 required
@@ -189,7 +179,7 @@ class LoanForm extends React.Component {
                   }
                 }}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm={6}>
               <TextField
                 required
