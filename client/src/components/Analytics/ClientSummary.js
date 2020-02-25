@@ -9,6 +9,10 @@ import firebase from "../common/firebase";
 import numeral from "numeral";
 
 const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    zoom: "80%"
+  },
   bigAvatar: {
     width: 200,
     height: 200
@@ -38,50 +42,52 @@ class ClientSummary extends Component {
 
     return (
       <Fragment>
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={12}>
-            <Card className={classes.card}>
-              <CardContent align="center">
-                <Typography
-                  variant="display1"
-                  align="center"
-                  //color="primary"
-                  style={{
-                    color: "#0000CD"
-                  }}
-                >
-                  Clients
-                </Typography>
-                <br />
-                <img
-                  alt="Remy Sharp"
-                  src="/static/images/clients.png"
-                  className={classes.bigAvatar}
-                />
-                <br />
-                <br />
-                <Grid container spacing={24}>
-                  <Grid item xs={4} sm={4} />
-                  <Grid item xs={4} sm={4}>
-                    <Typography
-                      variant="headline"
-                      gutterBottom
-                      align="center"
-                      color="Primary"
-                    >
-                      {numeral(this.state.numOfClients).format("0,0")}
-                    </Typography>
+        <div className={classes.root}>
+          <Grid container spacing={24}>
+            <Grid item xs={12} sm={12}>
+              <Card className={classes.card}>
+                <CardContent align="center">
+                  <Typography
+                    variant="display1"
+                    align="center"
+                    //color="primary"
+                    style={{
+                      color: "#0000CD"
+                    }}
+                  >
+                    Clients
+                  </Typography>
+                  <br />
+                  <img
+                    alt="Remy Sharp"
+                    src="/static/images/clients.png"
+                    className={classes.bigAvatar}
+                  />
+                  <br />
+                  <br />
+                  <Grid container spacing={24}>
+                    <Grid item xs={4} sm={4} />
+                    <Grid item xs={4} sm={4}>
+                      <Typography
+                        variant="headline"
+                        gutterBottom
+                        align="center"
+                        color="Primary"
+                      >
+                        {numeral(this.state.numOfClients).format("0,0")}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4} sm={4} />
                   </Grid>
-                  <Grid item xs={4} sm={4} />
-                </Grid>
-                <br />
-              </CardContent>
-            </Card>
-            <br />
+                  <br />
+                </CardContent>
+              </Card>
+              <br />
 
-            <br />
+              <br />
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
       </Fragment>
     );
   }

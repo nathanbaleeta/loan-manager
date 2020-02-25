@@ -9,6 +9,10 @@ import firebase from "../common/firebase";
 import numeral from "numeral";
 
 const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    zoom: "80%"
+  },
   bigAvatar: {
     width: 200,
     height: 200
@@ -49,51 +53,55 @@ class InstallmentSummary extends Component {
 
     return (
       <Fragment>
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={12}>
-            <Card className={classes.card}>
-              <CardContent align="center">
-                <Typography
-                  variant="display1"
-                  align="center"
-                  //color="primary"
-                  style={{
-                    color: "#0000CD"
-                  }}
-                >
-                  Total Installments
-                </Typography>
-                <br />
-                <img
-                  alt="Remy Sharp"
-                  src="/static/images/installment.jpg"
-                  className={classes.bigAvatar}
-                />
-                <br />
-                <br />
-                <Grid container spacing={24}>
-                  <Grid item xs={3} sm={3} />
-                  <Grid item xs={6} sm={6}>
-                    <Typography
-                      variant="headline"
-                      gutterBottom
-                      align="center"
-                      color="Primary"
-                    >
-                      {numeral(this.state.totalInstallments).format("0,0[.]00")}{" "}
-                      /=
-                    </Typography>
+        <div className={classes.root}>
+          <Grid container spacing={24}>
+            <Grid item xs={12} sm={12}>
+              <Card className={classes.card}>
+                <CardContent align="center">
+                  <Typography
+                    variant="display1"
+                    align="center"
+                    //color="primary"
+                    style={{
+                      color: "#0000CD"
+                    }}
+                  >
+                    Total Installments
+                  </Typography>
+                  <br />
+                  <img
+                    alt="Remy Sharp"
+                    src="/static/images/installment.jpg"
+                    className={classes.bigAvatar}
+                  />
+                  <br />
+                  <br />
+                  <Grid container spacing={24}>
+                    <Grid item xs={3} sm={3} />
+                    <Grid item xs={6} sm={6}>
+                      <Typography
+                        variant="headline"
+                        gutterBottom
+                        align="center"
+                        color="Primary"
+                      >
+                        {numeral(this.state.totalInstallments).format(
+                          "0,0[.]00"
+                        )}{" "}
+                        /=
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3} sm={3} />
                   </Grid>
-                  <Grid item xs={3} sm={3} />
-                </Grid>
-                <br />
-              </CardContent>
-            </Card>
-            <br />
+                  <br />
+                </CardContent>
+              </Card>
+              <br />
 
-            <br />
+              <br />
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
       </Fragment>
     );
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
@@ -17,7 +17,7 @@ const styles = theme => ({
   }
 });
 
-class LoanForm extends React.Component {
+class LoanForm extends Component {
   constructor() {
     super();
     this.state = {
@@ -67,10 +67,10 @@ class LoanForm extends React.Component {
 
   // Calculate BBF
   calculateBBF = principal => {
-    let newPrincipal = this.removeCommas(principal);
-    let computedInterestRate = (12 + 100) / 100;
+    let bbf = this.removeCommas(principal);
+    //let computedInterestRate = (12 + 100) / 100;
 
-    let bbf = parseFloat(newPrincipal * computedInterestRate);
+    //let bbf = parseFloat(newPrincipal * computedInterestRate);
     return bbf;
   };
 
@@ -111,41 +111,42 @@ class LoanForm extends React.Component {
     const { principal, loanTerm, issueDate, collateral } = this.state;
 
     return (
-      <div>
-        <br />
-        <form onSubmit={this.handleSubmit}>
-          <Grid container spacing={8}>
-            <Grid item xs={12} sm={12}>
-              <Typography variant="headline" align="left" color="primary">
-                Loan Calculator
-              </Typography>
-            </Grid>
-            {/* Number formatting using thousand separator */}
-            <Grid item xs={12} sm={12}>
-              <NumberFormat
-                value={principal}
-                thousandSeparator={true}
-                onValueChange={values => {
-                  const { formattedValue } = values;
+      <Fragment>
+        <div>
+          <br />
+          <form onSubmit={this.handleSubmit}>
+            <Grid container spacing={8}>
+              <Grid item xs={12} sm={12}>
+                <Typography variant="headline" align="left" color="primary">
+                  Loan Calculator
+                </Typography>
+              </Grid>
+              {/* Number formatting using thousand separator */}
+              <Grid item xs={12} sm={12}>
+                <NumberFormat
+                  value={principal}
+                  thousandSeparator={true}
+                  onValueChange={values => {
+                    const { formattedValue } = values;
 
-                  this.setState({ principal: formattedValue });
-                }}
-                customInput={TextField}
-                label="Principal"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
-              />
-            </Grid>
-            {/*  Number formatting using thousand separator */}
+                    this.setState({ principal: formattedValue });
+                  }}
+                  customInput={TextField}
+                  label="Principal"
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  autoComplete="off"
+                  InputProps={{
+                    classes: {
+                      notchedOutline: classes.notchedOutline
+                    }
+                  }}
+                />
+              </Grid>
+              {/*  Number formatting using thousand separator */}
 
-            {/*  <Grid item xs={12} sm={6}>
+              {/*  <Grid item xs={12} sm={6}>
               <TextField
                 required
                 id="principal"
@@ -180,88 +181,89 @@ class LoanForm extends React.Component {
                 }}
               />
             </Grid> */}
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="loanTerm"
-                name="loanTerm"
-                value={loanTerm}
-                onChange={this.onChange}
-                label="Loan term"
-                helperText="Duration in months"
-                type="number"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
-              />
-            </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="loanTerm"
+                  name="loanTerm"
+                  value={loanTerm}
+                  onChange={this.onChange}
+                  label="Loan term"
+                  helperText="Duration in months"
+                  type="number"
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  autoComplete="off"
+                  InputProps={{
+                    classes: {
+                      notchedOutline: classes.notchedOutline
+                    }
+                  }}
+                />
+              </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="issueDate"
-                name="issueDate"
-                value={issueDate}
-                onChange={this.onChange}
-                label="Issue Date"
-                type="date"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                autoComplete="off"
-                InputLabelProps={{
-                  shrink: true
-                }}
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
-              />
-            </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="issueDate"
+                  name="issueDate"
+                  value={issueDate}
+                  onChange={this.onChange}
+                  label="Issue Date"
+                  type="date"
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  autoComplete="off"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  InputProps={{
+                    classes: {
+                      notchedOutline: classes.notchedOutline
+                    }
+                  }}
+                />
+              </Grid>
 
-            <Grid item xs={12} sm={12}>
-              <TextField
-                id="collateral"
-                type="string"
-                name="collateral"
-                value={collateral}
-                onChange={this.onChange}
-                label="Collateral*"
-                multiline
-                rowsMax="4"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                autoComplete="off"
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline
-                  }
-                }}
-              />
-            </Grid>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  id="collateral"
+                  type="string"
+                  name="collateral"
+                  value={collateral}
+                  onChange={this.onChange}
+                  label="Collateral*"
+                  multiline
+                  rowsMax="4"
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  autoComplete="off"
+                  InputProps={{
+                    classes: {
+                      notchedOutline: classes.notchedOutline
+                    }
+                  }}
+                />
+              </Grid>
 
-            <Grid item xs={12} sm={12}>
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                fullWidth
-                color="secondary"
-              >
-                Save Loan
-              </Button>
+              <Grid item xs={12} sm={12}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  color="secondary"
+                >
+                  Save Loan
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
+          </form>
+        </div>
+      </Fragment>
     );
   }
 }

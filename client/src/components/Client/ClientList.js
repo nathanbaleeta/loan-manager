@@ -23,6 +23,10 @@ import CustomToolbar from "../mui-datatables/CustomToolbarClients";
 import firebase from "../common/firebase";
 
 const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    zoom: "80%"
+  },
   // Overiding css properties on material ui textbox
   notchedOutline: {
     borderWidth: "1px",
@@ -221,209 +225,216 @@ class ClientList extends Component {
 
     return (
       <Fragment>
-        <MUIDataTable
-          title={"Client list"}
-          data={data.map(c => {
-            return [
-              <Link
-                to={`/clients/${c.id}`}
-                style={{
-                  color: "darkblue",
-                  textDecoration: "none",
-                  fontSize: 18
-                }}
-              >
-                {c.lastName + " " + c.firstName}
-              </Link>,
-              <div
-                style={{
-                  fontSize: 18
-                }}
-              >
-                {c.address}
-              </div>,
-              <div
-                style={{
-                  fontSize: 18
-                }}
-              >
-                {c.phone1}
-              </div>,
-              <div
-                style={{
-                  fontSize: 18
-                }}
-              >
-                {c.phone2}
-              </div>,
+        <div className={classes.root}>
+          <MUIDataTable
+            title={"Client list"}
+            data={data.map(c => {
+              return [
+                <Link
+                  to={`/clients/${c.id}`}
+                  style={{
+                    color: "darkblue",
+                    textDecoration: "none",
+                    fontSize: 18
+                  }}
+                >
+                  {c.lastName + " " + c.firstName}
+                </Link>,
+                <div
+                  style={{
+                    fontSize: 18
+                  }}
+                >
+                  {c.address}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18
+                  }}
+                >
+                  {c.phone1}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18
+                  }}
+                >
+                  {c.phone2}
+                </div>,
 
-              <IconButton
-                color="primary"
-                //onClick={() => this.updateFarmer(index)}
-                // The bind method also works
-                onClick={this.updateClient.bind(this, c.id)}
-              >
-                <EditIcon color="primary" />
-              </IconButton>
-            ];
-          })}
-          columns={columns}
-          options={options}
-        />
+                <IconButton
+                  color="primary"
+                  //onClick={() => this.updateFarmer(index)}
+                  // The bind method also works
+                  onClick={this.updateClient.bind(this, c.id)}
+                >
+                  <EditIcon color="primary" />
+                </IconButton>
+              ];
+            })}
+            columns={columns}
+            options={options}
+          />
 
-        <Dialog
-          open={this.state.open}
-          onClose={this.closeDialog}
-          aria-labelledby="form-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle
-            id="simple-dialog-title"
-            color="default"
-            style={{ backgroundColor: "#2E3B55" }}
+          <Dialog
+            maxWidth="sm"
+            open={this.state.open}
+            onClose={this.closeDialog}
+            aria-labelledby="form-dialog-title"
+            aria-describedby="alert-dialog-description"
           >
-            <Typography
-              component="h1"
-              variant="display1"
-              align="center"
-              style={{ color: "white" }}
+            <DialogTitle
+              id="simple-dialog-title"
+              color="default"
+              style={{ backgroundColor: "#2E3B55" }}
             >
-              Edit Client
-            </Typography>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description" color="primary">
-              <br />
-              <form onSubmit={this.handleSubmit}>
-                <Typography variant="headline" align="left" color="inherit">
-                  Bio-data
-                </Typography>
+              <Typography
+                component="h1"
+                variant="headline"
+                align="center"
+                style={{ color: "white" }}
+              >
+                Edit Client
+              </Typography>
+            </DialogTitle>
+            <DialogContent
+              style={{
+                zoom: "80%"
+              }}
+            >
+              <DialogContentText id="alert-dialog-description" color="primary">
                 <br />
-                <Grid container spacing={8}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="firstName"
-                      name="firstName"
-                      value={this.state.firstName}
-                      onChange={this.onChange}
-                      label="First name"
-                      fullWidth
-                      margin="normal"
-                      variant="outlined"
-                      autoComplete="off"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline
-                        }
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      id="lastName"
-                      name="lastName"
-                      value={this.state.lastName}
-                      onChange={this.onChange}
-                      label="Last name"
-                      fullWidth
-                      margin="normal"
-                      variant="outlined"
-                      autoComplete="off"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline
-                        }
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      id="address"
-                      name="address"
-                      value={this.state.address}
-                      onChange={this.onChange}
-                      label="Address"
-                      multiline
-                      rowsMax="4"
-                      fullWidth
-                      margin="normal"
-                      variant="outlined"
-                      autoComplete="off"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline
-                        }
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <InputMask
-                      mask="(+256) 999 999 999"
-                      value={this.state.phone1}
-                      onChange={this.onChange}
-                    >
-                      {() => (
-                        <TextField
-                          id="phone1"
-                          name="phone1"
-                          label="Phone 1"
-                          fullWidth
-                          margin="normal"
-                          variant="outlined"
-                          autoComplete="phone1"
-                          InputProps={{
-                            classes: {
-                              notchedOutline: classes.notchedOutline
-                            }
-                          }}
-                        />
-                      )}
-                    </InputMask>
-                  </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <InputMask
-                      mask="(+256) 999 999 999"
-                      value={this.state.phone2}
-                      onChange={this.onChange}
-                    >
-                      {() => (
-                        <TextField
-                          id="phone2"
-                          name="phone2"
-                          label="Phone 2"
-                          fullWidth
-                          margin="normal"
-                          variant="outlined"
-                          autoComplete="off"
-                          InputProps={{
-                            classes: {
-                              notchedOutline: classes.notchedOutline
-                            }
-                          }}
-                        />
-                      )}
-                    </InputMask>
-                  </Grid>
+                <form onSubmit={this.handleSubmit}>
+                  <Typography variant="headline" align="left" color="inherit">
+                    Bio-data
+                  </Typography>
+                  <br />
+                  <Grid container spacing={8}>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        id="firstName"
+                        name="firstName"
+                        value={this.state.firstName}
+                        onChange={this.onChange}
+                        label="First name"
+                        fullWidth
+                        margin="normal"
+                        variant="outlined"
+                        autoComplete="off"
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline
+                          }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        id="lastName"
+                        name="lastName"
+                        value={this.state.lastName}
+                        onChange={this.onChange}
+                        label="Last name"
+                        fullWidth
+                        margin="normal"
+                        variant="outlined"
+                        autoComplete="off"
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline
+                          }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <TextField
+                        id="address"
+                        name="address"
+                        value={this.state.address}
+                        onChange={this.onChange}
+                        label="Address"
+                        multiline
+                        rowsMax="4"
+                        fullWidth
+                        margin="normal"
+                        variant="outlined"
+                        autoComplete="off"
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline
+                          }
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <InputMask
+                        mask="(+256) 999 999 999"
+                        value={this.state.phone1}
+                        onChange={this.onChange}
+                      >
+                        {() => (
+                          <TextField
+                            id="phone1"
+                            name="phone1"
+                            label="Phone 1"
+                            fullWidth
+                            margin="normal"
+                            variant="outlined"
+                            autoComplete="phone1"
+                            InputProps={{
+                              classes: {
+                                notchedOutline: classes.notchedOutline
+                              }
+                            }}
+                          />
+                        )}
+                      </InputMask>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <InputMask
+                        mask="(+256) 999 999 999"
+                        value={this.state.phone2}
+                        onChange={this.onChange}
+                      >
+                        {() => (
+                          <TextField
+                            id="phone2"
+                            name="phone2"
+                            label="Phone 2"
+                            fullWidth
+                            margin="normal"
+                            variant="outlined"
+                            autoComplete="off"
+                            InputProps={{
+                              classes: {
+                                notchedOutline: classes.notchedOutline
+                              }
+                            }}
+                          />
+                        )}
+                      </InputMask>
+                    </Grid>
 
-                  <Grid item xs={12} sm={12}>
-                    <br />
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      size="large"
-                      fullWidth
-                      color="secondary"
-                    >
-                      Update Client
-                    </Button>
+                    <Grid item xs={12} sm={12}>
+                      <br />
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        size="large"
+                        fullWidth
+                        color="secondary"
+                      >
+                        Update Client
+                      </Button>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </form>
-            </DialogContentText>
-          </DialogContent>
-        </Dialog>
+                </form>
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
+        </div>
       </Fragment>
     );
   }

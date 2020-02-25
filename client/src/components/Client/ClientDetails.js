@@ -33,10 +33,13 @@ import firebase from "../common/firebase";
 import numeral from "numeral";
 
 const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    zoom: "70%"
+  },
   avatar: {
     margin: 10
   },
-
   //Style the scrollbar
   "@global": {
     "*::-webkit-scrollbar": {
@@ -50,7 +53,7 @@ const styles = theme => ({
       outline: "1px solid slategrey"
     }
   },
-  root: {
+  loanHistory: {
     width: "100%",
     height: "100%",
     //maxWidth: 427,
@@ -177,129 +180,135 @@ class ClientDetails extends Component {
 
     return (
       <Fragment>
-        <Grid container spacing={2}>
-          <Grid item xs={2} sm={2}>
-            <ProfileInfo id={this.state.clientID} />
-          </Grid>
-          <Grid
-            item
-            xs={3}
-            sm={3}
-            style={{
-              //marginLeft: "0%",
-              marginTop: "-2%"
-              //borderRight: "1px solid #d4d4d4",
-              //backgroundColor: "white"
-            }}
-          >
-            {/* LoanList */}
-            <List className={classes.root}>
-              <br />
-              <br />
-              <Typography
-                variant="display1"
-                gutterBottom
-                align="center"
-                color="primary"
-              >
-                Loan history
-              </Typography>
-
-              <Fab
-                color="secondary"
-                aria-label="Add"
-                className={classes.fab}
-                onClick={this.handleOpen}
-              >
-                <AddIcon />
-              </Fab>
-              {loanData.map(loan => (
-                <Link
-                  to={`/clients/${clientID}/loans/${loan.loanID}`}
-                  className={classes.link}
-                >
-                  <ListItem
-                    button
-                    className={classes.message}
-                    //onClick={() => this.getLoanInstallments(loan.loanID)}
-                    onClick={this.getLoanInstallments.bind(this, loan.loanID)}
-                  >
-                    <ListItemText
-                      classes={{
-                        primary: classes.primary,
-                        secondary: classes.secondary
-                      }}
-                      primary={
-                        "Principal: " +
-                        numeral(loan.principal).format("0,0[.]00") +
-                        "/="
-                      }
-                      secondary={
-                        <React.Fragment>
-                          {"Duration: " + loan.loanTerm + " months"} <br />
-                          {"Issue date: " + loan.issueDate}
-                          <br />
-                          {/*{"Collateral: " + loan.collateral} */}
-                        </React.Fragment>
-                      }
-                    />
-                  </ListItem>
-                </Link>
-              ))}
-            </List>
-
-            {/* LoanList */}
-          </Grid>
-          <Grid item xs={7} sm={7}>
-            <Switch>
-              <Route
-                path="/clients/:id/loans/:id"
-                render={props => (
-                  <InstallmentList
-                    {...props}
-                    // pass multiple parameters to another/ child component as props
-                    loan={this.state.loanID}
-                    client={this.state.clientID}
-                  />
-                )}
-              />
-              />
-            </Switch>
-          </Grid>
-        </Grid>
-
-        <Dialog
-          open={this.state.open}
-          onClose={this.closeDialog}
-          aria-labelledby="form-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle
-            id="simple-dialog-title"
-            color="default"
-            style={{ backgroundColor: "#2E3B55" }}
-          >
-            <Typography
-              component="h1"
-              variant="display1"
-              align="center"
-              style={{ color: "white" }}
+        <div className={classes.root}>
+          <Grid container spacing={2}>
+            <Grid item xs={2} sm={2}>
+              <ProfileInfo id={this.state.clientID} />
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              sm={3}
+              style={{
+                //marginLeft: "0%",
+                marginTop: "-2%"
+                //borderRight: "1px solid #d4d4d4",
+                //backgroundColor: "white"
+              }}
             >
-              Add Loan
-            </Typography>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description" color="primary">
-              <br />
-              <LoanForm id={this.state.clientID} />
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-          </DialogActions>
-        </Dialog>
+              {/* LoanList */}
+              <List className={classes.loanHistory}>
+                <br />
+                <br />
+                <Typography
+                  variant="display1"
+                  gutterBottom
+                  align="center"
+                  color="primary"
+                >
+                  Loan history
+                </Typography>
+
+                <Fab
+                  color="secondary"
+                  aria-label="Add"
+                  className={classes.fab}
+                  onClick={this.handleOpen}
+                >
+                  <AddIcon />
+                </Fab>
+                {loanData.map(loan => (
+                  <Link
+                    to={`/clients/${clientID}/loans/${loan.loanID}`}
+                    className={classes.link}
+                  >
+                    <ListItem
+                      button
+                      className={classes.message}
+                      //onClick={() => this.getLoanInstallments(loan.loanID)}
+                      onClick={this.getLoanInstallments.bind(this, loan.loanID)}
+                    >
+                      <ListItemText
+                        classes={{
+                          primary: classes.primary,
+                          secondary: classes.secondary
+                        }}
+                        primary={
+                          "Principal: " +
+                          numeral(loan.principal).format("0,0[.]00") +
+                          "/="
+                        }
+                        secondary={
+                          <React.Fragment>
+                            {"Duration: " + loan.loanTerm + " months"} <br />
+                            {"Issue date: " + loan.issueDate}
+                            <br />
+                            {/*{"Collateral: " + loan.collateral} */}
+                          </React.Fragment>
+                        }
+                      />
+                    </ListItem>
+                  </Link>
+                ))}
+              </List>
+
+              {/* LoanList */}
+            </Grid>
+            <Grid item xs={7} sm={7}>
+              <Switch>
+                <Route
+                  path="/clients/:id/loans/:id"
+                  render={props => (
+                    <InstallmentList
+                      {...props}
+                      // pass multiple parameters to another/ child component as props
+                      loan={this.state.loanID}
+                      client={this.state.clientID}
+                    />
+                  )}
+                />
+                />
+              </Switch>
+            </Grid>
+          </Grid>
+
+          <Dialog
+            open={this.state.open}
+            onClose={this.closeDialog}
+            aria-labelledby="form-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle
+              id="simple-dialog-title"
+              color="default"
+              style={{ backgroundColor: "#2E3B55" }}
+            >
+              <Typography
+                component="h1"
+                variant="headline"
+                align="center"
+                style={{ color: "white" }}
+              >
+                Add Loan
+              </Typography>
+            </DialogTitle>
+            <DialogContent
+              style={{
+                zoom: "70%"
+              }}
+            >
+              <DialogContentText id="alert-dialog-description" color="primary">
+                <br />
+                <LoanForm id={this.state.clientID} />
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.handleClose} color="primary">
+                Cancel
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </Fragment>
     );
   }

@@ -12,7 +12,8 @@ import HighchartsReact from "highcharts-react-official";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    zoom: "80%"
   },
   paper: {
     padding: theme.spacing.unit * 2,

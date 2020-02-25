@@ -485,14 +485,18 @@ class InstallmentList extends Component {
           >
             <Typography
               component="h1"
-              variant="display1"
+              variant="headline"
               align="center"
               style={{ color: "white" }}
             >
               Add Installment
             </Typography>
           </DialogTitle>
-          <DialogContent>
+          <DialogContent
+            style={{
+              zoom: "70%"
+            }}
+          >
             <DialogContentText id="alert-dialog-description" color="primary">
               <br />
               <InstallmentForm

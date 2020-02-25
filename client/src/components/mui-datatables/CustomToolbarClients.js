@@ -64,14 +64,18 @@ class CustomToolbar extends React.Component {
           >
             <Typography
               component="h1"
-              variant="display1"
+              variant="headline"
               align="center"
               style={{ color: "white" }}
             >
               Add Client
             </Typography>
           </DialogTitle>
-          <DialogContent>
+          <DialogContent
+            style={{
+              zoom: "80%"
+            }}
+          >
             <Route path="/clients" component={ClientForm} />
           </DialogContent>
           <DialogActions>

@@ -24,6 +24,10 @@ import firebase from "../common/firebase";
 import numeral from "numeral";
 
 const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    zoom: "80%"
+  },
   // Overiding css properties on material ui textbox
   notchedOutline: {
     borderWidth: "1px",
@@ -210,160 +214,166 @@ class ExpensesList extends Component {
 
     return (
       <Fragment>
-        <MUIDataTable
-          title={"Expense list"}
-          data={data.map(e => {
-            return [
-              <div
-                style={{
-                  fontSize: 18
-                }}
-              >
-                {e.description}
-              </div>,
-              <div
-                style={{
-                  fontSize: 18
-                }}
-              >
-                {numeral(e.amount).format("0,0[.]00")}
-              </div>,
-              <div
-                style={{
-                  fontSize: 18
-                }}
-              >
-                {e.expenseDate}
-              </div>,
+        <div className={classes.root}>
+          <MUIDataTable
+            title={"Expense list"}
+            data={data.map(e => {
+              return [
+                <div
+                  style={{
+                    fontSize: 18
+                  }}
+                >
+                  {e.description}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18
+                  }}
+                >
+                  {numeral(e.amount).format("0,0[.]00")}
+                </div>,
+                <div
+                  style={{
+                    fontSize: 18
+                  }}
+                >
+                  {e.expenseDate}
+                </div>,
 
-              <IconButton
-                color="primary"
-                //onClick={() => this.updateFarmer(index)}
-                // The bind method also works
-                onClick={this.updateExpense.bind(this, e.id)}
-              >
-                <EditIcon color="primary" />
-              </IconButton>
-            ];
-          })}
-          columns={columns}
-          options={options}
-        />
+                <IconButton
+                  color="primary"
+                  //onClick={() => this.updateFarmer(index)}
+                  // The bind method also works
+                  onClick={this.updateExpense.bind(this, e.id)}
+                >
+                  <EditIcon color="primary" />
+                </IconButton>
+              ];
+            })}
+            columns={columns}
+            options={options}
+          />
 
-        <Dialog
-          open={this.state.open}
-          onClose={this.closeDialog}
-          aria-labelledby="form-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle
-            id="simple-dialog-title"
-            color="default"
-            style={{ backgroundColor: "#2E3B55" }}
+          <Dialog
+            open={this.state.open}
+            onClose={this.closeDialog}
+            aria-labelledby="form-dialog-title"
+            aria-describedby="alert-dialog-description"
           >
-            <Typography
-              component="h1"
-              variant="display1"
-              align="center"
-              style={{ color: "white" }}
+            <DialogTitle
+              id="simple-dialog-title"
+              color="default"
+              style={{ backgroundColor: "#2E3B55" }}
             >
-              Edit Expense
-            </Typography>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description" color="primary">
-              <br />
-              <form onSubmit={this.handleSubmit}>
-                <Typography variant="headline" align="left" color="primary">
-                  Expense details
-                </Typography>
+              <Typography
+                component="h1"
+                variant="headline"
+                align="center"
+                style={{ color: "white" }}
+              >
+                Edit Expense
+              </Typography>
+            </DialogTitle>
+            <DialogContent
+              style={{
+                zoom: "80%"
+              }}
+            >
+              <DialogContentText id="alert-dialog-description" color="primary">
                 <br />
-                <Grid container spacing={8}>
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      required
-                      id="description"
-                      name="description"
-                      value={this.state.description}
-                      onChange={this.onChange}
-                      label="Particulars"
-                      fullWidth
-                      margin="normal"
-                      variant="outlined"
-                      autoComplete="off"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline
-                        }
-                      }}
-                    />
-                  </Grid>
+                <form onSubmit={this.handleSubmit}>
+                  <Typography variant="headline" align="left" color="primary">
+                    Expense details
+                  </Typography>
+                  <br />
+                  <Grid container spacing={8}>
+                    <Grid item xs={12} sm={12}>
+                      <TextField
+                        required
+                        id="description"
+                        name="description"
+                        value={this.state.description}
+                        onChange={this.onChange}
+                        label="Particulars"
+                        fullWidth
+                        margin="normal"
+                        variant="outlined"
+                        autoComplete="off"
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline
+                          }
+                        }}
+                      />
+                    </Grid>
 
-                  <Grid item xs={12} sm={12}>
-                    <NumberFormat
-                      value={this.state.amount}
-                      thousandSeparator={true}
-                      onValueChange={values => {
-                        const { formattedValue } = values;
+                    <Grid item xs={12} sm={12}>
+                      <NumberFormat
+                        value={this.state.amount}
+                        thousandSeparator={true}
+                        onValueChange={values => {
+                          const { formattedValue } = values;
 
-                        this.setState({ amount: formattedValue });
-                      }}
-                      customInput={TextField}
-                      label="Amount"
-                      fullWidth
-                      margin="normal"
-                      variant="outlined"
-                      autoComplete="off"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline
-                        }
-                      }}
-                    />
-                  </Grid>
+                          this.setState({ amount: formattedValue });
+                        }}
+                        customInput={TextField}
+                        label="Amount"
+                        fullWidth
+                        margin="normal"
+                        variant="outlined"
+                        autoComplete="off"
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline
+                          }
+                        }}
+                      />
+                    </Grid>
 
-                  <Grid item xs={12} sm={12}>
-                    <TextField
-                      required
-                      id="expenseDate"
-                      name="expenseDate"
-                      value={this.state.expenseDate}
-                      onChange={this.onChange}
-                      label="Date"
-                      type="date"
-                      fullWidth
-                      margin="normal"
-                      variant="outlined"
-                      autoComplete="off"
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline
-                        }
-                      }}
-                    />
-                  </Grid>
+                    <Grid item xs={12} sm={12}>
+                      <TextField
+                        required
+                        id="expenseDate"
+                        name="expenseDate"
+                        value={this.state.expenseDate}
+                        onChange={this.onChange}
+                        label="Date"
+                        type="date"
+                        fullWidth
+                        margin="normal"
+                        variant="outlined"
+                        autoComplete="off"
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline
+                          }
+                        }}
+                      />
+                    </Grid>
 
-                  <Grid item xs={12} sm={12}>
-                    <br />
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      fullWidth
-                      size="large"
-                      color="secondary"
-                    >
-                      Update Expense
-                    </Button>
+                    <Grid item xs={12} sm={12}>
+                      <br />
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        fullWidth
+                        size="large"
+                        color="secondary"
+                      >
+                        Update Expense
+                      </Button>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </form>
-              <br />
-            </DialogContentText>
-          </DialogContent>
-        </Dialog>
+                </form>
+                <br />
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
+        </div>
       </Fragment>
     );
   }

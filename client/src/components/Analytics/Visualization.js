@@ -18,7 +18,8 @@ import InstallmentSummary from "./InstallmentSummary";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    zoom: "80%"
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -39,7 +40,7 @@ class Visualization extends React.Component {
     return (
       <div>
         <Typography
-          variant="display1"
+          variant="headline"
           align="center"
           color="primary"
           style={{ color: "black" }}
@@ -63,7 +64,7 @@ class Visualization extends React.Component {
         </Grid>
         <br /> <br /> <br />
         <Typography
-          variant="display1"
+          variant="headline"
           align="center"
           color="primary"
           style={{ color: "black" }}
